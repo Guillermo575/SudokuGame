@@ -18,14 +18,15 @@ public class SudokuBoard : MonoBehaviour
     private SudokuSubBoard[,] subBoards;
     public void CreateBoard()
     {
-        var SizeBoard = numberColumns * numberRows * (sizeNumberNode + spaceBetweenSubBoards);
+        var SizeSubBoard = sizeNumberNode + spaceBetweenSubBoards;
+        var SizeBoard = numberColumns * numberRows * SizeSubBoard;
         mainBoardPrefab.transform.localScale = new Vector3(SizeBoard, 1f, SizeBoard);
         subBoards = new SudokuSubBoard[numberColumns, numberRows];
         for (int i = 0; i < numberRows; i++)
         {
             for (int j = 0; j < numberColumns; j++)
             {
-                Vector3 position = new Vector3(spaceBetweenSubBoards + (j * (sizeNumberNode + spaceBetweenSubBoards) * numberColumns), 0.2f, -spaceBetweenSubBoards + (-i * (sizeNumberNode + spaceBetweenSubBoards) * numberRows));
+                Vector3 position = new Vector3(spaceBetweenSubBoards + (j * SizeSubBoard * numberRows), 0.2f, -spaceBetweenSubBoards + (-i * SizeSubBoard * numberColumns));
                 GameObject subBoardObj = Instantiate(subBoardPrefab, Vector3.zero, Quaternion.identity, this.transform);
                 subBoardObj.transform.localPosition = position;
                 subBoardObj.name = $"SubBoard_{j}_{i}";

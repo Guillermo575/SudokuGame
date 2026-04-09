@@ -156,6 +156,7 @@ MonoBehaviour:
   subBoardPrefab: {fileID: 3571833331529684242, guid: 6e1aa288ec0d79948ac042511c3e8d8f, type: 3}
   numberNodePrefab: {fileID: 436323741230254955, guid: a5cd9977b7d889744851c552fcdc2b4c, type: 3}
   spaceBetweenSubBoards: 0.1
+  spaceBetweenNodes: 0.025
   sizeNumberNode: 1
   numberColumns: 3
   numberRows: 3
