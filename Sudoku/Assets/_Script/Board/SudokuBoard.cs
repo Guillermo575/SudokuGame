@@ -18,19 +18,13 @@ public class SudokuBoard : MonoBehaviour
     private SudokuSubBoard[,] subBoards;
     public void CreateBoard()
     {
-        var SizeSubBoard = sizeNumberNode + spaceBetweenSubBoards;
-        var SizeBoard = numberColumns * numberRows * SizeSubBoard;
-        mainBoardPrefab.transform.localScale = new Vector3(SizeBoard, 1f, SizeBoard);
         subBoards = new SudokuSubBoard[numberColumns, numberRows];
         for (int i = 0; i < numberRows; i++)
         {
             for (int j = 0; j < numberColumns; j++)
             {
-                Vector3 position = new Vector3(spaceBetweenSubBoards + (j * SizeSubBoard * numberRows), 0.2f, -spaceBetweenSubBoards + (-i * SizeSubBoard * numberColumns));
                 GameObject subBoardObj = Instantiate(subBoardPrefab, Vector3.zero, Quaternion.identity, this.transform);
-                subBoardObj.transform.localPosition = position;
                 subBoardObj.name = $"SubBoard_{j}_{i}";
-                //subBoardObj.transform.localScale = new Vector3(sizeNumberNode * numberRows, 1f, sizeNumberNode * numberColumns);
                 SudokuSubBoard subBoard = subBoardObj.GetComponent<SudokuSubBoard>();
                 if (subBoard == null)
                 {
@@ -40,9 +34,30 @@ public class SudokuBoard : MonoBehaviour
                 subBoards[j, i] = subBoard;
             }
         }
+        UpdatePosition();
+    }
+    public void UpdatePosition()
+    {
+        var SizeNumber = sizeNumberNode + spaceBetweenNodes;
+        var SizeBoard = numberColumns * numberRows * SizeNumber + (spaceBetweenSubBoards * 4);
+        mainBoardPrefab.transform.localScale = new Vector3(SizeBoard, 1f, SizeBoard);
+        for (int i = 0; i < numberRows; i++)
+        {
+            for (int j = 0; j < numberColumns; j++)
+            {
+                SudokuSubBoard subBoardObj = subBoards[j, i];
+                Vector3 position = new Vector3(spaceBetweenSubBoards + (j * ((SizeNumber * numberRows) + spaceBetweenSubBoards)), 0.2f, -spaceBetweenSubBoards + (-i * ((SizeNumber * numberColumns) + spaceBetweenSubBoards)));
+                subBoardObj.gameObject.transform.localPosition = position;
+                subBoardObj.UpdatePosition();
+            }
+        }
     }
     private void Start()
     {
         CreateBoard();
+    }
+    private void Update()
+    {
+        UpdatePosition();
     }
 }

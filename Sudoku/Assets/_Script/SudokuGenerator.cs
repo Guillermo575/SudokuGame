@@ -6,6 +6,7 @@ namespace Sudoku
 {
     public class SudokuGenerator
     {
+        #region Variables
         public int ColumnasX = 3;
         public int ColumnasY = 3;
         public int ValorInicial = 1;
@@ -20,6 +21,9 @@ namespace Sudoku
         public bool Validado = false;
         public int ConteoErrores = 0;
         public long TiempoEjecutado = 0;
+        #endregion
+
+        #region HTML Table
         public String ResumenHTML
         {
             get
@@ -46,7 +50,9 @@ namespace Sudoku
                 return Tabla;
             }
         }
+        #endregion
 
+        #region	Test
         public static void Testeo(int cantidad = 50000)
         {
             List<SudokuGenerator> lst = new List<SudokuGenerator>();
@@ -73,7 +79,9 @@ namespace Sudoku
             var TodosExitos = (from x in lst where x.Exito select x).Count() == cantidad;
             double minutos = TiempoTotal / 60000.0;
         }
+        #endregion
 
+        #region General
         public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
@@ -89,14 +97,15 @@ namespace Sudoku
             stopwatch.Stop();
             TiempoEjecutado = stopwatch.ElapsedMilliseconds;
         }
+        #endregion
 
+        #region Process
         public List<Celda> GetCeldasValidas(int Cuadrante, int Valor)
         {
             List<Celda> lstRetorno = new List<Celda>();
             lstRetorno = (from x in lstCeldas where x.IdCuadrante == Cuadrante && x.Valor == 0 && ValidoEjeXY(x, Valor) && !GetBloqueo(x, Valor) select x).ToList();
             return lstRetorno;
         }
-
         public bool ValidoSoloUno(Celda objCelda)
         {
             int Valor = objCelda.Valor;
@@ -107,7 +116,6 @@ namespace Sudoku
                             select x).ToList();
             return lstRetorno.Count == 1;
         }
-
         public bool ValidoEjeXY(Celda objCelda, int Valor)
         {
             var lstRetorno = (from x in lstCeldas where ((x.CuadranteEjeX == objCelda.CuadranteEjeX && x.EjeX == objCelda.EjeX) ||
@@ -116,13 +124,11 @@ namespace Sudoku
                               select x).ToList();
             return lstRetorno.Count == 0;
         }
-
         public bool GetBloqueo(Celda objCelda, int Valor)
         {
             var lstBloqueo = (from x in lstBitacoraBloqueo where x.Bloque == objCelda && x.Valor == Valor select x).ToList();
             return lstBloqueo.Count > 0;
         }
-
         private void SetNewArray()
         {
             int IdCuadrante = 1;
@@ -143,7 +149,6 @@ namespace Sudoku
                 }
             }
         }
-
         private void SetDatos()
         {
             int ValorActual = ValorInicial;
@@ -185,16 +190,11 @@ namespace Sudoku
                         {
                             ValorActual--;
                             CuadranteIndex = SumaCuadrantes;
-                            //lstBitacoraBloqueo = new List<Bitacora>();
                         }
                         if (ValorActual <= 0)
                         {
                             return;
                         }
-                        //if (ConteoErrores > 80000)
-                        //{
-                        //    return;
-                        //}
                         lstBitacoraBloqueo.Add(new Bitacora() { Bloque = objLast.Bloque, Valor = ValorActual });
                     }
                 }
@@ -238,9 +238,11 @@ namespace Sudoku
                     IndexMaximo = IndexMinimo + lst[l + 1].Peso;
                 }
             }
-            //return lst[rnd.Next(lst.Count)];
             return null;
         }
+        #endregion
+
+        #region Celda
         public class Celda
         {
             public int Id;
@@ -262,10 +264,43 @@ namespace Sudoku
             }
 			public List<Bitacora> lstWarnings = new List<Bitacora>();
         }
+        #endregion
+
+        #region Bitacora
         public class Bitacora
         {
             public Celda Bloque { get; set; }
             public int Valor { get; set; }
         }
+        #endregion
     }
+    #region Alphabet
+    public class Alphabet
+    {
+        public const string masterAlpha = "-123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0";
+        public string getAlphaChar(int index)
+        {
+            return ((index > masterAlpha.Count()) ? masterAlpha[0] : masterAlpha[index]).ToString();
+        }
+        public string getCurrentAlpha(int length)
+        {
+            if (length < 0) return string.Empty;
+            if (length >= masterAlpha.Length) return masterAlpha;
+            return masterAlpha.Substring(0, length);
+        }
+        public string getAlphaChar(int length, int index)
+        {
+            return (index < 0 || index > length ? masterAlpha[0] : masterAlpha[index]).ToString();
+        }
+        public int getAlphaIndex(int length, char caracter)
+        {
+            int index = masterAlpha.IndexOf(caracter);
+            return index < 0 || index > length ? 0 : index;
+        }
+        public string getAlphaChar(int length, char caracter)
+        {
+            return getAlphaChar(length, getAlphaIndex(length, caracter));
+        }
+    }
+    #endregion
 }
