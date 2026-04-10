@@ -1,3 +1,4 @@
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class CamaraController : MonoBehaviour
@@ -20,6 +21,7 @@ public class CamaraController : MonoBehaviour
     private InputAction moveAction;
     private InputAction zoomScroll;
     private InputAction centerAction;
+    private InputAction clickAction;
     #endregion
 
     #region Start & Update
@@ -32,6 +34,7 @@ public class CamaraController : MonoBehaviour
         LimitarCamara();
         HandleZoom();
         HandleCenter();
+        HandleClick();
     }
     #endregion
 
@@ -47,9 +50,11 @@ public class CamaraController : MonoBehaviour
         moveAction = inputActions.FindAction("Move");
         zoomScroll = inputActions.FindAction("Scroll");
         centerAction = inputActions.FindAction("Center");
+        clickAction = inputActions.FindAction("Click");
         moveAction.Enable();
         zoomScroll.Enable();
         centerAction.Enable();
+        clickAction.Enable();
         defaultOrthographicSize = cam.orthographicSize;
         maxOrthographicSize = defaultOrthographicSize;
         float sizeHorizontal = tablero.transform.localScale.x;
@@ -80,6 +85,13 @@ public class CamaraController : MonoBehaviour
             CentrarCamara(tableroWidth, tableroHeight);
         }
     }
+    private void HandleClick()
+    {
+        if (clickAction.triggered)
+        {
+            DetectButtonClick();
+        }
+    }
     public void CentrarCamara(float tamañoHorizontal, float tamañoVertical)
     {
         float aspectRatio = (float)Screen.width / Screen.height;
@@ -102,6 +114,20 @@ public class CamaraController : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, minCamX, maxCamX);
         pos.z = Mathf.Clamp(pos.z, minCamZ, maxCamZ);
         transform.position = pos;
+    }
+    private void DetectButtonClick()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.Log(hit.collider.name);
+            SudokuNumberNode nodeButton = hit.collider.GetComponent<SudokuNumberNode>();
+            if (nodeButton != null)
+            {
+                Debug.Log("BOTON OPRIMIDO");
+            }
+        }
     }
     #endregion
 }
