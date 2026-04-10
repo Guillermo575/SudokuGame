@@ -52,10 +52,6 @@ public class SudokuBoard : MonoBehaviour
             }
         }
     }
-    private void Start()
-    {
-        CreateBoard();
-    }
     private void Update()
     {
         UpdatePosition();
