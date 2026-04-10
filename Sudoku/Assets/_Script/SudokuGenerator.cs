@@ -13,7 +13,7 @@ namespace Sudoku
         public int ValorFinal { get { return ColumnasX * ColumnasY; } }
         public int SumaCuadrantes { get { return ColumnasX * ColumnasY; } }
         public int SumaCeldas { get { return (ColumnasX * ColumnasX) * (ColumnasY * ColumnasY); } }
-        public int SumaBases { get { return ((ValorFinal + 1) * ValorInicial)/2; } }
+        public int SumaBases { get { return ((ValorFinal + 1) * ValorInicial) / 2; } }
         public List<Celda> lstCeldas { get; set; } = new List<Celda>();
         public List<Bitacora> lstBitacora = new List<Bitacora>();
         public List<Bitacora> lstBitacoraBloqueo = new List<Bitacora>();
@@ -40,7 +40,7 @@ namespace Sudoku
                             for (int x = 0; x < ColumnasX; x++)
                             {
                                 var objCelda = (from obj in lstCeldas where obj.CuadranteEjeX == l && obj.CuadranteEjeY == m && obj.EjeX == x && obj.EjeY == y select obj).ToList().First();
-                                Tabla += $"<td { (objCelda.IdCuadrante%2 == 0 ? "style='background-color:#DDD'" : "style='background-color:#FFF'") }> { objCelda.Valor } </td>";
+                                Tabla += $"<td {(objCelda.IdCuadrante % 2 == 0 ? "style='background-color:#DDD'" : "style='background-color:#FFF'")}> {objCelda.Valor} </td>";
                             }
                         }
                         Tabla += "</tr>";
@@ -109,18 +109,20 @@ namespace Sudoku
         public bool ValidoSoloUno(Celda objCelda)
         {
             int Valor = objCelda.Valor;
-            var lstRetorno = (from x in lstCeldas where ((x.IdCuadrante == objCelda.IdCuadrante) ||
+            var lstRetorno = (from x in lstCeldas
+                              where ((x.IdCuadrante == objCelda.IdCuadrante) ||
                                                          (x.CuadranteEjeX == objCelda.CuadranteEjeX && x.EjeX == objCelda.EjeX) ||
-                                                         (x.CuadranteEjeY == objCelda.CuadranteEjeY && x.EjeY == objCelda.EjeY)) && 
+                                                         (x.CuadranteEjeY == objCelda.CuadranteEjeY && x.EjeY == objCelda.EjeY)) &&
                                                           x.Valor == Valor
-                            select x).ToList();
+                              select x).ToList();
             return lstRetorno.Count == 1;
         }
         public bool ValidoEjeXY(Celda objCelda, int Valor)
         {
-            var lstRetorno = (from x in lstCeldas where ((x.CuadranteEjeX == objCelda.CuadranteEjeX && x.EjeX == objCelda.EjeX) ||
-                                                         (x.CuadranteEjeY == objCelda.CuadranteEjeY && x.EjeY == objCelda.EjeY)) && 
-                                                          x.Valor == Valor 
+            var lstRetorno = (from x in lstCeldas
+                              where ((x.CuadranteEjeX == objCelda.CuadranteEjeX && x.EjeX == objCelda.EjeX) ||
+                                                         (x.CuadranteEjeY == objCelda.CuadranteEjeY && x.EjeY == objCelda.EjeY)) &&
+                                                          x.Valor == Valor
                               select x).ToList();
             return lstRetorno.Count == 0;
         }
@@ -262,7 +264,7 @@ namespace Sudoku
                 this.EjeX = EjeX;
                 this.EjeY = EjeY;
             }
-			public List<Bitacora> lstWarnings = new List<Bitacora>();
+            public List<Bitacora> lstWarnings = new List<Bitacora>();
         }
         #endregion
 
