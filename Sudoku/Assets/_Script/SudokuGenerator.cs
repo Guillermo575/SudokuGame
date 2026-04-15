@@ -4,23 +4,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 namespace Sudoku
 {
+    [Serializable]
     public class SudokuGenerator
     {
         #region Variables
         public int ColumnasX = 3;
         public int ColumnasY = 3;
-        public int ValorInicial = 1;
+        public List<Celda> lstCeldas;
+        public int ValorInicial { private set; get; } = 1;
         public int ValorFinal { get { return ColumnasX * ColumnasY; } }
         public int SumaCuadrantes { get { return ColumnasX * ColumnasY; } }
         public int SumaCeldas { get { return (ColumnasX * ColumnasX) * (ColumnasY * ColumnasY); } }
         public int SumaBases { get { return ((ValorFinal + 1) * ValorInicial) / 2; } }
-        public List<Celda> lstCeldas { get; set; } = new List<Celda>();
-        public List<Bitacora> lstBitacora = new List<Bitacora>();
-        public List<Bitacora> lstBitacoraBloqueo = new List<Bitacora>();
-        public bool Exito = false;
-        public bool Validado = false;
-        public int ConteoErrores = 0;
-        public long TiempoEjecutado = 0;
+        private List<Bitacora> lstBitacora = new List<Bitacora>();
+        private List<Bitacora> lstBitacoraBloqueo = new List<Bitacora>();
+        public bool Exito { private set; get; }
+        public bool Validado { private set; get; }
+        public int ConteoErrores { private set; get; }
+        public long TiempoEjecutado { private set; get; }
         #endregion
 
         #region HTML Table
@@ -40,7 +41,7 @@ namespace Sudoku
                             for (int x = 0; x < ColumnasX; x++)
                             {
                                 var objCelda = (from obj in lstCeldas where obj.CuadranteEjeX == l && obj.CuadranteEjeY == m && obj.EjeX == x && obj.EjeY == y select obj).ToList().First();
-                                Tabla += $"<td {(objCelda.IdCuadrante % 2 == 0 ? "style='background-color:#DDD'" : "style='background-color:#FFF'")}> {objCelda.Valor} </td>";
+                                Tabla += $"<td {(objCelda.IdCuadrante % 2 == 0 ? "style='background-color:#DDD'" : "style='background-color:#FFF'")}> {Alphabet.getAlphaChar(objCelda.Valor)} </td>";
                             }
                         }
                         Tabla += "</tr>";
@@ -133,6 +134,7 @@ namespace Sudoku
         }
         private void SetNewArray()
         {
+            lstCeldas = new List<Celda>();
             int IdCuadrante = 1;
             int IdCelda = 1;
             for (int m = 0; m < ColumnasY; m++)
@@ -143,7 +145,7 @@ namespace Sudoku
                     {
                         for (int x = 0; x < ColumnasX; x++)
                         {
-                            lstCeldas.Add(new Celda(IdCelda, IdCuadrante, l, m, x, y));
+                            lstCeldas.Add(new Celda(IdCelda, IdCuadrante, l, m, y, x));
                             IdCelda++;
                         }
                     }
@@ -245,6 +247,7 @@ namespace Sudoku
         #endregion
 
         #region Celda
+        [Serializable]
         public class Celda
         {
             public int Id;
@@ -253,8 +256,9 @@ namespace Sudoku
             public int CuadranteEjeY;
             public int EjeX;
             public int EjeY;
-            public int Peso = 1;
-            public int Valor { get; set; }
+            public int Peso { get; set; } = 1;
+            public int Valor;
+            public Celda() { }
             public Celda(int Id, int IdCuadrante, int CuadranteEjeX, int CuadranteEjeY, int EjeX, int EjeY)
             {
                 this.Id = Id;
@@ -280,28 +284,33 @@ namespace Sudoku
     public class Alphabet
     {
         public const string masterAlpha = "-123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0";
-        public string getAlphaChar(int index)
+        public static string getAlphaChar(int index)
         {
             return ((index > masterAlpha.Count()) ? masterAlpha[0] : masterAlpha[index]).ToString();
         }
-        public string getCurrentAlpha(int length)
+        public static string getCurrentAlpha(int length)
         {
             if (length < 0) return string.Empty;
             if (length >= masterAlpha.Length) return masterAlpha;
             return masterAlpha.Substring(0, length);
         }
-        public string getAlphaChar(int length, int index)
+        public static string getAlphaChar(int length, int index)
         {
             return (index < 0 || index > length ? masterAlpha[0] : masterAlpha[index]).ToString();
         }
-        public int getAlphaIndex(int length, char caracter)
+        public static string getAlphaChar(int length, char caracter)
+        {
+            return getAlphaChar(length, getAlphaIndex(length, caracter));
+        }
+        public static int getAlphaIndex(int length, char caracter)
         {
             int index = masterAlpha.IndexOf(caracter);
             return index < 0 || index > length ? 0 : index;
         }
-        public string getAlphaChar(int length, char caracter)
+        public static int getAlphaIndex(char caracter)
         {
-            return getAlphaChar(length, getAlphaIndex(length, caracter));
+            int index = masterAlpha.IndexOf(caracter);
+            return index < 0 ? 0 : index;
         }
     }
     #endregion

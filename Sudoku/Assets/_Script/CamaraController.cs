@@ -121,8 +121,7 @@ public class CamaraController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log(hit.collider.name);
-            SudokuNumberNode nodeButton = hit.collider.GetComponent<SudokuNumberNode>();
+            SudokuNumberCell nodeButton = hit.collider.GetComponent<SudokuNumberCell>();
             if (nodeButton != null)
             {
                 Debug.Log("BOTON OPRIMIDO");
