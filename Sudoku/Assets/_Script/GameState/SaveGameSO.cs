@@ -5,14 +5,15 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using UnityEngine;
 [Serializable]
-[CreateAssetMenu(fileName = "SaveGameSO", menuName = "ScriptableObjects/Otros")]
+[CreateAssetMenu(fileName = "SaveGameSO", menuName = "ScriptableObjects/SaveGameSO")]
 public class SaveGameSO : UnityEngine.ScriptableObject
 {
-    public GameState gameState;
+    public GameState lastGameState;
+    public List<GameState> lstGames;
     public SaveGameSO Clone()
     {
         SaveGameSO clone = new SaveGameSO();
-        clone.gameState = gameState.Clone();
+        clone.lastGameState = lastGameState.Clone();
         return clone;
     }
 }

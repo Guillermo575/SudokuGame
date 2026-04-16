@@ -362,7 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sudokuBoard: {fileID: 1546840822}
   controller: {fileID: 963194229}
-  saveGameSO: {fileID: 11400000, guid: 5d33c5cb1d7e85d4da1249b89efa3582, type: 2}
+  saveGameSO: {fileID: 11400000, guid: 0db9e814c1418ce488dda2aba6df6602, type: 2}
 --- !u!4 &1902135371
 Transform:
   m_ObjectHideFlags: 0

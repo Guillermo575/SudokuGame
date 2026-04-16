@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1391ea27251486345b0f359253365c5b, type: 3}
   m_Name: SaveGameSO
   m_EditorClassIdentifier: 
-  gameState:
+  lastGameState:
     sudokuGenerator:
       ColumnasX: 0
       ColumnasY: 0
       lstCeldas: []
     lstCeldas: []
     lstBitacoraMovimiento: []
+  lstGames: []

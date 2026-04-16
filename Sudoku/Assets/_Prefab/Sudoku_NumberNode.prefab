@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5aa706e0251442478f42179752183e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberText: {fileID: 5099642484054158632}
+  sudokuNumberCell: {fileID: 3635621979696053124}
 --- !u!1 &4518074554320831995
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022eb47479e77ed4fb771a5462216efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberText: {fileID: 5099642484054158632}
 --- !u!1 &8974360963774909203
 GameObject:
   m_ObjectHideFlags: 0

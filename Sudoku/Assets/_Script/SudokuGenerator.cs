@@ -141,11 +141,11 @@ namespace Sudoku
             {
                 for (int l = 0; l < ColumnasX; l++)
                 {
-                    for (int y = 0; y < ColumnasY; y++)
+                    for (int y = 0; y < ColumnasX; y++)
                     {
-                        for (int x = 0; x < ColumnasX; x++)
+                        for (int x = 0; x < ColumnasY; x++)
                         {
-                            lstCeldas.Add(new Celda(IdCelda, IdCuadrante, l, m, y, x));
+                            lstCeldas.Add(new Celda(IdCelda, IdCuadrante, l, m, x, y));
                             IdCelda++;
                         }
                     }
@@ -258,6 +258,7 @@ namespace Sudoku
             public int EjeY;
             public int Peso { get; set; } = 1;
             public int Valor;
+            public bool bloqueado;
             public Celda() { }
             public Celda(int Id, int IdCuadrante, int CuadranteEjeX, int CuadranteEjeY, int EjeX, int EjeY)
             {
@@ -279,6 +280,10 @@ namespace Sudoku
             public int Valor { get; set; }
         }
         #endregion
+    }
+    public enum eType
+    {
+        cr9x9, cr16x16, cr6x6, cr4x4, cr20x20, cr25x25, cr30x30, cr36x36
     }
     #region Alphabet
     public class Alphabet

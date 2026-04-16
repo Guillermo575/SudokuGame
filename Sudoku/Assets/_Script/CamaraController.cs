@@ -74,7 +74,7 @@ public class CamaraController : MonoBehaviour
         if (zoomScroll.triggered)
         {
             Vector2 scrollValue = zoomScroll.ReadValue<Vector2>();
-            cam.orthographicSize += scrollValue.y;
+            cam.orthographicSize += -scrollValue.y;
         }
         cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, 1f, maxOrthographicSize);
     }

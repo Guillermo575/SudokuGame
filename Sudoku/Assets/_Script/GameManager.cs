@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
     public SaveGameSO saveGameSO;
     #endregion
 
+    #region private Variables
+    public int LoopId { get; private set; } = 1;
+    public SudokuGenerator sudokuGenerator { get; private set; }
+    #endregion
+
     #region Awake & Start
     void Awake()
     {
@@ -22,31 +27,48 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         LoadOrCreateGame();
+        LoopId = 1;
         sudokuBoard.CreateBoard();
         controller.InitiateCamera();
+    }
+    #endregion
+
+    #region General
+    public int addLoopId()
+    {
+        return LoopId++;
     }
     #endregion
 
     #region SO
     private void LoadOrCreateGame()
     {
-        //saveGameSO = AssetDatabase.LoadAssetAtPath<SaveGameSO>(GetAssetPath());
-        if (saveGameSO == null || saveGameSO.gameState == null || saveGameSO.gameState.sudokuGenerator == null || saveGameSO.gameState.sudokuGenerator.lstCeldas == null || saveGameSO.gameState.sudokuGenerator.lstCeldas.Count == 0)
+        if (saveGameSO == null || saveGameSO.lastGameState == null || saveGameSO.lastGameState.sudokuGenerator == null || saveGameSO.lastGameState.sudokuGenerator.lstCeldas == null || saveGameSO.lastGameState.sudokuGenerator.lstCeldas.Count == 0)
         {
-            SudokuGenerator sudokuGenerator = new SudokuGenerator(sudokuBoard.numberColumns, sudokuBoard.numberRows);
-            //saveGameSO = UnityEngine.ScriptableObject.CreateInstance<SaveGameSO>();
-            saveGameSO.gameState = new GameState();
-            saveGameSO.gameState.sudokuGenerator = sudokuGenerator;
-            //AssetDatabase.CreateAsset(saveGameSO, GetAssetPath());
-            //AssetDatabase.SaveAssets();
+            sudokuGenerator = new SudokuGenerator(sudokuBoard.numberColumns, sudokuBoard.numberRows);
+            BlockCells(sudokuGenerator.lstCeldas);
+            saveGameSO.lastGameState = new GameState();
+            saveGameSO.lastGameState.sudokuGenerator = sudokuGenerator;
         }
-        sudokuBoard.numberColumns = saveGameSO.gameState.sudokuGenerator.ColumnasX;
-        sudokuBoard.numberRows = saveGameSO.gameState.sudokuGenerator.ColumnasY;
+        else
+        {
+            sudokuGenerator = saveGameSO.lastGameState.sudokuGenerator;
+        }
+        sudokuBoard.numberColumns = saveGameSO.lastGameState.sudokuGenerator.ColumnasX;
+        sudokuBoard.numberRows = saveGameSO.lastGameState.sudokuGenerator.ColumnasY;
     }
-    private string GetAssetPath()
+    #endregion
+
+    #region BlockCells
+    public void BlockCells(List<SudokuGenerator.Celda> lstCelda)
     {
-        string scriptPath = Directory.GetParent(Application.dataPath).FullName;
-        return Path.Combine(scriptPath + "\\Assets\\", "LastGame.asset");
+        for (int l = 0; l < lstCelda.Count; l++) 
+        { 
+            if (l % 3 == 0)
+            {
+                lstCelda[l].bloqueado = true;
+            }
+        }
     }
     #endregion
 
