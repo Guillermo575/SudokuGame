@@ -15,5 +15,5 @@ MonoBehaviour:
   Board: {fileID: 2100000, guid: 0ccfd834336c4ab438fd21dc8fc68143, type: 2}
   SubBoard: {fileID: 2100000, guid: 4722e0959bc5fdc4aa0340310b1cc012, type: 2}
   CellNormal: {fileID: 2100000, guid: 4891c9887a48e5a4f9653556f3e5388a, type: 2}
-  CellDisabled: {fileID: 0}
-  CellSelected: {fileID: 0}
+  CellDisabled: {fileID: 2100000, guid: 5daadff0def54c7489a1d15e82d5b4be, type: 2}
+  CellSelected: {fileID: 2100000, guid: f26690d6df215c340b641b68be32ac58, type: 2}

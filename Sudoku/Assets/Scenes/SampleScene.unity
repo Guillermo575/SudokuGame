@@ -363,6 +363,7 @@ MonoBehaviour:
   sudokuBoard: {fileID: 1546840822}
   controller: {fileID: 963194229}
   saveGameSO: {fileID: 11400000, guid: 0db9e814c1418ce488dda2aba6df6602, type: 2}
+  sudokuBoardMaterial: {fileID: 11400000, guid: f953b72f187a5a24fb3fa7e12e7d4990, type: 2}
 --- !u!4 &1902135371
 Transform:
   m_ObjectHideFlags: 0
