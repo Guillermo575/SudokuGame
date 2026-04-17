@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
                 renderer.material = sudokuBoardMaterial.CellNormal;
             }
         }
+        sudokuNumberCellSelected = sudokuNumberCell;
         renderer = sudokuNumberCell.gameObject.GetComponent<Renderer>();
         if (renderer != null)
         {

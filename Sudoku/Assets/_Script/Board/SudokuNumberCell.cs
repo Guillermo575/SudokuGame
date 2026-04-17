@@ -34,9 +34,9 @@ public class SudokuNumberCell : MonoBehaviour
             }
             else
             {
-                //SetNumber(0);
                 material = gameManager.sudokuBoardMaterial.CellNormal;
-                SetNumber(objCelda.First().Valor);
+                //SetNumber(objCelda.First().Valor);
+                SetNumber(0);
             }
             if (renderer != null)
             {
