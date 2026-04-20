@@ -233,6 +233,22 @@ public class CamaraController : MonoBehaviour
             }
         }
     }
+    //private void DetectButtonClick()
+    //{
+    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //    RaycastHit hit;
+    //    if (Physics.Raycast(ray, out hit))
+    //    {
+    //        SudokuNumberCell nodeButton = hit.collider.GetComponent<SudokuNumberCell>();
+    //        if (nodeButton != null && !nodeButton.Bloqueado)
+    //        {
+    //            if (!isDragging && !isPinching)
+    //            {
+    //                GameManager.GetSingleton().setCellSelected(nodeButton);
+    //            }
+    //        }
+    //    }
+    //}
     #endregion
     private void DetectKey()
     {

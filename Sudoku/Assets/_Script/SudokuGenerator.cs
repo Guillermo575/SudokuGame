@@ -98,6 +98,21 @@ namespace Sudoku
             stopwatch.Stop();
             TiempoEjecutado = stopwatch.ElapsedMilliseconds;
         }
+        public static bool ValidarCeldas(List<Celda> lstCeldas)
+        {
+            bool Validado = true;
+            foreach (var objCelda in lstCeldas)
+            {
+                if (!Validado || objCelda.Valor == 0) return false;
+                Validado = (from x in lstCeldas
+                            where ((x.IdCuadrante == objCelda.IdCuadrante) ||
+                                                       (x.CuadranteEjeX == objCelda.CuadranteEjeX && x.EjeX == objCelda.EjeX) ||
+                                                       (x.CuadranteEjeY == objCelda.CuadranteEjeY && x.EjeY == objCelda.EjeY)) &&
+                                                        x.Valor == objCelda.Valor
+                            select x).ToList().Count == 1;
+            }
+            return Validado;
+        }
         #endregion
 
         #region Process

@@ -1,11 +1,7 @@
-
-using NUnit.Framework;
 using Sudoku;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting.FullSerializer;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using static Sudoku.SudokuGenerator;
@@ -80,11 +76,29 @@ public class GameManager : MonoBehaviour
                 renderer.material = sudokuBoardMaterial.CellNormal;
             }
         }
-        sudokuNumberCellSelected = sudokuNumberCell;
-        renderer = sudokuNumberCell.gameObject.GetComponent<Renderer>();
-        if (renderer != null)
+        if (sudokuNumberCell != null)
         {
-            renderer.material = sudokuBoardMaterial.CellSelected;
+            sudokuNumberCellSelected = sudokuNumberCell;
+            renderer = sudokuNumberCell.gameObject.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material = sudokuBoardMaterial.CellSelected;
+            }
+        }
+    }
+    public void setCellSelectedValue(int Id, int Valor)
+    {
+        var lstCelda = saveGameSO.lastGameState.lstCeldas;
+        var obj = (from x in lstCelda where x.Id == Id select x).ToList();
+        if (obj.Count > 0)
+        {
+            obj.First().Valor = Valor;
+            sudokuNumberCellSelected.SetNumber(Valor);
+            setCellSelected(null);
+            if (ValidarCeldas(lstCelda))
+            {
+                Debug.Log("COMPLETADO!!");
+            }
         }
     }
     #endregion
