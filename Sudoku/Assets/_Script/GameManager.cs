@@ -12,11 +12,11 @@ public class GameManager : MonoBehaviour
     public CamaraController controller;
     public SaveGameSO saveGameSO;
     public SudokuBoardMaterial sudokuBoardMaterial;
+    public HUDButtonPanel hUDButtonPanel;
     #endregion
 
     #region private Variables
     public int LoopId { get; private set; } = 1;
-    public SudokuGenerator sudokuGenerator { get; private set; }
     private SudokuNumberCell sudokuNumberCellSelected;
     #endregion
 
@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
         LoopId = 1;
         sudokuBoard.CreateBoard();
         controller.InitiateCamera();
+        if (hUDButtonPanel != null)
+            hUDButtonPanel.Initialize(sudokuBoard.numberColumns * sudokuBoard.numberRows);
     }
     #endregion
 
@@ -41,29 +43,7 @@ public class GameManager : MonoBehaviour
     }
     private void CreateGame()
     {
-        sudokuGenerator = new SudokuGenerator(sudokuBoard.numberColumns, sudokuBoard.numberRows);
-        BlockCells(sudokuGenerator.lstCeldas);
-        saveGameSO.lastGameState = new GameState();
-        saveGameSO.lastGameState.sudokuGenerator = sudokuGenerator;
-        var lstCeldas = new List<Celda>();
-        foreach (var obj in sudokuGenerator.lstCeldas)
-        {
-            lstCeldas.Add
-            (
-                new Celda
-                {
-                    Id = obj.Id,
-                    IdCuadrante = obj.IdCuadrante,
-                    CuadranteEjeX = obj.CuadranteEjeX,
-                    CuadranteEjeY = obj.CuadranteEjeY,
-                    EjeX = obj.EjeX,
-                    EjeY = obj.EjeY,
-                    bloqueado = obj.bloqueado,
-                    Valor = obj.bloqueado ? obj.Valor : 0,
-                }
-            );
-        }
-        saveGameSO.lastGameState.lstCeldas = lstCeldas;
+        saveGameSO.CreateGame(sudokuBoard.numberColumns, sudokuBoard.numberRows);
     }
     public void setCellSelected(SudokuNumberCell sudokuNumberCell)
     {
@@ -86,6 +66,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void setCellSelectedValue(int Valor)
+    {
+        setCellSelectedValue(sudokuNumberCellSelected.Id, Valor);
+    }
     public void setCellSelectedValue(int Id, int Valor)
     {
         var lstCelda = saveGameSO.lastGameState.lstCeldas;
@@ -101,6 +85,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public SudokuGenerator GetSudokuGenerator() 
+    { 
+        return saveGameSO.lastGameState.sudokuGenerator;
+    }
     #endregion
 
     #region SO
@@ -110,32 +98,8 @@ public class GameManager : MonoBehaviour
         {
             CreateGame();
         }
-        else
-        {
-            sudokuGenerator = saveGameSO.lastGameState.sudokuGenerator;
-        }
         sudokuBoard.numberColumns = saveGameSO.lastGameState.sudokuGenerator.ColumnasX;
         sudokuBoard.numberRows = saveGameSO.lastGameState.sudokuGenerator.ColumnasY;
-    }
-    #endregion
-
-    #region BlockCells
-    public void BlockCells(List<SudokuGenerator.Celda> lstCelda, int cicloMin = 2, int cicloMax = 4)
-    {
-        foreach (var obj in lstCelda)
-        {
-            obj.bloqueado = true;
-        }
-        System.Random rnd = new System.Random();
-        int ciclo = rnd.Next(cicloMin, cicloMax);
-        for (int i = 0; i < lstCelda.Count; i += ciclo)
-        {
-            ciclo = rnd.Next(cicloMin, cicloMax);
-            int inicio = i;
-            int fin = Math.Min(i + ciclo - 1, lstCelda.Count - 1);
-            int indiceAleatorio = rnd.Next(inicio, fin + 1);
-            lstCelda[indiceAleatorio].bloqueado = false;
-        }
     }
     #endregion
 

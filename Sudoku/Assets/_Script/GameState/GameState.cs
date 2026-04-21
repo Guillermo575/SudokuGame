@@ -8,6 +8,9 @@ using static Sudoku.SudokuGenerator;
 [Serializable]
 public class GameState
 {
+    public String Id;
+    public DateTime dateCreation;
+    public DateTime dateUpdate;
     public SudokuGenerator sudokuGenerator;
     public List<Celda> lstCeldas = new List<Celda>();
     public List<BitacoraMovimiento> lstBitacoraMovimiento = new List<BitacoraMovimiento>();

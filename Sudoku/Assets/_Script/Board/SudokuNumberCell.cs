@@ -22,7 +22,7 @@ public class SudokuNumberCell : MonoBehaviour
                 Debug.LogError("Falta un componente TextMeshPro en SudokuNumberNode");
             }
         }
-        var objCelda = (from x in gameManager.sudokuGenerator.lstCeldas where x.Id == Id select x).ToList();
+        var objCelda = (from x in gameManager.GetSudokuGenerator().lstCeldas where x.Id == Id select x).ToList();
         if (objCelda.Count > 0)
         {
             Material material;
