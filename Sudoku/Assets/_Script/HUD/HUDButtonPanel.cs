@@ -13,13 +13,18 @@ public class HUDButtonPanel : MonoBehaviour
         }
         for (int i = 0; i < numberOfButtons; i++)
         {
-            GameObject buttonObj = Instantiate(buttonPrefab.gameObject, parentTransform);
-            buttonObj.name = "Button_" + i;
-            HUDButtonNumber btn = buttonObj.GetComponent<HUDButtonNumber>();
-            if (btn != null)
-            {
-                btn.Initialize(i + 1);
-            }
+            MakeButton(i + 1);
+        }
+        MakeButton(0);
+    }
+    public void MakeButton(int Index)
+    {
+        GameObject buttonObj = Instantiate(buttonPrefab.gameObject, parentTransform);
+        buttonObj.name = "Button_" + Index;
+        HUDButtonNumber btn = buttonObj.GetComponent<HUDButtonNumber>();
+        if (btn != null)
+        {
+            btn.Initialize(Index);
         }
     }
 }

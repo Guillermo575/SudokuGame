@@ -1,16 +1,18 @@
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 public class CamaraController : MonoBehaviour
 {
     #region Public
+    public Camera cam;
     public InputActionAsset inputActions;
     public GameObject tablero;
     public Vector2 Bounds;
     #endregion
 
     #region Private
-    private Camera cam;
     private float defaultOrthographicSize;
     private float maxOrthographicSize;
     private float tableroWidth;
@@ -20,6 +22,7 @@ public class CamaraController : MonoBehaviour
     private float initialPinchDistance;
     private float initialOrthographicSize;
     private bool isPinching = false;
+    GameManager gameManager;
     #endregion
 
     #region InputAction
@@ -30,6 +33,10 @@ public class CamaraController : MonoBehaviour
     #endregion
 
     #region Start & Update
+    private void Start()
+    {
+        gameManager = GameManager.GetSingleton();
+    }
     void Update()
     {
         HandleMovement();
@@ -37,13 +44,14 @@ public class CamaraController : MonoBehaviour
         HandleZoom();
         HandleCenter();
         HandleClick();
+        DetectKey();
     }
     #endregion
 
     #region General
     public void InitiateCamera()
     {
-        cam = GetComponent<Camera>();
+        gameManager = GameManager.GetSingleton();
         if (cam == null || !cam.orthographic)
         {
             Debug.LogError("Este script requiere una camara ortografica.");
@@ -81,6 +89,7 @@ public class CamaraController : MonoBehaviour
     #region Mover Camara
     private void HandleMovement()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         if (Touchscreen.current != null && Touchscreen.current.touches.Count > 0)
         {
             if (Touchscreen.current.touches.Count == 2)
@@ -151,6 +160,19 @@ public class CamaraController : MonoBehaviour
     #endregion
 
     #region Zoom
+    public float GetZoomActual()
+    {
+        return cam.orthographicSize;
+    }
+    public float GetMaxOrthographicSize()
+    {
+        return maxOrthographicSize;
+    }
+    public void CambiarZoom(float val)
+    {
+        if (cam == null) return;
+        cam.orthographicSize = val;
+    }
     private void HandleZoom()
     {
         if (zoomScroll.triggered)
@@ -233,32 +255,22 @@ public class CamaraController : MonoBehaviour
             }
         }
     }
-    //private void DetectButtonClick()
-    //{
-    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(ray, out hit))
-    //    {
-    //        SudokuNumberCell nodeButton = hit.collider.GetComponent<SudokuNumberCell>();
-    //        if (nodeButton != null && !nodeButton.Bloqueado)
-    //        {
-    //            if (!isDragging && !isPinching)
-    //            {
-    //                GameManager.GetSingleton().setCellSelected(nodeButton);
-    //            }
-    //        }
-    //    }
-    //}
     #endregion
+
+    #region Detect Key
     private void DetectKey()
     {
-        //foreach (Key key in Keyboard.current.allKeys)
-        //{
-        //    if (Keyboard.current[key].isPressed)
-        //    {
-        //        Debug.Log($"Tecla presionada: {key}");
-        //        break;
-        //    }
-        //}
+        foreach (KeyControl key in Keyboard.current.allKeys)
+        {
+            if (key.wasPressedThisFrame && IsAlphanumericKey(key))
+            {
+                gameManager.setCellSelectedValue(Sudoku.Alphabet.getAlphaIndex(key.name.ToUpper()[0]));
+            }
+        }
     }
+    bool IsAlphanumericKey(KeyControl key)
+    {
+        return (key.name.Length == 1 && char.IsLetter(key.name[0])) || char.IsDigit(key.name[0]);
+    }
+    #endregion
 }

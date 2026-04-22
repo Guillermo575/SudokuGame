@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     #region private Variables
     public int LoopId { get; private set; } = 1;
     private SudokuNumberCell sudokuNumberCellSelected;
+    private int TotalAlphabet { get { return sudokuBoard.numberColumns * sudokuBoard.numberRows; } }
     #endregion
 
     #region Awake & Start
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
         sudokuBoard.CreateBoard();
         controller.InitiateCamera();
         if (hUDButtonPanel != null)
-            hUDButtonPanel.Initialize(sudokuBoard.numberColumns * sudokuBoard.numberRows);
+            hUDButtonPanel.Initialize(TotalAlphabet);
     }
     #endregion
 
@@ -68,10 +69,12 @@ public class GameManager : MonoBehaviour
     }
     public void setCellSelectedValue(int Valor)
     {
+        if (sudokuNumberCellSelected == null) return;
         setCellSelectedValue(sudokuNumberCellSelected.Id, Valor);
     }
     public void setCellSelectedValue(int Id, int Valor)
     {
+        if (Valor > TotalAlphabet) return;
         var lstCelda = saveGameSO.lastGameState.lstCeldas;
         var obj = (from x in lstCelda where x.Id == Id select x).ToList();
         if (obj.Count > 0)

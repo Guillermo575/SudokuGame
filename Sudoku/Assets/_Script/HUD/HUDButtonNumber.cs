@@ -9,7 +9,7 @@ public class HUDButtonNumber : MonoBehaviour
     public void Initialize(int indexValue)
     {
         this.indexValue = indexValue;
-        numberText.text = indexValue.ToString();
+        numberText.text = Sudoku.Alphabet.getAlphaChar(indexValue);
         gameManager = GameManager.GetSingleton();
     }
     public void OnButtonClicked()
