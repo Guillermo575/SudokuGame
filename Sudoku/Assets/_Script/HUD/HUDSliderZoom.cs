@@ -29,4 +29,11 @@ public class HUDSliderZoom : MonoBehaviour
             camaraController.CambiarZoom(zoomSlider.value);
         }
     }
+    public void OnCenterClick()
+    {
+        if (camaraController != null)
+        {
+            camaraController.CentrarCamara();
+        }
+    }
 }

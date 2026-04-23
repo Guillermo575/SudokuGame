@@ -3,17 +3,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 using UnityEngine;
 using static Sudoku.SudokuGenerator;
 [Serializable]
 public class GameState
 {
     public String Id;
-    public DateTime dateCreation;
-    public DateTime dateUpdate;
+    public String dateUpdate;
     public SudokuGenerator sudokuGenerator;
     public List<Celda> lstCeldas = new List<Celda>();
-    public List<BitacoraMovimiento> lstBitacoraMovimiento = new List<BitacoraMovimiento>();
+    public List<LogMove> lstBitacoraMovimiento = new List<LogMove>();
+    public int LogIndex = 0;
     public GameState Clone()
     {
         GameState clone = CloneShallow(this);
@@ -22,7 +23,7 @@ public class GameState
         {
             clone.lstCeldas.Add(CloneShallow(obj));
         }
-        clone.lstBitacoraMovimiento = new List<BitacoraMovimiento>();
+        clone.lstBitacoraMovimiento = new List<LogMove>();
         foreach (var obj in this.lstBitacoraMovimiento)
         {
             clone.lstBitacoraMovimiento.Add(CloneShallow(obj));
@@ -45,10 +46,29 @@ public class GameState
     }
     #region Bitacora
     [Serializable]
-    public class BitacoraMovimiento
+    public class LogMove
     {
-        public int CuadranteX, CuadranteY, X, Y;
-        public int Valor { get; set; }
+        public int Id, Valor, ValorAntes;
+    }
+    public void LogAdd(int Id, int Valor, int ValorAntes)
+    {
+        var obj = (from x in lstCeldas where x.Id == Id select x).ToList();
+        if (obj.Count == 0) return;
+        lstBitacoraMovimiento = lstBitacoraMovimiento.Take(LogIndex).ToList();
+        lstBitacoraMovimiento.Add(new LogMove { Id = Id, Valor = Valor, ValorAntes = ValorAntes });
+        LogIndex++;
+    }
+    public LogMove LogBack()
+    {
+        if (LogIndex == 0) return null;
+        LogIndex--;
+        return lstBitacoraMovimiento[LogIndex];
+    }
+    public LogMove LogForward()
+    {
+        if (LogIndex > lstBitacoraMovimiento.Count) return null;
+        LogIndex++;
+        return lstBitacoraMovimiento[LogIndex];
     }
     #endregion
 }

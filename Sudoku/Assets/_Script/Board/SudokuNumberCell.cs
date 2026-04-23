@@ -22,7 +22,7 @@ public class SudokuNumberCell : MonoBehaviour
                 Debug.LogError("Falta un componente TextMeshPro en SudokuNumberNode");
             }
         }
-        var objCelda = (from x in gameManager.GetSudokuGenerator().lstCeldas where x.Id == Id select x).ToList();
+        var objCelda = (from x in gameManager.GetLstCeldas() where x.Id == Id select x).ToList();
         if (objCelda.Count > 0)
         {
             Material material;
@@ -35,8 +35,8 @@ public class SudokuNumberCell : MonoBehaviour
             else
             {
                 material = gameManager.sudokuBoardMaterial.CellNormal;
-                //SetNumber(objCelda.First().Valor);
-                SetNumber(0);
+                SetNumber(objCelda.First().Valor);
+                //SetNumber(0);
             }
             if (renderer != null)
             {
@@ -44,11 +44,13 @@ public class SudokuNumberCell : MonoBehaviour
             }
         }
     }
-    public void SetNumber(int number)
+    public bool SetNumber(int number)
     {
         if (numberText != null)
         {
             numberText.text = Sudoku.Alphabet.getAlphaChar(number);
+            return true;
         }
+        return false;
     }
 }

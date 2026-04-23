@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using static GameState;
 using static Sudoku.SudokuGenerator;
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
     public int LoopId { get; private set; } = 1;
     private SudokuNumberCell sudokuNumberCellSelected;
     private int TotalAlphabet { get { return sudokuBoard.numberColumns * sudokuBoard.numberRows; } }
+    private GameState lastGameState { get { return saveGameSO == null ? null : saveGameSO.lastGameState; } }
+    private SudokuGenerator sudokuGenerator { get { return lastGameState == null ? null : lastGameState.sudokuGenerator; } }
     #endregion
 
     #region Awake & Start
@@ -72,37 +75,48 @@ public class GameManager : MonoBehaviour
         if (sudokuNumberCellSelected == null) return;
         setCellSelectedValue(sudokuNumberCellSelected.Id, Valor);
     }
-    public void setCellSelectedValue(int Id, int Valor)
+    public void setCellSelectedValue(int Id, int Valor, bool AddLog = true)
     {
         if (Valor > TotalAlphabet) return;
-        var lstCelda = saveGameSO.lastGameState.lstCeldas;
+        var lstCelda = lastGameState.lstCeldas;
         var obj = (from x in lstCelda where x.Id == Id select x).ToList();
         if (obj.Count > 0)
         {
-            obj.First().Valor = Valor;
-            sudokuNumberCellSelected.SetNumber(Valor);
-            setCellSelected(null);
-            if (ValidarCeldas(lstCelda))
+            int ValorAntes = obj.First().Valor;
+            if (sudokuNumberCellSelected.SetNumber(Valor))
             {
-                Debug.Log("COMPLETADO!!");
+                if (AddLog)
+                {
+                    obj.First().Valor = Valor;
+                    lastGameState.LogAdd(Id, Valor, ValorAntes);
+                }
+                setCellSelected(null);
+                if (ValidarCeldas(lstCelda))
+                {
+                    Debug.Log("COMPLETADO!!");
+                }
             }
         }
     }
     public SudokuGenerator GetSudokuGenerator() 
     { 
-        return saveGameSO.lastGameState.sudokuGenerator;
+        return sudokuGenerator;
+    }
+    public List<Celda> GetLstCeldas()
+    {
+        return lastGameState.lstCeldas;
     }
     #endregion
 
     #region SO
     private void LoadOrCreateGame()
     {
-        if (saveGameSO == null || saveGameSO.lastGameState == null || saveGameSO.lastGameState.sudokuGenerator == null || saveGameSO.lastGameState.sudokuGenerator.lstCeldas == null || saveGameSO.lastGameState.sudokuGenerator.lstCeldas.Count == 0)
+        if (saveGameSO == null || lastGameState == null || sudokuGenerator == null || sudokuGenerator.lstCeldas == null || sudokuGenerator.lstCeldas.Count == 0)
         {
             CreateGame();
         }
-        sudokuBoard.numberColumns = saveGameSO.lastGameState.sudokuGenerator.ColumnasX;
-        sudokuBoard.numberRows = saveGameSO.lastGameState.sudokuGenerator.ColumnasY;
+        sudokuBoard.numberColumns = sudokuGenerator.ColumnasX;
+        sudokuBoard.numberRows = sudokuGenerator.ColumnasY;
     }
     #endregion
 
@@ -129,6 +143,23 @@ public class GameManager : MonoBehaviour
     public static GameManager GetSingleton()
     {
         return SingletonGameManager;
+    }
+    #endregion
+
+    #region LogMovement
+    public void LogBack()
+    {
+        if (lastGameState == null) return;
+        var objLog = lastGameState.LogBack();
+        if (objLog == null) return;
+        setCellSelectedValue(objLog.Id, objLog.ValorAntes, false);
+    }
+    public void LogForward()
+    {
+        if (lastGameState == null) return;
+        var objLog = lastGameState.LogForward();
+        if (objLog == null) return;
+        setCellSelectedValue(objLog.Id, objLog.Valor, false);
     }
     #endregion
 }

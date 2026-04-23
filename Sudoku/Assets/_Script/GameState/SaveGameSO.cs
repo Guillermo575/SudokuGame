@@ -11,21 +11,14 @@ public class SaveGameSO : UnityEngine.ScriptableObject
 {
     public GameState lastGameState;
     public List<GameState> lstGames;
-    public SaveGameSO Clone()
-    {
-        SaveGameSO clone = new SaveGameSO();
-        clone.lastGameState = lastGameState.Clone();
-        return clone;
-    }
     #region CreateGame
     public void CreateGame(int numberColumns, int numberRows)
     {
         var sudokuGenerator = new SudokuGenerator(numberColumns, numberRows);
         BlockCells(sudokuGenerator.lstCeldas);
         lastGameState = new GameState();
-        lastGameState.dateCreation = DateTime.Now;
-        lastGameState.Id = lastGameState.dateCreation.ToString("yyyyMMddHHmmssfff");
-        lastGameState.dateUpdate = DateTime.Now;
+        lastGameState.Id = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+        lastGameState.dateUpdate = lastGameState.Id;
         lastGameState.sudokuGenerator = sudokuGenerator;
         var lstCeldas = new List<Celda>();
         foreach (var obj in sudokuGenerator.lstCeldas)

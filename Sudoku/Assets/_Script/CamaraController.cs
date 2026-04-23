@@ -220,6 +220,10 @@ public class CamaraController : MonoBehaviour
             CentrarCamara(tableroWidth, tableroHeight);
         }
     }
+    public void CentrarCamara()
+    {
+        CentrarCamara(tableroWidth, tableroHeight);
+    }
     public void CentrarCamara(float Horizontal, float Vertical)
     {
         float aspectRatio = (float)Screen.width / Screen.height;
@@ -262,9 +266,16 @@ public class CamaraController : MonoBehaviour
     {
         foreach (KeyControl key in Keyboard.current.allKeys)
         {
-            if (key.wasPressedThisFrame && IsAlphanumericKey(key))
+            if (key.wasPressedThisFrame)
             {
-                gameManager.setCellSelectedValue(Sudoku.Alphabet.getAlphaIndex(key.name.ToUpper()[0]));
+                if (IsAlphanumericKey(key))
+                {
+                    gameManager.setCellSelectedValue(Sudoku.Alphabet.getAlphaIndex(key.name.ToUpper()[0]));
+                }
+                if (key.name.ToUpper() == "BACKSPACE" || key.name == "DELETE" || key.name.ToUpper() == "SPACE")
+                {
+                    gameManager.setCellSelectedValue(0);
+                }
             }
         }
     }
