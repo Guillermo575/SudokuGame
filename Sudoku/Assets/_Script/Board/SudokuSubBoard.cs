@@ -2,25 +2,29 @@ using UnityEngine;
 public class SudokuSubBoard : MonoBehaviour
 {
     public GameObject mainBoardPrefab;
-    private SudokuNumberNode[,] nodes;
+    private SudokuNumberCell[,] nodes;
     private SudokuBoard sudokuBoard;
     public void Initialize(SudokuBoard sudokuBoard)
     {
         this.sudokuBoard = sudokuBoard;
-        nodes = new SudokuNumberNode[sudokuBoard.numberRows, sudokuBoard.numberColumns];
+        nodes = new SudokuNumberCell[sudokuBoard.numberRows, sudokuBoard.numberColumns];
         for (int i = 0; i < sudokuBoard.numberColumns; i++)
         {
             for (int j = 0; j < sudokuBoard.numberRows; j++)
             {
                 GameObject NumberNode = Instantiate(sudokuBoard.numberNodePrefab, Vector3.zero, Quaternion.identity, this.transform);
                 NumberNode.name = $"Node_{j}_{i}";
-                SudokuNumberNode subBoard = NumberNode.GetComponent<SudokuNumberNode>();
-                if (subBoard == null)
+                SudokuNumberCell subBoardCell = NumberNode.GetComponent<SudokuNumberCell>();
+                if (subBoardCell == null)
                 {
-                    subBoard = NumberNode.AddComponent<SudokuNumberNode>();
+                    subBoardCell = NumberNode.GetComponentInChildren<SudokuNumberCell>();
+                    if (subBoardCell == null)
+                    {
+                        subBoardCell = NumberNode.AddComponent<SudokuNumberCell>();
+                    }
                 }
-                subBoard.Initialize();
-                nodes[j, i] = subBoard;
+                subBoardCell.Initialize(sudokuBoard);
+                nodes[j, i] = subBoardCell;
             }
         }
         UpdatePosition();
@@ -33,9 +37,9 @@ public class SudokuSubBoard : MonoBehaviour
         {
             for (int j = 0; j < sudokuBoard.numberRows; j++)
             {
-                SudokuNumberNode subBoard = nodes[j, i];
+                SudokuNumberCell subBoardCell = nodes[j, i];
                 Vector3 position = new Vector3(sudokuBoard.spaceBetweenNodes + (j * SizeNode), 0.4f, -sudokuBoard.spaceBetweenNodes + (-i * SizeNode));
-                subBoard.gameObject.transform.localPosition = position;
+                subBoardCell.gameObject.transform.localPosition = position;
             }
         }
     }

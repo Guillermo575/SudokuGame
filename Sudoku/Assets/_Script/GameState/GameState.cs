@@ -56,19 +56,21 @@ public class GameState
         if (obj.Count == 0) return;
         lstBitacoraMovimiento = lstBitacoraMovimiento.Take(LogIndex).ToList();
         lstBitacoraMovimiento.Add(new LogMove { Id = Id, Valor = Valor, ValorAntes = ValorAntes });
-        LogIndex++;
+        LogIndex = lstBitacoraMovimiento.Count;
     }
     public LogMove LogBack()
     {
-        if (LogIndex == 0) return null;
+        if (LogIndex < 0) return null;
         LogIndex--;
-        return lstBitacoraMovimiento[LogIndex];
+        return (LogIndex < 0) ? null : lstBitacoraMovimiento[LogIndex];
     }
     public LogMove LogForward()
     {
-        if (LogIndex > lstBitacoraMovimiento.Count) return null;
+        if (LogIndex >= lstBitacoraMovimiento.Count) return null;
+        LogIndex = LogIndex < 0 ? 0 : LogIndex;
+        var obj = lstBitacoraMovimiento[LogIndex];
         LogIndex++;
-        return lstBitacoraMovimiento[LogIndex];
+        return obj;
     }
     #endregion
 }

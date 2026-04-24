@@ -1,10 +1,15 @@
+using Sudoku;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static Sudoku.SudokuGenerator;
 public class SudokuBoard : MonoBehaviour
 {
     #region Prefabs
     public GameObject mainBoardPrefab;
     public GameObject subBoardPrefab;
     public GameObject numberNodePrefab;
+    public SudokuBoardMaterial sudokuBoardMaterial;
     #endregion
 
     #region Public
@@ -13,11 +18,20 @@ public class SudokuBoard : MonoBehaviour
     public float sizeNumberNode = 1f;
     public int numberColumns = 3;
     public int numberRows = 3;
+    public List<SudokuNumberCell> allCells { get; private set; }
+    #endregion
+
+    #region Private
+    public int LoopId { get; private set; } = 1;
+    public GameState gameState { get; private set; }
+    private SudokuGenerator sudokuGenerator { get { return gameState == null ? null : gameState.sudokuGenerator; } }
     #endregion
 
     private SudokuSubBoard[,] subBoards;
-    public void CreateBoard()
+    public void CreateBoard(GameState gameState)
     {
+        LoopId = 1;
+        this.gameState = gameState;
         subBoards = new SudokuSubBoard[numberColumns, numberRows];
         for (int i = 0; i < numberRows; i++)
         {
@@ -34,6 +48,7 @@ public class SudokuBoard : MonoBehaviour
                 subBoards[j, i] = subBoard;
             }
         }
+        allCells = FindObjectsByType<SudokuNumberCell>(FindObjectsSortMode.InstanceID).ToList();
         UpdatePosition();
     }
     public void UpdatePosition()
@@ -52,8 +67,16 @@ public class SudokuBoard : MonoBehaviour
             }
         }
     }
+    public List<Celda> GetLstCeldas()
+    {
+        return gameState.lstCeldas;
+    }
     private void Update()
     {
         UpdatePosition();
+    }
+    public int addLoopId()
+    {
+        return LoopId++;
     }
 }

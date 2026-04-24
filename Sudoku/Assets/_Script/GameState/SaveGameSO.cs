@@ -12,7 +12,7 @@ public class SaveGameSO : UnityEngine.ScriptableObject
     public GameState lastGameState;
     public List<GameState> lstGames;
     #region CreateGame
-    public void CreateGame(int numberColumns, int numberRows)
+    public GameState CreateGame(int numberColumns, int numberRows)
     {
         var sudokuGenerator = new SudokuGenerator(numberColumns, numberRows);
         BlockCells(sudokuGenerator.lstCeldas);
@@ -39,6 +39,7 @@ public class SaveGameSO : UnityEngine.ScriptableObject
             );
         }
         lastGameState.lstCeldas = lstCeldas;
+        return lastGameState;
     }
     public void BlockCells(List<SudokuGenerator.Celda> lstCelda, int cicloMin = 2, int cicloMax = 4)
     {

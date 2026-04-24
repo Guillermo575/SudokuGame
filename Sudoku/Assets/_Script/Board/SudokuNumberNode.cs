@@ -7,7 +7,7 @@ public class SudokuNumberNode : MonoBehaviour
     {
         if (sudokuNumberCell != null)
         {
-            sudokuNumberCell.Initialize();
+            //sudokuNumberCell.Initialize();
         }
     }
 }

@@ -1,43 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 using System.Linq;
+using static Sudoku.SudokuGenerator;
 public class SudokuNumberCell : MonoBehaviour
 {
+    public GameObject sudokuNumberCell;
     public TextMeshPro numberText;
     public int Id = 0;
     public bool Bloqueado = false;
-    GameManager gameManager;
-    public void Initialize()
+    public Celda objCelda {  get; private set; }
+    SudokuBoard sudokuBoard;
+    public void Initialize(SudokuBoard sudokuBoard)
+    {
+        this.sudokuBoard = sudokuBoard;
+        if (sudokuNumberCell != null)
+        {
+            InitializeCell();
+        }
+    }
+    public void InitializeCell()
     {
         Renderer renderer = GetComponent<Renderer>();
-        gameManager = GameManager.GetSingleton();
-        Id = Id == 0 ? gameManager.addLoopId() : Id;
+        Id = Id == 0 ? sudokuBoard.addLoopId() : Id;
         if (numberText == null)
         {
             numberText = GetComponentInChildren<TextMeshPro>();
             if (numberText == null)
             {
-                Debug.LogError("Falta un componente TextMeshPro en SudokuNumberNode");
+                Debug.LogError("Falta un componente TextMeshPro en SudokuNumberCell");
             }
         }
-        var objCelda = (from x in gameManager.GetLstCeldas() where x.Id == Id select x).ToList();
-        if (objCelda.Count > 0)
+        var lstCelda = (from x in sudokuBoard.GetLstCeldas() where x.Id == Id select x).ToList();
+        if (lstCelda.Count > 0)
         {
+            objCelda = lstCelda.First();
             Material material;
-            Bloqueado = objCelda.First().bloqueado;
-            if (objCelda.First().bloqueado)
-            {
-                material = gameManager.sudokuBoardMaterial.CellDisabled;
-                SetNumber(objCelda.First().Valor);
-            }
-            else
-            {
-                material = gameManager.sudokuBoardMaterial.CellNormal;
-                SetNumber(objCelda.First().Valor);
-                //SetNumber(0);
-            }
+            Bloqueado = objCelda.bloqueado;
+            material = objCelda.bloqueado ? sudokuBoard.sudokuBoardMaterial.CellDisabled : sudokuBoard.sudokuBoardMaterial.CellNormal;
+            SetNumber(objCelda.Valor);
             if (renderer != null)
             {
                 renderer.material = material;
@@ -49,6 +49,7 @@ public class SudokuNumberCell : MonoBehaviour
         if (numberText != null)
         {
             numberText.text = Sudoku.Alphabet.getAlphaChar(number);
+            objCelda.Valor = number;
             return true;
         }
         return false;

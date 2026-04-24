@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5681575860307948105}
-  - component: {fileID: 8178210921201899735}
   m_Layer: 0
   m_Name: Sudoku_NumberNode
   m_TagString: Untagged
@@ -33,19 +32,6 @@ Transform:
   - {fileID: 631420170059170723}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8178210921201899735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 436323741230254955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5aa706e0251442478f42179752183e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sudokuNumberCell: {fileID: 3635621979696053124}
 --- !u!1 &4518074554320831995
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022eb47479e77ed4fb771a5462216efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sudokuNumberCell: {fileID: 4518074554320831995}
   numberText: {fileID: 5099642484054158632}
   Id: 0
   Bloqueado: 0
