@@ -12,4 +12,12 @@ public class HUDLogControl : MonoBehaviour
     {
         GameManager.GetSingleton().LogForward();
     }
+    public void OnBackMaxClick()
+    {
+        GameManager.GetSingleton().LogBackMax();
+    }
+    public void OnForwardMaxClick()
+    {
+        GameManager.GetSingleton().LogForwardMax();
+    }
 }

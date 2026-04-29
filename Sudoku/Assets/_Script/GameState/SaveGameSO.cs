@@ -9,8 +9,10 @@ using static Sudoku.SudokuGenerator;
 [CreateAssetMenu(fileName = "SaveGameSO", menuName = "ScriptableObjects/SaveGameSO")]
 public class SaveGameSO : UnityEngine.ScriptableObject
 {
+
     public GameState lastGameState;
     public List<GameState> lstGames;
+
     #region CreateGame
     public GameState CreateGame(int numberColumns, int numberRows)
     {
@@ -56,6 +58,27 @@ public class SaveGameSO : UnityEngine.ScriptableObject
             int fin = Math.Min(i + ciclo - 1, lstCelda.Count - 1);
             int indiceAleatorio = rnd.Next(inicio, fin + 1);
             lstCelda[indiceAleatorio].bloqueado = false;
+        }
+    }
+    #endregion
+
+    #region Save
+    public void SaveGame(GameState gameState)
+    {
+        if (lstGames.Count == 0)
+        {
+            lstGames = new List<GameState>();
+            lstGames.Add(gameState);
+            return;
+        }
+        int index = lstGames.FindIndex(p => p.Id == gameState.Id);
+        if (index >= 0)
+        {
+            lstGames[index] = gameState;
+        }
+        else
+        {
+            lstGames.Add(gameState);
         }
     }
     #endregion

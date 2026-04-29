@@ -40,7 +40,8 @@ public class GameManager : MonoBehaviour
     #region General
     private void LoadOrCreateGame()
     {
-        if (saveGameSO == null || gameState == null || sudokuGenerator == null || sudokuGenerator.lstCeldas == null || sudokuGenerator.lstCeldas.Count == 0)
+        if (saveGameSO == null || saveGameSO.lastGameState == null || saveGameSO.lastGameState.sudokuGenerator == null || saveGameSO.lastGameState.sudokuGenerator.lstCeldas == null || 
+            saveGameSO.lastGameState.sudokuGenerator.lstCeldas.Count == 0)
         {
             saveGameSO.CreateGame(sudokuBoard.numberColumns, sudokuBoard.numberRows);
         }
@@ -84,7 +85,6 @@ public class GameManager : MonoBehaviour
     {
         if (sudokuNumberCellSelected == null) return;
         if (Valor > TotalAlphabet) return;
-        var lstCelda = gameState.lstCeldas;
         int ValorAntes = sudokuNumberCellSelected.objCelda.Valor;
         if (sudokuNumberCellSelected.SetNumber(Valor))
         {
@@ -93,11 +93,28 @@ public class GameManager : MonoBehaviour
                 gameState.LogAdd(Id, Valor, ValorAntes);
             }
             setCellSelected(null);
-            if (ValidarCeldas(lstCelda))
-            {
-                Debug.Log("COMPLETADO!!");
-            }
+            CheckWinGame();
         }
+    }
+    #endregion
+
+    #region Win
+    private void AutoResolveGame()
+    {
+        var lstCeldas = gameState.lstCeldas;
+        for (int l = 0; l < lstCeldas.Count; l++)
+        {
+            lstCeldas[l].Valor = sudokuGenerator.lstCeldas[l].Valor;
+        }
+    }
+    private bool CheckWinGame()
+    {
+        if (ValidarCeldas(gameState.lstCeldas))
+        {
+            Debug.Log("COMPLETADO!!");
+            return true;
+        }
+        return false;
     }
     #endregion
 
@@ -132,6 +149,14 @@ public class GameManager : MonoBehaviour
             setCellSelectedValue(objLog.Id, objLog.ValorAntes, false);
         }
     }
+    public void LogBackMax()
+    {
+        if (gameState == null || gameState.lstBitacoraMovimiento == null) return;
+        for (int l = 0; l < gameState.lstBitacoraMovimiento.Count + 1; l++)
+        {
+            LogBack();
+        }
+    }
     public void LogForward()
     {
         if (gameState == null) return;
@@ -140,6 +165,14 @@ public class GameManager : MonoBehaviour
         if (setCellSelected(objLog.Id))
         {
             setCellSelectedValue(objLog.Id, objLog.Valor, false);
+        }
+    }
+    public void LogForwardMax()
+    {
+        if (gameState == null || gameState.lstBitacoraMovimiento == null) return;
+        for (int l = 0; l < gameState.lstBitacoraMovimiento.Count + 1; l++)
+        {
+            LogForward();
         }
     }
     #endregion
