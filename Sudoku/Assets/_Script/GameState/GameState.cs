@@ -9,12 +9,65 @@ using static Sudoku.SudokuGenerator;
 [Serializable]
 public class GameState
 {
+    #region Public
     public String Id;
     public String dateUpdate;
     public SudokuGenerator sudokuGenerator;
     public List<Celda> lstCeldas = new List<Celda>();
     public List<LogMove> lstBitacoraMovimiento = new List<LogMove>();
     public int LogIndex = 0;
+    #endregion
+
+    #region General
+    public static GameState CreateGame(int numberColumns, int numberRows, int cicloMin = 2, int cicloMax = 4)
+    {
+        var sudokuGenerator = new SudokuGenerator(numberColumns, numberRows);
+        BlockCells(sudokuGenerator.lstCeldas, cicloMin, cicloMax);
+        var gameState = new GameState();
+        gameState.Id = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+        gameState.dateUpdate = gameState.Id;
+        gameState.sudokuGenerator = sudokuGenerator;
+        var lstCeldas = new List<Celda>();
+        foreach (var obj in sudokuGenerator.lstCeldas)
+        {
+            lstCeldas.Add
+            (
+                new Celda
+                {
+                    Id = obj.Id,
+                    IdCuadrante = obj.IdCuadrante,
+                    CuadranteEjeX = obj.CuadranteEjeX,
+                    CuadranteEjeY = obj.CuadranteEjeY,
+                    EjeX = obj.EjeX,
+                    EjeY = obj.EjeY,
+                    bloqueado = obj.bloqueado,
+                    Valor = obj.bloqueado ? obj.Valor : 0,
+                }
+            );
+        }
+        gameState.lstCeldas = lstCeldas;
+        return gameState;
+    }
+    public static void BlockCells(List<SudokuGenerator.Celda> lstCelda, int cicloMin = 2, int cicloMax = 4)
+    {
+        foreach (var obj in lstCelda)
+        {
+            obj.bloqueado = true;
+        }
+        System.Random rnd = new System.Random();
+        int ciclo = rnd.Next(cicloMin, cicloMax);
+        for (int i = 0; i < lstCelda.Count; i += ciclo)
+        {
+            ciclo = rnd.Next(cicloMin, cicloMax);
+            int inicio = i;
+            int fin = Math.Min(i + ciclo - 1, lstCelda.Count - 1);
+            int indiceAleatorio = rnd.Next(inicio, fin + 1);
+            lstCelda[indiceAleatorio].bloqueado = false;
+        }
+    }
+    #endregion
+
+    #region Clone
     public GameState Clone()
     {
         GameState clone = CloneShallow(this);
@@ -44,6 +97,8 @@ public class GameState
         }
         return clone;
     }
+    #endregion
+
     #region Bitacora
     [Serializable]
     public class LogMove

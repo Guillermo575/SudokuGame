@@ -35,10 +35,11 @@ public class CamaraController : MonoBehaviour
     #region Start & Update
     private void Start()
     {
-        gameManager = GameManager.GetSingleton();
+        //gameManager = GameManager.GetSingleton();
     }
     void Update()
     {
+        if (gameManager == null) return;
         HandleMovement();
         LimitarCamara();
         HandleZoom();

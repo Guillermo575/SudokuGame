@@ -53,6 +53,7 @@ public class SudokuBoard : MonoBehaviour
     }
     public void UpdatePosition()
     {
+        if (gameState == null) return;
         var SizeNumber = sizeNumberNode + spaceBetweenNodes;
         var SizeBoard = numberColumns * numberRows * SizeNumber + (spaceBetweenSubBoards * 4);
         mainBoardPrefab.transform.localScale = new Vector3(SizeBoard, 1f, SizeBoard);

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class HUDButtonNumber : MonoBehaviour
 {
     public TextMeshProUGUI numberText;
-    private int indexValue;
+    public int indexValue { get; private set; }
     private GameManager gameManager;
     public void Initialize(int indexValue)
     {

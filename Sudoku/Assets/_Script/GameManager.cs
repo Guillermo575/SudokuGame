@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public CamaraController controller;
     public SaveGameSO saveGameSO;
     public HUDButtonPanel hUDButtonPanel;
+    public GameObject hudObject;
     #endregion
 
     #region private Variables
@@ -26,25 +27,23 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         CreateSingleton();
-    }
-    private void Start()
-    {
-        LoadOrCreateGame();
-        sudokuBoard.CreateBoard(saveGameSO.lastGameState);
-        controller.InitiateCamera();
         if (hUDButtonPanel != null)
-            hUDButtonPanel.Initialize(TotalAlphabet);
+            hUDButtonPanel.Initialize(Sudoku.Alphabet.masterAlpha.Length - 1, 0);
     }
     #endregion
 
     #region General
-    private void LoadOrCreateGame()
+    public void CreateGame()
     {
-        if (saveGameSO == null || saveGameSO.lastGameState == null || saveGameSO.lastGameState.sudokuGenerator == null || saveGameSO.lastGameState.sudokuGenerator.lstCeldas == null || 
-            saveGameSO.lastGameState.sudokuGenerator.lstCeldas.Count == 0)
-        {
-            saveGameSO.CreateGame(sudokuBoard.numberColumns, sudokuBoard.numberRows);
-        }
+        saveGameSO.lastGameState = GameState.CreateGame(sudokuBoard.numberColumns, sudokuBoard.numberRows);
+    }
+    public void StartGame()
+    {
+        sudokuBoard.gameObject.SetActive(true);
+        sudokuBoard.CreateBoard(saveGameSO.lastGameState);
+        controller.InitiateCamera();
+        if (hUDButtonPanel != null)
+            hUDButtonPanel.HideShowButtons(TotalAlphabet);
     }
     public bool setCellSelected(int Valor)
     {
