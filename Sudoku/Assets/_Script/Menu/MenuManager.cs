@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
 
     #region Public
     public GameObject container;
+    public List<GameObject> lstMenus;
+    #endregion
+
+    #region Private
+    public List<GameObject> lstMenuTree;
     #endregion
 
     #region Awake
     void Awake()
     {
         CreateSingleton();
+        //lstMenuTree = new List<GameObject>();
     }
     #endregion
 
@@ -35,6 +42,50 @@ public class MenuManager : MonoBehaviour
     public void HideShow(bool Visible)
     {
         container.SetActive(Visible);
+    }
+    #endregion
+
+    #region Menus
+    public GameObject GetMenu(string name)
+    {
+        var lst = (from x in lstMenus where x.name.ToUpper() == name.ToUpper() select x).ToList();
+        return lst.Count > 0 ? lst.First().gameObject : null;
+    }
+    public void BackMenu()
+    {
+        if (lstMenuTree.Count > 1)
+        {
+            var objBack = lstMenuTree[lstMenuTree.Count - 2];
+            var objActual = lstMenuTree.Last();
+            lstMenuTree.Remove(objActual);
+            objActual.SetActive(false);
+            objBack.SetActive(true);
+        }
+    }
+    public void ShowMenu(GameObject objMenu)
+    {
+        if (objMenu != null)
+        {
+            SetActiveCanvas();
+            lstMenuTree.Add(objMenu);
+            objMenu.SetActive(true);
+        }
+    }
+    public void SetActiveCanvas(bool value = false)
+    {
+        var lst = lstMenuTree;
+        foreach (var x in lst)
+        {
+            if (x.gameObject != null && x.gameObject.activeSelf)
+            {
+                x.gameObject.SetActive(value);
+            }
+        }
+    }
+    public void DeleteMenuTree()
+    {
+        SetActiveCanvas(false);
+        lstMenuTree = new List<GameObject>();
     }
     #endregion
 
