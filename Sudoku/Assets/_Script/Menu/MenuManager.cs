@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
 
     #region Public
     public GameObject container;
+    public MenuConfirmar menuConfirmar;
     public List<GameObject> lstMenus;
     #endregion
 
@@ -106,6 +108,17 @@ public class MenuManager : MonoBehaviour
     public static MenuManager GetSingleton()
     {
         return SingletonGameManager;
+    }
+    #endregion
+
+    #region SalirJuego
+    public void ExitGame()
+    {
+        menuConfirmar.MostrarPantallaConfirmar(EventoRegresarAPantallaPrincipal, "Do you want to exit?");
+    }
+    private void EventoRegresarAPantallaPrincipal()
+    {
+        Application.Quit();
     }
     #endregion
 }
