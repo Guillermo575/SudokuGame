@@ -112,11 +112,11 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region SalirJuego
-    public void ExitGame()
+    public void QuitApp()
     {
-        menuConfirmar.MostrarPantallaConfirmar(EventoRegresarAPantallaPrincipal, "Do you want to exit?");
+        menuConfirmar.MostrarPantallaConfirmar(EventoQuitApp, "Do you want to exit?");
     }
-    private void EventoRegresarAPantallaPrincipal()
+    private void EventoQuitApp()
     {
         Application.Quit();
     }
