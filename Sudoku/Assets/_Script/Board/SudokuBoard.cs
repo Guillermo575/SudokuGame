@@ -16,12 +16,12 @@ public class SudokuBoard : MonoBehaviour
     public float spaceBetweenSubBoards = 0.05f;
     public float spaceBetweenNodes = 0.025f;
     public float sizeNumberNode = 1f;
-    public int numberColumns = 3;
-    public int numberRows = 3;
     public List<SudokuNumberCell> allCells { get; private set; }
     #endregion
 
     #region Private
+    public int numberColumns { get; private set; } = 3;
+    public int numberRows { get; private set; } = 3;
     public int LoopId { get; private set; } = 1;
     public GameState gameState { get; private set; }
     private SudokuGenerator sudokuGenerator { get { return gameState == null ? null : gameState.sudokuGenerator; } }
@@ -30,6 +30,8 @@ public class SudokuBoard : MonoBehaviour
     private SudokuSubBoard[,] subBoards;
     public void CreateBoard(GameState gameState)
     {
+        numberColumns = gameState.sudokuGenerator.ColumnasY;
+        numberRows = gameState.sudokuGenerator.ColumnasX;
         LoopId = 1;
         this.gameState = gameState;
         subBoards = new SudokuSubBoard[numberColumns, numberRows];

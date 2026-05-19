@@ -33,9 +33,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region General
-    public void CreateGame()
+    public void CreateGame(int numberColumns, int numberRows, int cicloMin = 2, int cicloMax = 4)
     {
-        saveGameSO.lastGameState = GameState.CreateGame(sudokuBoard.numberColumns, sudokuBoard.numberRows);
+        saveGameSO.lastGameState = GameState.CreateGame(numberColumns, numberRows, cicloMin, cicloMax);
     }
     public void StartGame()
     {
@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
         {
             lstCeldas[l].Valor = sudokuGenerator.lstCeldas[l].Valor;
         }
+        CheckWinGame();
     }
     private bool CheckWinGame()
     {

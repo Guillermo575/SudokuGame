@@ -11,6 +11,7 @@ public class GameState
 {
     #region Public
     public String Id;
+    public String dateCreate;
     public String dateUpdate;
     public SudokuGenerator sudokuGenerator;
     public List<Celda> lstCeldas = new List<Celda>();
@@ -24,8 +25,10 @@ public class GameState
         var sudokuGenerator = new SudokuGenerator(numberColumns, numberRows);
         BlockCells(sudokuGenerator.lstCeldas, cicloMin, cicloMax);
         var gameState = new GameState();
-        gameState.Id = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-        gameState.dateUpdate = gameState.Id;
+        var dateNow = DateTime.Now;
+        gameState.Id = dateNow.ToString("yyyyMMddHHmmssfff");
+        gameState.dateCreate = dateNow.ToString("dd/MM/yyyy");
+        gameState.dateUpdate = gameState.dateCreate;
         gameState.sudokuGenerator = sudokuGenerator;
         var lstCeldas = new List<Celda>();
         foreach (var obj in sudokuGenerator.lstCeldas)
