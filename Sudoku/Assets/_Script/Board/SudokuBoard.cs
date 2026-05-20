@@ -30,6 +30,14 @@ public class SudokuBoard : MonoBehaviour
     private SudokuSubBoard[,] subBoards;
     public void CreateBoard(GameState gameState)
     {
+        Transform[] children = mainBoardPrefab.GetComponentsInChildren<Transform>();
+        foreach (Transform child in children)
+        {
+            if (child != mainBoardPrefab.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
         numberColumns = gameState.sudokuGenerator.ColumnasY;
         numberRows = gameState.sudokuGenerator.ColumnasX;
         LoopId = 1;

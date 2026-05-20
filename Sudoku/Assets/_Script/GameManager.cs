@@ -33,17 +33,19 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region General
-    public void CreateGame(int numberColumns, int numberRows, int cicloMin = 2, int cicloMax = 4)
-    {
-        saveGameSO.lastGameState = GameState.CreateGame(numberColumns, numberRows, cicloMin, cicloMax);
-    }
     public void StartGame()
     {
+        StartGame(saveGameSO.lastGameState);
+    }
+    public void StartGame(GameState gameState)
+    {
+        if (gameState == null) return;
         sudokuBoard.gameObject.SetActive(true);
-        sudokuBoard.CreateBoard(saveGameSO.lastGameState);
+        sudokuBoard.CreateBoard(gameState);
         controller.InitiateCamera();
         if (hUDButtonPanel != null)
             hUDButtonPanel.HideShowButtons(TotalAlphabet);
+        saveGameSO.lastGameState = gameState;
     }
     public bool setCellSelected(int Valor)
     {

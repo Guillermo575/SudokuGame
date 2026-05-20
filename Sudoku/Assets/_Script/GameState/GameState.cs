@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Linq;
 using UnityEngine;
 using static Sudoku.SudokuGenerator;
+using Unity.VisualScripting;
 [Serializable]
 public class GameState
 {
@@ -17,14 +18,18 @@ public class GameState
     public List<Celda> lstCeldas = new List<Celda>();
     public List<LogMove> lstBitacoraMovimiento = new List<LogMove>();
     public int LogIndex = 0;
+    public string BoardType;
+    public string Difficult;
     #endregion
 
     #region General
-    public static GameState CreateGame(int numberColumns, int numberRows, int cicloMin = 2, int cicloMax = 4)
+    public static GameState CreateGame(string BoardType, string Difficult, int numberColumns, int numberRows, int cicloMin = 2, int cicloMax = 4)
     {
         var sudokuGenerator = new SudokuGenerator(numberColumns, numberRows);
         BlockCells(sudokuGenerator.lstCeldas, cicloMin, cicloMax);
         var gameState = new GameState();
+        gameState.BoardType = BoardType;
+        gameState.Difficult = Difficult;
         var dateNow = DateTime.Now;
         gameState.Id = dateNow.ToString("yyyyMMddHHmmssfff");
         gameState.dateCreate = dateNow.ToString("dd/MM/yyyy");

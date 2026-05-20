@@ -104,10 +104,10 @@ public class MenuManager : MonoBehaviour
         string BoardType = dropdownBoard.options[dropdownBoard.value].text.ToUpper().Replace(" ", "");
         var getDiff = (from x in lstConfType where x.name == BoardType select x).ToList();
         if (getDiff.Count == 0) return;
-        string DifficultType = dropdownBoard.options[dropdownBoard.value].text.ToUpper().Replace(" ", "");
+        string DifficultType = dropdownDifficult.options[dropdownDifficult.value].text.ToUpper().Replace(" ", "");
         var getInterv = CalcularIntervaloOcultamiento(getDiff.First().numberRows, getDiff.First().numberColumns, DifficultType);
-        gameManager.CreateGame(getDiff.First().numberRows, getDiff.First().numberColumns, getInterv[0], getInterv[1]);
-        gameManager.StartGame();
+        var newgame = GameState.CreateGame(BoardType, DifficultType, getDiff.First().numberRows, getDiff.First().numberColumns, getInterv[0], getInterv[1]);
+        gameManager.StartGame(newgame);
         HideShow(false);
         HUDManager.GetSingleton().HideShow(true);
     }
