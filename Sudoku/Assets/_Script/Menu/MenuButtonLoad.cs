@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 public class MenuButtonLoad : MonoBehaviour
 {
     public TextMeshProUGUI txtDate;
@@ -28,5 +29,7 @@ public class MenuButtonLoad : MonoBehaviour
     public void OnButtonDelete()
     {
         if (gameManager == null || gameState == null) return;
+        gameManager.saveGameSO.lstGames = (from x in gameManager.saveGameSO.lstGames where x.Id != gameState.Id select x).ToList();
+        Destroy(this);
     }
 }

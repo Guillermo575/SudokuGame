@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: SaveGameSO
   m_EditorClassIdentifier: 
   lastGameState:
-    Id: 20260424021523580
-    dateUpdate: 20260424021523580
+    Id: 20260520011531742
+    dateCreate: 20/05/2026
+    dateUpdate: 20/05/2026
     sudokuGenerator:
       ColumnasX: 3
       ColumnasY: 3
@@ -34,7 +35,7 @@ MonoBehaviour:
         EjeX: 1
         EjeY: 0
         Valor: 4
-        bloqueado: 0
+        bloqueado: 1
       - Id: 3
         IdCuadrante: 1
         CuadranteEjeX: 0
@@ -42,14 +43,14 @@ MonoBehaviour:
         EjeX: 2
         EjeY: 0
         Valor: 3
-        bloqueado: 0
+        bloqueado: 1
       - Id: 4
         IdCuadrante: 1
         CuadranteEjeX: 0
         CuadranteEjeY: 0
         EjeX: 0
         EjeY: 1
-        Valor: 6
+        Valor: 5
         bloqueado: 1
       - Id: 5
         IdCuadrante: 1
@@ -65,7 +66,7 @@ MonoBehaviour:
         CuadranteEjeY: 0
         EjeX: 2
         EjeY: 1
-        Valor: 5
+        Valor: 7
         bloqueado: 0
       - Id: 7
         IdCuadrante: 1
@@ -73,7 +74,7 @@ MonoBehaviour:
         CuadranteEjeY: 0
         EjeX: 0
         EjeY: 2
-        Valor: 7
+        Valor: 6
         bloqueado: 1
       - Id: 8
         IdCuadrante: 1
@@ -82,7 +83,7 @@ MonoBehaviour:
         EjeX: 1
         EjeY: 2
         Valor: 8
-        bloqueado: 0
+        bloqueado: 1
       - Id: 9
         IdCuadrante: 1
         CuadranteEjeX: 0
@@ -97,7 +98,7 @@ MonoBehaviour:
         CuadranteEjeY: 0
         EjeX: 0
         EjeY: 0
-        Valor: 9
+        Valor: 6
         bloqueado: 1
       - Id: 11
         IdCuadrante: 2
@@ -113,7 +114,7 @@ MonoBehaviour:
         CuadranteEjeY: 0
         EjeX: 2
         EjeY: 0
-        Valor: 7
+        Valor: 8
         bloqueado: 1
       - Id: 13
         IdCuadrante: 2
@@ -121,8 +122,8 @@ MonoBehaviour:
         CuadranteEjeY: 0
         EjeX: 0
         EjeY: 1
-        Valor: 1
-        bloqueado: 0
+        Valor: 9
+        bloqueado: 1
       - Id: 14
         IdCuadrante: 2
         CuadranteEjeX: 1
@@ -137,7 +138,7 @@ MonoBehaviour:
         CuadranteEjeY: 0
         EjeX: 2
         EjeY: 1
-        Valor: 8
+        Valor: 1
         bloqueado: 1
       - Id: 16
         IdCuadrante: 2
@@ -161,7 +162,7 @@ MonoBehaviour:
         CuadranteEjeY: 0
         EjeX: 2
         EjeY: 2
-        Valor: 6
+        Valor: 7
         bloqueado: 1
       - Id: 19
         IdCuadrante: 3
@@ -169,8 +170,8 @@ MonoBehaviour:
         CuadranteEjeY: 0
         EjeX: 0
         EjeY: 0
-        Valor: 6
-        bloqueado: 0
+        Valor: 7
+        bloqueado: 1
       - Id: 20
         IdCuadrante: 3
         CuadranteEjeX: 2
@@ -185,7 +186,7 @@ MonoBehaviour:
         CuadranteEjeY: 0
         EjeX: 2
         EjeY: 0
-        Valor: 8
+        Valor: 9
         bloqueado: 1
       - Id: 22
         IdCuadrante: 3
@@ -194,23 +195,23 @@ MonoBehaviour:
         EjeX: 0
         EjeY: 1
         Valor: 3
-        bloqueado: 0
+        bloqueado: 1
       - Id: 23
         IdCuadrante: 3
         CuadranteEjeX: 2
         CuadranteEjeY: 0
         EjeX: 1
         EjeY: 1
-        Valor: 7
-        bloqueado: 0
+        Valor: 6
+        bloqueado: 1
       - Id: 24
         IdCuadrante: 3
         CuadranteEjeX: 2
         CuadranteEjeY: 0
         EjeX: 2
         EjeY: 1
-        Valor: 9
-        bloqueado: 1
+        Valor: 8
+        bloqueado: 0
       - Id: 25
         IdCuadrante: 3
         CuadranteEjeX: 2
@@ -226,7 +227,7 @@ MonoBehaviour:
         EjeX: 1
         EjeY: 2
         Valor: 1
-        bloqueado: 0
+        bloqueado: 1
       - Id: 27
         IdCuadrante: 3
         CuadranteEjeX: 2
@@ -242,30 +243,30 @@ MonoBehaviour:
         EjeX: 0
         EjeY: 0
         Valor: 3
-        bloqueado: 0
+        bloqueado: 1
       - Id: 29
         IdCuadrante: 4
         CuadranteEjeX: 0
         CuadranteEjeY: 1
         EjeX: 1
         EjeY: 0
-        Valor: 1
-        bloqueado: 1
+        Valor: 6
+        bloqueado: 0
       - Id: 30
         IdCuadrante: 4
         CuadranteEjeX: 0
         CuadranteEjeY: 1
         EjeX: 2
         EjeY: 0
-        Valor: 4
-        bloqueado: 0
+        Valor: 2
+        bloqueado: 1
       - Id: 31
         IdCuadrante: 4
         CuadranteEjeX: 0
         CuadranteEjeY: 1
         EjeX: 0
         EjeY: 1
-        Valor: 2
+        Valor: 9
         bloqueado: 1
       - Id: 32
         IdCuadrante: 4
@@ -273,7 +274,7 @@ MonoBehaviour:
         CuadranteEjeY: 1
         EjeX: 1
         EjeY: 1
-        Valor: 9
+        Valor: 1
         bloqueado: 1
       - Id: 33
         IdCuadrante: 4
@@ -281,15 +282,15 @@ MonoBehaviour:
         CuadranteEjeY: 1
         EjeX: 2
         EjeY: 1
-        Valor: 6
-        bloqueado: 0
+        Valor: 4
+        bloqueado: 1
       - Id: 34
         IdCuadrante: 4
         CuadranteEjeX: 0
         CuadranteEjeY: 1
         EjeX: 0
         EjeY: 2
-        Valor: 5
+        Valor: 7
         bloqueado: 0
       - Id: 35
         IdCuadrante: 4
@@ -297,7 +298,7 @@ MonoBehaviour:
         CuadranteEjeY: 1
         EjeX: 1
         EjeY: 2
-        Valor: 7
+        Valor: 5
         bloqueado: 1
       - Id: 36
         IdCuadrante: 4
@@ -306,14 +307,14 @@ MonoBehaviour:
         EjeX: 2
         EjeY: 2
         Valor: 8
-        bloqueado: 0
+        bloqueado: 1
       - Id: 37
         IdCuadrante: 5
         CuadranteEjeX: 1
         CuadranteEjeY: 1
         EjeX: 0
         EjeY: 0
-        Valor: 6
+        Valor: 8
         bloqueado: 1
       - Id: 38
         IdCuadrante: 5
@@ -321,15 +322,15 @@ MonoBehaviour:
         CuadranteEjeY: 1
         EjeX: 1
         EjeY: 0
-        Valor: 7
-        bloqueado: 0
+        Valor: 1
+        bloqueado: 1
       - Id: 39
         IdCuadrante: 5
         CuadranteEjeX: 1
         CuadranteEjeY: 1
         EjeX: 2
         EjeY: 0
-        Valor: 2
+        Valor: 5
         bloqueado: 1
       - Id: 40
         IdCuadrante: 5
@@ -337,15 +338,15 @@ MonoBehaviour:
         CuadranteEjeY: 1
         EjeX: 0
         EjeY: 1
-        Valor: 8
-        bloqueado: 0
+        Valor: 7
+        bloqueado: 1
       - Id: 41
         IdCuadrante: 5
         CuadranteEjeX: 1
         CuadranteEjeY: 1
         EjeX: 1
         EjeY: 1
-        Valor: 1
+        Valor: 3
         bloqueado: 1
       - Id: 42
         IdCuadrante: 5
@@ -353,7 +354,7 @@ MonoBehaviour:
         CuadranteEjeY: 1
         EjeX: 2
         EjeY: 1
-        Valor: 5
+        Valor: 2
         bloqueado: 1
       - Id: 43
         IdCuadrante: 5
@@ -369,8 +370,8 @@ MonoBehaviour:
         CuadranteEjeY: 1
         EjeX: 1
         EjeY: 2
-        Valor: 3
-        bloqueado: 0
+        Valor: 6
+        bloqueado: 1
       - Id: 45
         IdCuadrante: 5
         CuadranteEjeX: 1
@@ -385,7 +386,7 @@ MonoBehaviour:
         CuadranteEjeY: 1
         EjeX: 0
         EjeY: 0
-        Valor: 8
+        Valor: 4
         bloqueado: 1
       - Id: 47
         IdCuadrante: 6
@@ -394,39 +395,39 @@ MonoBehaviour:
         EjeX: 1
         EjeY: 0
         Valor: 9
-        bloqueado: 0
+        bloqueado: 1
       - Id: 48
         IdCuadrante: 6
         CuadranteEjeX: 2
         CuadranteEjeY: 1
         EjeX: 2
         EjeY: 0
-        Valor: 5
-        bloqueado: 1
+        Valor: 7
+        bloqueado: 0
       - Id: 49
         IdCuadrante: 6
         CuadranteEjeX: 2
         CuadranteEjeY: 1
         EjeX: 0
         EjeY: 1
-        Valor: 4
-        bloqueado: 0
+        Valor: 5
+        bloqueado: 1
       - Id: 50
         IdCuadrante: 6
         CuadranteEjeX: 2
         CuadranteEjeY: 1
         EjeX: 1
         EjeY: 1
-        Valor: 3
-        bloqueado: 0
+        Valor: 8
+        bloqueado: 1
       - Id: 51
         IdCuadrante: 6
         CuadranteEjeX: 2
         CuadranteEjeY: 1
         EjeX: 2
         EjeY: 1
-        Valor: 7
-        bloqueado: 1
+        Valor: 6
+        bloqueado: 0
       - Id: 52
         IdCuadrante: 6
         CuadranteEjeX: 2
@@ -442,14 +443,14 @@ MonoBehaviour:
         EjeX: 1
         EjeY: 2
         Valor: 2
-        bloqueado: 0
+        bloqueado: 1
       - Id: 54
         IdCuadrante: 6
         CuadranteEjeX: 2
         CuadranteEjeY: 1
         EjeX: 2
         EjeY: 2
-        Valor: 6
+        Valor: 3
         bloqueado: 1
       - Id: 55
         IdCuadrante: 7
@@ -457,7 +458,7 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 0
         EjeY: 0
-        Valor: 9
+        Valor: 4
         bloqueado: 1
       - Id: 56
         IdCuadrante: 7
@@ -466,7 +467,7 @@ MonoBehaviour:
         EjeX: 1
         EjeY: 0
         Valor: 3
-        bloqueado: 0
+        bloqueado: 1
       - Id: 57
         IdCuadrante: 7
         CuadranteEjeX: 0
@@ -474,14 +475,14 @@ MonoBehaviour:
         EjeX: 2
         EjeY: 0
         Valor: 1
-        bloqueado: 0
+        bloqueado: 1
       - Id: 58
         IdCuadrante: 7
         CuadranteEjeX: 0
         CuadranteEjeY: 2
         EjeX: 0
         EjeY: 1
-        Valor: 4
+        Valor: 2
         bloqueado: 1
       - Id: 59
         IdCuadrante: 7
@@ -489,15 +490,15 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 1
         EjeY: 1
-        Valor: 5
-        bloqueado: 1
+        Valor: 7
+        bloqueado: 0
       - Id: 60
         IdCuadrante: 7
         CuadranteEjeX: 0
         CuadranteEjeY: 2
         EjeX: 2
         EjeY: 1
-        Valor: 2
+        Valor: 6
         bloqueado: 1
       - Id: 61
         IdCuadrante: 7
@@ -506,14 +507,14 @@ MonoBehaviour:
         EjeX: 0
         EjeY: 2
         Valor: 8
-        bloqueado: 0
+        bloqueado: 1
       - Id: 62
         IdCuadrante: 7
         CuadranteEjeX: 0
         CuadranteEjeY: 2
         EjeX: 1
         EjeY: 2
-        Valor: 6
+        Valor: 9
         bloqueado: 1
       - Id: 63
         IdCuadrante: 7
@@ -521,8 +522,8 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 2
         EjeY: 2
-        Valor: 7
-        bloqueado: 0
+        Valor: 5
+        bloqueado: 1
       - Id: 64
         IdCuadrante: 8
         CuadranteEjeX: 1
@@ -537,7 +538,7 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 1
         EjeY: 0
-        Valor: 6
+        Valor: 8
         bloqueado: 1
       - Id: 66
         IdCuadrante: 8
@@ -545,23 +546,23 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 2
         EjeY: 0
-        Valor: 4
-        bloqueado: 0
+        Valor: 6
+        bloqueado: 1
       - Id: 67
         IdCuadrante: 8
         CuadranteEjeX: 1
         CuadranteEjeY: 2
         EjeX: 0
         EjeY: 1
-        Valor: 7
-        bloqueado: 1
+        Valor: 1
+        bloqueado: 0
       - Id: 68
         IdCuadrante: 8
         CuadranteEjeX: 1
         CuadranteEjeY: 2
         EjeX: 1
         EjeY: 1
-        Valor: 8
+        Valor: 9
         bloqueado: 1
       - Id: 69
         IdCuadrante: 8
@@ -569,8 +570,8 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 2
         EjeY: 1
-        Valor: 1
-        bloqueado: 0
+        Valor: 3
+        bloqueado: 1
       - Id: 70
         IdCuadrante: 8
         CuadranteEjeX: 1
@@ -578,14 +579,14 @@ MonoBehaviour:
         EjeX: 0
         EjeY: 2
         Valor: 2
-        bloqueado: 1
+        bloqueado: 0
       - Id: 71
         IdCuadrante: 8
         CuadranteEjeX: 1
         CuadranteEjeY: 2
         EjeX: 1
         EjeY: 2
-        Valor: 9
+        Valor: 7
         bloqueado: 1
       - Id: 72
         IdCuadrante: 8
@@ -593,15 +594,15 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 2
         EjeY: 2
-        Valor: 3
-        bloqueado: 0
+        Valor: 4
+        bloqueado: 1
       - Id: 73
         IdCuadrante: 9
         CuadranteEjeX: 2
         CuadranteEjeY: 2
         EjeX: 0
         EjeY: 0
-        Valor: 7
+        Valor: 9
         bloqueado: 1
       - Id: 74
         IdCuadrante: 9
@@ -609,7 +610,7 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 1
         EjeY: 0
-        Valor: 8
+        Valor: 7
         bloqueado: 1
       - Id: 75
         IdCuadrante: 9
@@ -618,14 +619,14 @@ MonoBehaviour:
         EjeX: 2
         EjeY: 0
         Valor: 2
-        bloqueado: 0
+        bloqueado: 1
       - Id: 76
         IdCuadrante: 9
         CuadranteEjeX: 2
         CuadranteEjeY: 2
         EjeX: 0
         EjeY: 1
-        Valor: 9
+        Valor: 8
         bloqueado: 1
       - Id: 77
         IdCuadrante: 9
@@ -633,7 +634,7 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 1
         EjeY: 1
-        Valor: 6
+        Valor: 4
         bloqueado: 1
       - Id: 78
         IdCuadrante: 9
@@ -641,24 +642,24 @@ MonoBehaviour:
         CuadranteEjeY: 2
         EjeX: 2
         EjeY: 1
-        Valor: 3
-        bloqueado: 0
+        Valor: 5
+        bloqueado: 1
       - Id: 79
         IdCuadrante: 9
         CuadranteEjeX: 2
         CuadranteEjeY: 2
         EjeX: 0
         EjeY: 2
-        Valor: 5
-        bloqueado: 0
+        Valor: 6
+        bloqueado: 1
       - Id: 80
         IdCuadrante: 9
         CuadranteEjeX: 2
         CuadranteEjeY: 2
         EjeX: 1
         EjeY: 2
-        Valor: 4
-        bloqueado: 1
+        Valor: 3
+        bloqueado: 0
       - Id: 81
         IdCuadrante: 9
         CuadranteEjeX: 2
@@ -682,23 +683,23 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 1
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 4
+      bloqueado: 1
     - Id: 3
       IdCuadrante: 1
       CuadranteEjeX: 0
       CuadranteEjeY: 0
       EjeX: 2
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 3
+      bloqueado: 1
     - Id: 4
       IdCuadrante: 1
       CuadranteEjeX: 0
       CuadranteEjeY: 0
       EjeX: 0
       EjeY: 1
-      Valor: 6
+      Valor: 5
       bloqueado: 1
     - Id: 5
       IdCuadrante: 1
@@ -722,7 +723,7 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 0
       EjeY: 2
-      Valor: 7
+      Valor: 6
       bloqueado: 1
     - Id: 8
       IdCuadrante: 1
@@ -730,8 +731,8 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 1
       EjeY: 2
-      Valor: 0
-      bloqueado: 0
+      Valor: 8
+      bloqueado: 1
     - Id: 9
       IdCuadrante: 1
       CuadranteEjeX: 0
@@ -746,7 +747,7 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 0
       EjeY: 0
-      Valor: 9
+      Valor: 6
       bloqueado: 1
     - Id: 11
       IdCuadrante: 2
@@ -762,7 +763,7 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 2
       EjeY: 0
-      Valor: 7
+      Valor: 8
       bloqueado: 1
     - Id: 13
       IdCuadrante: 2
@@ -770,8 +771,8 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 0
       EjeY: 1
-      Valor: 0
-      bloqueado: 0
+      Valor: 9
+      bloqueado: 1
     - Id: 14
       IdCuadrante: 2
       CuadranteEjeX: 1
@@ -786,7 +787,7 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 2
       EjeY: 1
-      Valor: 8
+      Valor: 1
       bloqueado: 1
     - Id: 16
       IdCuadrante: 2
@@ -810,7 +811,7 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 2
       EjeY: 2
-      Valor: 6
+      Valor: 7
       bloqueado: 1
     - Id: 19
       IdCuadrante: 3
@@ -818,8 +819,8 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 0
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 7
+      bloqueado: 1
     - Id: 20
       IdCuadrante: 3
       CuadranteEjeX: 2
@@ -834,7 +835,7 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 2
       EjeY: 0
-      Valor: 8
+      Valor: 9
       bloqueado: 1
     - Id: 22
       IdCuadrante: 3
@@ -842,24 +843,24 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 0
       EjeY: 1
-      Valor: 0
-      bloqueado: 0
+      Valor: 3
+      bloqueado: 1
     - Id: 23
       IdCuadrante: 3
       CuadranteEjeX: 2
       CuadranteEjeY: 0
       EjeX: 1
       EjeY: 1
-      Valor: 0
-      bloqueado: 0
+      Valor: 6
+      bloqueado: 1
     - Id: 24
       IdCuadrante: 3
       CuadranteEjeX: 2
       CuadranteEjeY: 0
       EjeX: 2
       EjeY: 1
-      Valor: 9
-      bloqueado: 1
+      Valor: 0
+      bloqueado: 0
     - Id: 25
       IdCuadrante: 3
       CuadranteEjeX: 2
@@ -874,8 +875,8 @@ MonoBehaviour:
       CuadranteEjeY: 0
       EjeX: 1
       EjeY: 2
-      Valor: 0
-      bloqueado: 0
+      Valor: 1
+      bloqueado: 1
     - Id: 27
       IdCuadrante: 3
       CuadranteEjeX: 2
@@ -890,31 +891,31 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 0
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 3
+      bloqueado: 1
     - Id: 29
       IdCuadrante: 4
       CuadranteEjeX: 0
       CuadranteEjeY: 1
       EjeX: 1
       EjeY: 0
-      Valor: 1
-      bloqueado: 1
+      Valor: 0
+      bloqueado: 0
     - Id: 30
       IdCuadrante: 4
       CuadranteEjeX: 0
       CuadranteEjeY: 1
       EjeX: 2
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 2
+      bloqueado: 1
     - Id: 31
       IdCuadrante: 4
       CuadranteEjeX: 0
       CuadranteEjeY: 1
       EjeX: 0
       EjeY: 1
-      Valor: 2
+      Valor: 9
       bloqueado: 1
     - Id: 32
       IdCuadrante: 4
@@ -922,7 +923,7 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 1
       EjeY: 1
-      Valor: 9
+      Valor: 1
       bloqueado: 1
     - Id: 33
       IdCuadrante: 4
@@ -930,8 +931,8 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 2
       EjeY: 1
-      Valor: 6
-      bloqueado: 0
+      Valor: 4
+      bloqueado: 1
     - Id: 34
       IdCuadrante: 4
       CuadranteEjeX: 0
@@ -946,7 +947,7 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 1
       EjeY: 2
-      Valor: 7
+      Valor: 5
       bloqueado: 1
     - Id: 36
       IdCuadrante: 4
@@ -954,15 +955,15 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 2
       EjeY: 2
-      Valor: 0
-      bloqueado: 0
+      Valor: 8
+      bloqueado: 1
     - Id: 37
       IdCuadrante: 5
       CuadranteEjeX: 1
       CuadranteEjeY: 1
       EjeX: 0
       EjeY: 0
-      Valor: 6
+      Valor: 8
       bloqueado: 1
     - Id: 38
       IdCuadrante: 5
@@ -970,15 +971,15 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 1
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 1
+      bloqueado: 1
     - Id: 39
       IdCuadrante: 5
       CuadranteEjeX: 1
       CuadranteEjeY: 1
       EjeX: 2
       EjeY: 0
-      Valor: 2
+      Valor: 5
       bloqueado: 1
     - Id: 40
       IdCuadrante: 5
@@ -986,15 +987,15 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 0
       EjeY: 1
-      Valor: 0
-      bloqueado: 0
+      Valor: 7
+      bloqueado: 1
     - Id: 41
       IdCuadrante: 5
       CuadranteEjeX: 1
       CuadranteEjeY: 1
       EjeX: 1
       EjeY: 1
-      Valor: 1
+      Valor: 3
       bloqueado: 1
     - Id: 42
       IdCuadrante: 5
@@ -1002,7 +1003,7 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 2
       EjeY: 1
-      Valor: 5
+      Valor: 2
       bloqueado: 1
     - Id: 43
       IdCuadrante: 5
@@ -1018,8 +1019,8 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 1
       EjeY: 2
-      Valor: 0
-      bloqueado: 0
+      Valor: 6
+      bloqueado: 1
     - Id: 45
       IdCuadrante: 5
       CuadranteEjeX: 1
@@ -1034,7 +1035,7 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 0
       EjeY: 0
-      Valor: 8
+      Valor: 4
       bloqueado: 1
     - Id: 47
       IdCuadrante: 6
@@ -1042,40 +1043,40 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 1
       EjeY: 0
-      Valor: 2
-      bloqueado: 0
+      Valor: 9
+      bloqueado: 1
     - Id: 48
       IdCuadrante: 6
       CuadranteEjeX: 2
       CuadranteEjeY: 1
       EjeX: 2
       EjeY: 0
-      Valor: 5
-      bloqueado: 1
+      Valor: 0
+      bloqueado: 0
     - Id: 49
       IdCuadrante: 6
       CuadranteEjeX: 2
       CuadranteEjeY: 1
       EjeX: 0
       EjeY: 1
-      Valor: 0
-      bloqueado: 0
+      Valor: 5
+      bloqueado: 1
     - Id: 50
       IdCuadrante: 6
       CuadranteEjeX: 2
       CuadranteEjeY: 1
       EjeX: 1
       EjeY: 1
-      Valor: 0
-      bloqueado: 0
+      Valor: 8
+      bloqueado: 1
     - Id: 51
       IdCuadrante: 6
       CuadranteEjeX: 2
       CuadranteEjeY: 1
       EjeX: 2
       EjeY: 1
-      Valor: 7
-      bloqueado: 1
+      Valor: 0
+      bloqueado: 0
     - Id: 52
       IdCuadrante: 6
       CuadranteEjeX: 2
@@ -1090,15 +1091,15 @@ MonoBehaviour:
       CuadranteEjeY: 1
       EjeX: 1
       EjeY: 2
-      Valor: 0
-      bloqueado: 0
+      Valor: 2
+      bloqueado: 1
     - Id: 54
       IdCuadrante: 6
       CuadranteEjeX: 2
       CuadranteEjeY: 1
       EjeX: 2
       EjeY: 2
-      Valor: 6
+      Valor: 3
       bloqueado: 1
     - Id: 55
       IdCuadrante: 7
@@ -1106,7 +1107,7 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 0
       EjeY: 0
-      Valor: 9
+      Valor: 4
       bloqueado: 1
     - Id: 56
       IdCuadrante: 7
@@ -1114,23 +1115,23 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 1
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 3
+      bloqueado: 1
     - Id: 57
       IdCuadrante: 7
       CuadranteEjeX: 0
       CuadranteEjeY: 2
       EjeX: 2
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 1
+      bloqueado: 1
     - Id: 58
       IdCuadrante: 7
       CuadranteEjeX: 0
       CuadranteEjeY: 2
       EjeX: 0
       EjeY: 1
-      Valor: 4
+      Valor: 2
       bloqueado: 1
     - Id: 59
       IdCuadrante: 7
@@ -1138,15 +1139,15 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 1
       EjeY: 1
-      Valor: 5
-      bloqueado: 1
+      Valor: 0
+      bloqueado: 0
     - Id: 60
       IdCuadrante: 7
       CuadranteEjeX: 0
       CuadranteEjeY: 2
       EjeX: 2
       EjeY: 1
-      Valor: 2
+      Valor: 6
       bloqueado: 1
     - Id: 61
       IdCuadrante: 7
@@ -1154,15 +1155,15 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 0
       EjeY: 2
-      Valor: 0
-      bloqueado: 0
+      Valor: 8
+      bloqueado: 1
     - Id: 62
       IdCuadrante: 7
       CuadranteEjeX: 0
       CuadranteEjeY: 2
       EjeX: 1
       EjeY: 2
-      Valor: 6
+      Valor: 9
       bloqueado: 1
     - Id: 63
       IdCuadrante: 7
@@ -1170,8 +1171,8 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 2
       EjeY: 2
-      Valor: 0
-      bloqueado: 0
+      Valor: 5
+      bloqueado: 1
     - Id: 64
       IdCuadrante: 8
       CuadranteEjeX: 1
@@ -1186,7 +1187,7 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 1
       EjeY: 0
-      Valor: 6
+      Valor: 8
       bloqueado: 1
     - Id: 66
       IdCuadrante: 8
@@ -1194,23 +1195,23 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 2
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 6
+      bloqueado: 1
     - Id: 67
       IdCuadrante: 8
       CuadranteEjeX: 1
       CuadranteEjeY: 2
       EjeX: 0
       EjeY: 1
-      Valor: 7
-      bloqueado: 1
+      Valor: 0
+      bloqueado: 0
     - Id: 68
       IdCuadrante: 8
       CuadranteEjeX: 1
       CuadranteEjeY: 2
       EjeX: 1
       EjeY: 1
-      Valor: 8
+      Valor: 9
       bloqueado: 1
     - Id: 69
       IdCuadrante: 8
@@ -1218,23 +1219,23 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 2
       EjeY: 1
-      Valor: 0
-      bloqueado: 0
+      Valor: 3
+      bloqueado: 1
     - Id: 70
       IdCuadrante: 8
       CuadranteEjeX: 1
       CuadranteEjeY: 2
       EjeX: 0
       EjeY: 2
-      Valor: 2
-      bloqueado: 1
+      Valor: 0
+      bloqueado: 0
     - Id: 71
       IdCuadrante: 8
       CuadranteEjeX: 1
       CuadranteEjeY: 2
       EjeX: 1
       EjeY: 2
-      Valor: 9
+      Valor: 7
       bloqueado: 1
     - Id: 72
       IdCuadrante: 8
@@ -1242,15 +1243,15 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 2
       EjeY: 2
-      Valor: 0
-      bloqueado: 0
+      Valor: 4
+      bloqueado: 1
     - Id: 73
       IdCuadrante: 9
       CuadranteEjeX: 2
       CuadranteEjeY: 2
       EjeX: 0
       EjeY: 0
-      Valor: 7
+      Valor: 9
       bloqueado: 1
     - Id: 74
       IdCuadrante: 9
@@ -1258,7 +1259,7 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 1
       EjeY: 0
-      Valor: 8
+      Valor: 7
       bloqueado: 1
     - Id: 75
       IdCuadrante: 9
@@ -1266,15 +1267,15 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 2
       EjeY: 0
-      Valor: 0
-      bloqueado: 0
+      Valor: 2
+      bloqueado: 1
     - Id: 76
       IdCuadrante: 9
       CuadranteEjeX: 2
       CuadranteEjeY: 2
       EjeX: 0
       EjeY: 1
-      Valor: 9
+      Valor: 8
       bloqueado: 1
     - Id: 77
       IdCuadrante: 9
@@ -1282,7 +1283,7 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 1
       EjeY: 1
-      Valor: 6
+      Valor: 4
       bloqueado: 1
     - Id: 78
       IdCuadrante: 9
@@ -1290,24 +1291,24 @@ MonoBehaviour:
       CuadranteEjeY: 2
       EjeX: 2
       EjeY: 1
-      Valor: 0
-      bloqueado: 0
+      Valor: 5
+      bloqueado: 1
     - Id: 79
       IdCuadrante: 9
       CuadranteEjeX: 2
       CuadranteEjeY: 2
       EjeX: 0
       EjeY: 2
-      Valor: 0
-      bloqueado: 0
+      Valor: 6
+      bloqueado: 1
     - Id: 80
       IdCuadrante: 9
       CuadranteEjeX: 2
       CuadranteEjeY: 2
       EjeX: 1
       EjeY: 2
-      Valor: 4
-      bloqueado: 1
+      Valor: 0
+      bloqueado: 0
     - Id: 81
       IdCuadrante: 9
       CuadranteEjeX: 2
@@ -1316,12 +1317,8 @@ MonoBehaviour:
       EjeY: 2
       Valor: 1
       bloqueado: 1
-    lstBitacoraMovimiento:
-    - Id: 47
-      Valor: 2
-      ValorAntes: 0
-    - Id: 33
-      Valor: 6
-      ValorAntes: 0
-    LogIndex: 2
+    lstBitacoraMovimiento: []
+    LogIndex: 0
+    BoardType: 9X9
+    Difficult: EASY
   lstGames: []
