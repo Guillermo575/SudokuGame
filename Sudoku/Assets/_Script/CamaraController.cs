@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +11,7 @@ public class CamaraController : MonoBehaviour
     public InputActionAsset inputActions;
     public GameObject tablero;
     public Vector2 Bounds;
+    public bool CameraLock;
     #endregion
 
     #region Private
@@ -90,6 +92,13 @@ public class CamaraController : MonoBehaviour
     #region Mover Camara
     private void HandleMovement()
     {
+        if (CameraLock) return;
+        if (cam.orthographicSize >= maxOrthographicSize - 0.01f)
+        {
+            LimitarCamara();
+            CentrarCamara();
+            return;
+        }
         if (EventSystem.current.IsPointerOverGameObject()) return;
         if (Touchscreen.current != null && Touchscreen.current.touches.Count > 0)
         {
@@ -283,6 +292,11 @@ public class CamaraController : MonoBehaviour
     bool IsAlphanumericKey(KeyControl key)
     {
         return (key.name.Length == 1 && char.IsLetter(key.name[0])) || char.IsDigit(key.name[0]);
+    }
+
+    public void ToggleLockCamera(bool cameraLock)
+    {
+        CameraLock = cameraLock;
     }
     #endregion
 }

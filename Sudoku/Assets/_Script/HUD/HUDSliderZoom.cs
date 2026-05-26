@@ -3,6 +3,7 @@ using UnityEngine.UI;
 public class HUDSliderZoom : MonoBehaviour
 {
     public Slider zoomSlider;
+    public Toggle lockCameraToggle;
     public CamaraController camaraController;
     private bool isStarted = false;
     void Update()
@@ -34,6 +35,13 @@ public class HUDSliderZoom : MonoBehaviour
         if (camaraController != null)
         {
             camaraController.CentrarCamara();
+        }
+    }
+    public void OnLockCamera()
+    {
+        if (camaraController != null)
+        {
+            camaraController.ToggleLockCamera(lockCameraToggle.isOn);
         }
     }
 }
