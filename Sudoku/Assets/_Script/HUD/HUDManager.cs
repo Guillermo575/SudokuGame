@@ -74,8 +74,8 @@ public class HUDManager : MonoBehaviour
         _rectTransform.anchorMin = new Vector2(0.5f, 0);
         _rectTransform.anchorMax = new Vector2(0.5f, 0);
         _rectTransform.pivot = new Vector2(0.5f, 0);
-        _rectTransform.offsetMin = new Vector2(padding, padding);
-        _rectTransform.offsetMax = new Vector2(-padding, _rectTransform.rect.height);
+        //_rectTransform.offsetMin = new Vector2(padding, padding);
+        //_rectTransform.offsetMax = new Vector2(-padding, _rectTransform.rect.height);
     }
     void PositionHudHorizontalLeft()
     {
@@ -83,8 +83,8 @@ public class HUDManager : MonoBehaviour
         _rectTransform.anchorMin = new Vector2(0, 0.5f);
         _rectTransform.anchorMax = new Vector2(0, 0.5f);
         _rectTransform.pivot = new Vector2(0, 0.5f);
-        _rectTransform.offsetMin = new Vector2(padding, padding);
-        _rectTransform.offsetMax = new Vector2(_rectTransform.rect.width, -padding);
+        //_rectTransform.offsetMin = new Vector2(padding, padding);
+        //_rectTransform.offsetMax = new Vector2(_rectTransform.rect.width, -padding);
     }
     void PositionHudHorizontalRight()
     {
@@ -92,8 +92,8 @@ public class HUDManager : MonoBehaviour
         _rectTransform.anchorMin = new Vector2(1, 0.5f);
         _rectTransform.anchorMax = new Vector2(1, 0.5f);
         _rectTransform.pivot = new Vector2(1, 0.5f);
-        _rectTransform.offsetMin = new Vector2(-_rectTransform.rect.width, padding);
-        _rectTransform.offsetMax = new Vector2(-padding, -padding);
+        //_rectTransform.offsetMin = new Vector2(-_rectTransform.rect.width, padding);
+        //_rectTransform.offsetMax = new Vector2(-padding, -padding);
     }
     #endregion
 
