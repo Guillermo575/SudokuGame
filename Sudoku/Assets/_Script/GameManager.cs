@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public SaveGameSO saveGameSO;
     public HUDButtonPanel hUDButtonPanel;
     public GameObject hudObject;
+    public bool isLeftHanded = false;
     #endregion
 
     #region private Variables
@@ -21,14 +22,27 @@ public class GameManager : MonoBehaviour
     private int TotalAlphabet { get { return sudokuBoard.numberColumns * sudokuBoard.numberRows; } }
     private GameState gameState { get { return sudokuBoard == null ? null : sudokuBoard.gameState; } }
     private SudokuGenerator sudokuGenerator { get { return gameState == null ? null : gameState.sudokuGenerator; } }
+    public enum OrientationMode
+    {
+        Vertical,
+        HorizontalLeft,
+        HorizontalRight
+    }
+    public OrientationMode CurrentOrientation { get; private set; }
+    private bool _isMobilePlatform;
     #endregion
 
     #region Awake & Start
     void Awake()
     {
+        _isMobilePlatform = Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer;
         CreateSingleton();
         if (hUDButtonPanel != null)
             hUDButtonPanel.Initialize(Sudoku.Alphabet.masterAlpha.Length - 1, 0);
+    }
+    void Update()
+    {
+        CurrentOrientation = _isMobilePlatform ? CheckOrientationChangeMobile() : CheckOrientationChange();
     }
     #endregion
 
@@ -175,6 +189,36 @@ public class GameManager : MonoBehaviour
         for (int l = 0; l < gameState.lstBitacoraMovimiento.Count + 1; l++)
         {
             LogForward();
+        }
+    }
+    #endregion
+
+    #region Orientation
+    private OrientationMode CheckOrientationChangeMobile()
+    {
+        if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+        {
+            return OrientationMode.Vertical;
+        }
+        else if (Screen.orientation == ScreenOrientation.LandscapeLeft)
+        {
+            return (isLeftHanded ? OrientationMode.HorizontalLeft : OrientationMode.HorizontalRight);
+        }
+        else if (Screen.orientation == ScreenOrientation.LandscapeRight)
+        {
+            return (isLeftHanded ? OrientationMode.HorizontalRight : OrientationMode.HorizontalLeft);
+        }
+        return OrientationMode.Vertical;
+    }
+    private OrientationMode CheckOrientationChange()
+    {
+        if (Screen.width > Screen.height)
+        {
+            return (isLeftHanded ? OrientationMode.HorizontalLeft : OrientationMode.HorizontalRight);
+        }
+        else
+        {
+            return OrientationMode.Vertical;
         }
     }
     #endregion

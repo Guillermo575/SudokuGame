@@ -3,18 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class HUDManager : MonoBehaviour
 {
-    public enum OrientationMode
-    {
-        Vertical,
-        HorizontalLeft,
-        HorizontalRight
-    }
-    public OrientationMode CurrentOrientation { get; private set; }
-
     #region Public
     public GameObject hudContainer;
     public float padding = 20f;
-    public bool isLeftHanded = false;
     public HUDButtonPanel buttonPanel;
     public HUDSliderZoom sliderZoom;
     public HUDLogControl logControl;
@@ -23,13 +14,13 @@ public class HUDManager : MonoBehaviour
     #region Private
     private RectTransform _rectTransform;
     private CanvasScaler _canvasScaler;
-    private bool _isMobilePlatform;
+    private GameManager gameManager;
+    private GameManager.OrientationMode CurrentOrientation;
     #endregion
 
     #region Awake
     void Awake()
     {
-        _isMobilePlatform = Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer;
         CreateSingleton();
         if (hudContainer == null)
         {
@@ -51,55 +42,32 @@ public class HUDManager : MonoBehaviour
         }
         UpdateOrientation(CurrentOrientation);
     }
-    #endregion
-
+    void Start()
+    {
+        gameManager = GameManager.GetSingleton();
+    }
     void Update()
     {
-        if (_isMobilePlatform)
+        var orientation = gameManager.CurrentOrientation;
+        if (CurrentOrientation != orientation)
         {
-            var orientation = CheckOrientationChange();
-            if (CurrentOrientation != orientation)
-            {
-                UpdateOrientation(orientation);
-            }
+            UpdateOrientation(orientation);
         }
     }
+    #endregion
 
     #region Orientation
-    public void SwapOrientation()
-    {
-        CurrentOrientation = CurrentOrientation == OrientationMode.Vertical ? isLeftHanded ? OrientationMode.HorizontalLeft : OrientationMode.HorizontalRight : OrientationMode.Vertical;
-        UpdateOrientation(CurrentOrientation);
-    }
-    private OrientationMode CheckOrientationChange()
-    {
-        if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
-        {
-            return OrientationMode.Vertical;
-        }
-        else if (Screen.orientation == ScreenOrientation.LandscapeLeft)
-        {
-            return (isLeftHanded ? OrientationMode.HorizontalLeft : OrientationMode.HorizontalRight);
-        }
-        else if (Screen.orientation == ScreenOrientation.LandscapeRight)
-        {
-            return (isLeftHanded ? OrientationMode.HorizontalRight : OrientationMode.HorizontalLeft);
-        }
-        return OrientationMode.Vertical;
-    }
-
-    void UpdateOrientation(OrientationMode orientationMode)
+    void UpdateOrientation(GameManager.OrientationMode orientationMode)
     {
         CurrentOrientation = orientationMode;
         switch (orientationMode)
         {
-            case OrientationMode.Vertical: PositionHudVertical(); return;
-            case OrientationMode.HorizontalLeft: PositionHudHorizontalLeft(); return;
-            case OrientationMode.HorizontalRight: PositionHudHorizontalRight(); return;
+            case GameManager.OrientationMode.Vertical: PositionHudVertical(); return;
+            case GameManager.OrientationMode.HorizontalLeft: PositionHudHorizontalLeft(); return;
+            case GameManager.OrientationMode.HorizontalRight: PositionHudHorizontalRight(); return;
         }
         Debug.LogWarning("HUDManager: Orientación desconocida.  Manteniendo la posición actual del HUD.");
     }
-
     void PositionHudVertical()
     {
         if (_rectTransform == null) return;
@@ -109,7 +77,6 @@ public class HUDManager : MonoBehaviour
         _rectTransform.offsetMin = new Vector2(padding, padding);
         _rectTransform.offsetMax = new Vector2(-padding, _rectTransform.rect.height);
     }
-
     void PositionHudHorizontalLeft()
     {
         if (_rectTransform == null) return;
@@ -119,7 +86,6 @@ public class HUDManager : MonoBehaviour
         _rectTransform.offsetMin = new Vector2(padding, padding);
         _rectTransform.offsetMax = new Vector2(_rectTransform.rect.width, -padding);
     }
-
     void PositionHudHorizontalRight()
     {
         if (_rectTransform == null) return;

@@ -25,6 +25,7 @@ public class CamaraController : MonoBehaviour
     private float initialOrthographicSize;
     private bool isPinching = false;
     GameManager gameManager;
+    public GameManager.OrientationMode CurrentOrientation { get; private set; }
     #endregion
 
     #region InputAction
@@ -35,10 +36,6 @@ public class CamaraController : MonoBehaviour
     #endregion
 
     #region Start & Update
-    private void Start()
-    {
-        //gameManager = GameManager.GetSingleton();
-    }
     void Update()
     {
         if (gameManager == null) return;
@@ -48,6 +45,7 @@ public class CamaraController : MonoBehaviour
         HandleCenter();
         HandleClick();
         DetectKey();
+        CurrentOrientation = gameManager.CurrentOrientation;
     }
     #endregion
 
@@ -185,6 +183,7 @@ public class CamaraController : MonoBehaviour
     }
     private void HandleZoom()
     {
+        if (zoomScroll == null) return;
         if (zoomScroll.triggered)
         {
             Vector2 scrollValue = zoomScroll.ReadValue<Vector2>();
@@ -245,6 +244,16 @@ public class CamaraController : MonoBehaviour
         float centerX = Horizontal / 2f;
         float centerY = -Vertical / 2f;
         transform.position = new Vector3(centerX, 10f, centerY);
+    }
+    public Vector3 getOrientationOffset()
+    {
+        switch (CurrentOrientation)
+        {
+            case GameManager.OrientationMode.Vertical: return new Vector3(0, 0, -Screen.height / 2);
+            case GameManager.OrientationMode.HorizontalLeft: return new Vector3(-Screen.width / 2, 0, 0);
+            case GameManager.OrientationMode.HorizontalRight: return new Vector3(Screen.width / 2, 0, 0);
+        }
+        return new Vector3(0, 0, 0);
     }
     #endregion
 
