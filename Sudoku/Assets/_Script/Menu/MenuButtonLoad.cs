@@ -11,11 +11,12 @@ public class MenuButtonLoad : MonoBehaviour
     private GameState gameState;
     private GameManager gameManager;
     private MenuManager menuManager;
-
+    private HUDManager hudManager;
     public void Initialize(GameState gameState)
     {
         gameManager = GameManager.GetSingleton();
         menuManager = MenuManager.GetSingleton();
+        hudManager = HUDManager.GetSingleton();
         this.gameState = gameState;
         txtDate.text = gameState.dateCreate;
         txtBoard.text = gameState.BoardType;
@@ -25,6 +26,8 @@ public class MenuButtonLoad : MonoBehaviour
     {
         if (gameManager == null || gameState == null) return;
         gameManager.StartGame(gameState);
+        menuManager.HideShow(false);
+        hudManager.HideShow(true);
     }
     public void OnButtonDelete()
     {

@@ -243,17 +243,20 @@ public class CamaraController : MonoBehaviour
         cam.orthographicSize = newSize;
         float centerX = Horizontal / 2f;
         float centerY = -Vertical / 2f;
-        transform.position = new Vector3(centerX, 10f, centerY);
+        transform.position = new Vector3(centerX, 10f, centerY) + getOrientationOffset(Horizontal, Vertical, newSize);
     }
-    public Vector3 getOrientationOffset()
+
+    public Vector3 getOrientationOffset(float Horizontal, float Vertical, float cameraSize, float offset = 0.4f)
     {
+        float offsetVertical = Vertical * offset;
+        float offsetHorizontal = Horizontal * offset;
         switch (CurrentOrientation)
         {
-            case GameManager.OrientationMode.Vertical: return new Vector3(0, 0, -Screen.height / 2);
-            case GameManager.OrientationMode.HorizontalLeft: return new Vector3(-Screen.width / 2, 0, 0);
-            case GameManager.OrientationMode.HorizontalRight: return new Vector3(Screen.width / 2, 0, 0);
+            case GameManager.OrientationMode.Vertical: return new Vector3(0, 0, -offsetVertical);
+            case GameManager.OrientationMode.HorizontalLeft: return new Vector3(-offsetHorizontal, 0, 0);
+            case GameManager.OrientationMode.HorizontalRight: return new Vector3(offsetHorizontal, 0, 0);
         }
-        return new Vector3(0, 0, 0);
+        return Vector3.zero;
     }
     #endregion
 
