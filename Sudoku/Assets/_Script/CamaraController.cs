@@ -25,7 +25,8 @@ public class CamaraController : MonoBehaviour
     private float initialOrthographicSize;
     private bool isPinching = false;
     GameManager gameManager;
-    public GameManager.OrientationMode CurrentOrientation { get; private set; }
+    OrientationManager orientationManager;
+    public OrientationManager.OrientationMode CurrentOrientation { get; private set; }
     #endregion
 
     #region InputAction
@@ -45,7 +46,7 @@ public class CamaraController : MonoBehaviour
         HandleCenter();
         HandleClick();
         DetectKey();
-        CurrentOrientation = gameManager.CurrentOrientation;
+        CurrentOrientation = orientationManager.CurrentOrientation;
     }
     #endregion
 
@@ -53,6 +54,7 @@ public class CamaraController : MonoBehaviour
     public void InitiateCamera()
     {
         gameManager = GameManager.GetSingleton();
+        orientationManager = OrientationManager.GetSingleton();
         if (cam == null || !cam.orthographic)
         {
             Debug.LogError("Este script requiere una camara ortografica.");
@@ -252,9 +254,9 @@ public class CamaraController : MonoBehaviour
         float offsetHorizontal = Horizontal * offset;
         switch (CurrentOrientation)
         {
-            case GameManager.OrientationMode.Vertical: return new Vector3(0, 0, -offsetVertical);
-            case GameManager.OrientationMode.HorizontalLeft: return new Vector3(-offsetHorizontal, 0, 0);
-            case GameManager.OrientationMode.HorizontalRight: return new Vector3(offsetHorizontal, 0, 0);
+            case OrientationManager.OrientationMode.Vertical: return new Vector3(0, 0, -offsetVertical);
+            case OrientationManager.OrientationMode.HorizontalLeft: return new Vector3(-offsetHorizontal, 0, 0);
+            case OrientationManager.OrientationMode.HorizontalRight: return new Vector3(offsetHorizontal, 0, 0);
         }
         return Vector3.zero;
     }

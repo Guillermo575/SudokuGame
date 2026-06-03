@@ -1150,10 +1150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudContainer: {fileID: 584769495}
-  padding: 20
-  buttonPanel: {fileID: 7954579218871001131}
-  sliderZoom: {fileID: 744804869}
-  logControl: {fileID: 757772002}
 --- !u!1 &248753008
 GameObject:
   m_ObjectHideFlags: 0
@@ -2784,6 +2780,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 584769496}
+  - component: {fileID: 584769497}
   m_Layer: 5
   m_Name: HUDContainer
   m_TagString: Untagged
@@ -2815,6 +2812,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &584769497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584769495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d6adcb2e45c1d43ad0503a7309b191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verticalAnchorMin: {x: 0.5, y: 0}
+  verticalAnchorMax: {x: 0.5, y: 0}
+  verticalPivot: {x: 0.5, y: 0}
+  horizontalLeftAnchorMin: {x: 0, y: 0.5}
+  horizontalLeftAnchorMax: {x: 0, y: 0.5}
+  horizontalLeftPivot: {x: 0, y: 0.5}
+  horizontalRightAnchorMin: {x: 1, y: 0.5}
+  horizontalRightAnchorMax: {x: 1, y: 0.5}
+  horizontalRightPivot: {x: 1, y: 0.5}
 --- !u!1 &588070584
 GameObject:
   m_ObjectHideFlags: 0
@@ -4060,17 +4078,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 488185689332451604, guid: 8ae111dc1006dfd45976a73510869303, type: 3}
   m_PrefabInstance: {fileID: 744804867}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &744804869 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8194419226789881523, guid: 8ae111dc1006dfd45976a73510869303, type: 3}
-  m_PrefabInstance: {fileID: 744804867}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ab3246cbfa67ed498acb4f592bd379f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &753575145
 GameObject:
   m_ObjectHideFlags: 0
@@ -4375,17 +4382,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1430175890687448769, guid: 692627eb63eb4494eb06a7dcad0522b0, type: 3}
   m_PrefabInstance: {fileID: 757772000}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &757772002 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7287634022206999212, guid: 692627eb63eb4494eb06a7dcad0522b0, type: 3}
-  m_PrefabInstance: {fileID: 757772000}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 242f42aa15636b448be9ddce198d7c49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &758959458
 GameObject:
   m_ObjectHideFlags: 0
@@ -4983,8 +4979,6 @@ MonoBehaviour:
   - {fileID: 1176428478}
   - {fileID: 1357777378}
   - {fileID: 978418825}
-  dropdownBoard: {fileID: 779785656}
-  dropdownDifficult: {fileID: 1639855428}
   lstMenuTree:
   - {fileID: 1082551389}
 --- !u!1 &932376870
@@ -8480,6 +8474,7 @@ GameObject:
   - component: {fileID: 1414250856}
   - component: {fileID: 1414250855}
   - component: {fileID: 1414250858}
+  - component: {fileID: 1414250859}
   m_Layer: 5
   m_Name: Menu_BtnGameContinue
   m_TagString: Untagged
@@ -8551,8 +8546,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 885335444}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 1414250859}
+        m_TargetAssemblyTypeName: MenuButtonContinue, Assembly-CSharp
         m_MethodName: OnContinueGame
         m_Mode: 1
         m_Arguments:
@@ -8615,6 +8610,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeInLandscape: {x: 650, y: 100}
   sizeInPortrait: {x: 650, y: 150}
+--- !u!114 &1414250859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414250853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0125265b713df49bea4c45922da649, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1457670793
 GameObject:
   m_ObjectHideFlags: 0
@@ -10922,6 +10929,7 @@ GameObject:
   - component: {fileID: 1794572348}
   - component: {fileID: 1794572349}
   - component: {fileID: 1794572350}
+  - component: {fileID: 1794572351}
   m_Layer: 5
   m_Name: Menu_pnlNewgame
   m_TagString: Untagged
@@ -11000,6 +11008,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1794572351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794572347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd2f441b51c9f5439fdfd16e1926793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropdownBoard: {fileID: 779785656}
+  dropdownDifficult: {fileID: 1639855428}
 --- !u!1 &1816421184
 GameObject:
   m_ObjectHideFlags: 0
@@ -11247,6 +11269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1902135371}
   - component: {fileID: 1902135370}
+  - component: {fileID: 1902135372}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -11271,7 +11294,6 @@ MonoBehaviour:
   saveGameSO: {fileID: 11400000, guid: 0db9e814c1418ce488dda2aba6df6602, type: 2}
   hUDButtonPanel: {fileID: 7954579218871001131}
   hudObject: {fileID: 227736408}
-  isLeftHanded: 0
 --- !u!4 &1902135371
 Transform:
   m_ObjectHideFlags: 0
@@ -11287,6 +11309,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1902135372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902135369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76029b5683867484cb2a88abec3a8de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLeftHanded: 0
 --- !u!1 &1912351534
 GameObject:
   m_ObjectHideFlags: 0
@@ -11446,8 +11481,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 885335444}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 1794572351}
+        m_TargetAssemblyTypeName: MenuNewGame, Assembly-CSharp
         m_MethodName: OnNewGame
         m_Mode: 1
         m_Arguments:
