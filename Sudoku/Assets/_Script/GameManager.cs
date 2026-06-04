@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     private int TotalAlphabet { get { return sudokuBoard.numberColumns * sudokuBoard.numberRows; } }
     private GameState gameState { get { return sudokuBoard == null ? null : sudokuBoard.gameState; } }
     private SudokuGenerator sudokuGenerator { get { return gameState == null ? null : gameState.sudokuGenerator; } }
+    public bool IsGameActive { get { return sudokuBoard == null ? false : sudokuBoard.IsGameActive; } }
+    public bool IsPause { get { return sudokuBoard == null ? false : sudokuBoard.IsGameActive ? _IsPause : false; } }
+    private bool _IsPause;
     #endregion
 
     #region Awake & Start
@@ -87,6 +90,17 @@ public class GameManager : MonoBehaviour
             setCellSelected(null);
             CheckWinGame();
         }
+    }
+    #endregion
+
+    #region Pause
+    public void TogglePause()
+    {
+        _IsPause = !_IsPause;
+    }
+    public void setPause(bool Pause)
+    {
+        _IsPause = Pause;
     }
     #endregion
 

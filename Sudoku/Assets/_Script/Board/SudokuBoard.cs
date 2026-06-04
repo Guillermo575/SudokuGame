@@ -24,23 +24,22 @@ public class SudokuBoard : MonoBehaviour
     public int numberRows { get; private set; } = 3;
     public int LoopId { get; private set; } = 1;
     public GameState gameState { get; private set; }
-    private SudokuGenerator sudokuGenerator { get { return gameState == null ? null : gameState.sudokuGenerator; } }
+    private SudokuSubBoard[,] subBoards;
+    public bool IsGameActive { get; private set; }
     #endregion
 
-    private SudokuSubBoard[,] subBoards;
+    #region Update
+    private void Update()
+    {
+        UpdatePosition();
+    }
+    #endregion
+
     public void CreateBoard(GameState gameState)
     {
-        Transform[] children = mainBoardPrefab.GetComponentsInChildren<Transform>();
-        foreach (Transform child in children)
-        {
-            if (child != mainBoardPrefab.transform)
-            {
-                Destroy(child.gameObject);
-            }
-        }
+        DestroyBoard();
         numberColumns = gameState.sudokuGenerator.ColumnasY;
         numberRows = gameState.sudokuGenerator.ColumnasX;
-        LoopId = 1;
         this.gameState = gameState;
         subBoards = new SudokuSubBoard[numberColumns, numberRows];
         for (int i = 0; i < numberRows; i++)
@@ -59,6 +58,7 @@ public class SudokuBoard : MonoBehaviour
             }
         }
         allCells = FindObjectsByType<SudokuNumberCell>(FindObjectsSortMode.InstanceID).ToList();
+        IsGameActive = true;
         UpdatePosition();
     }
     public void UpdatePosition()
@@ -78,13 +78,23 @@ public class SudokuBoard : MonoBehaviour
             }
         }
     }
+    public void DestroyBoard()
+    {
+        Transform[] children = mainBoardPrefab.GetComponentsInChildren<Transform>();
+        foreach (Transform child in children)
+        {
+            if (child != mainBoardPrefab.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        LoopId = 1;
+        subBoards = null;
+        IsGameActive = false;
+    }
     public List<Celda> GetLstCeldas()
     {
         return gameState.lstCeldas;
-    }
-    private void Update()
-    {
-        UpdatePosition();
     }
     public int addLoopId()
     {
