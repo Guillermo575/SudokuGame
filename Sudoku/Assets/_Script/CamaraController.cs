@@ -1,5 +1,3 @@
-using System;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -34,24 +32,15 @@ public class CamaraController : MonoBehaviour
     private InputAction zoomScroll;
     private InputAction centerAction;
     private InputAction clickAction;
+    private InputAction menuAction;
     #endregion
 
     #region Start & Update
-    void Update()
+    private void Awake()
     {
-        if (gameManager == null) return;
-        HandleMovement();
-        LimitarCamara();
-        HandleZoom();
-        HandleCenter();
-        HandleClick();
-        DetectKey();
-        CurrentOrientation = orientationManager.CurrentOrientation;
+        CreateSingleton();
     }
-    #endregion
-
-    #region General
-    public void InitiateCamera()
+    void Start()
     {
         gameManager = GameManager.GetSingleton();
         orientationManager = OrientationManager.GetSingleton();
@@ -64,18 +53,29 @@ public class CamaraController : MonoBehaviour
         zoomScroll = inputActions.FindAction("Scroll");
         centerAction = inputActions.FindAction("Center");
         clickAction = inputActions.FindAction("Click");
+        defaultOrthographicSize = cam.orthographicSize;
+        maxOrthographicSize = defaultOrthographicSize;
         moveAction.Enable();
         zoomScroll.Enable();
         centerAction.Enable();
         clickAction.Enable();
-        defaultOrthographicSize = cam.orthographicSize;
-        maxOrthographicSize = defaultOrthographicSize;
-        float sizeHorizontal = tablero.transform.localScale.x;
-        float sizeVertical = tablero.transform.localScale.z;
-        tableroWidth = sizeHorizontal;
-        tableroHeight = sizeVertical;
-        CentrarCamara(tableroWidth, tableroHeight);
     }
+    void Update()
+    {
+        if (gameManager == null) return;
+        tableroWidth = tablero.transform.localScale.x;
+        tableroHeight = tablero.transform.localScale.z;
+        HandleMovement();
+        LimitarCamara();
+        HandleZoom();
+        HandleCenter();
+        HandleClick();
+        DetectKey();
+        CurrentOrientation = orientationManager.CurrentOrientation;
+    }
+    #endregion
+
+    #region General
     private void LimitarCamara()
     {
         float minCamX = tablero.transform.position.x - Bounds.x;
@@ -311,6 +311,26 @@ public class CamaraController : MonoBehaviour
     public void ToggleLockCamera(bool cameraLock)
     {
         CameraLock = cameraLock;
+    }
+    #endregion
+
+    #region Singleton
+    private static CamaraController SingletonObject;
+    private CamaraController() { }
+    private void CreateSingleton()
+    {
+        if (SingletonObject == null)
+        {
+            SingletonObject = this;
+        }
+        else
+        {
+            Debug.LogError("Ya existe una instancia de esta clase");
+        }
+    }
+    public static CamaraController GetSingleton()
+    {
+        return SingletonObject;
     }
     #endregion
 }

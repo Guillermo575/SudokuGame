@@ -4,7 +4,6 @@ public class GameManager : MonoBehaviour
 {
     #region Variables
     public SudokuBoard sudokuBoard;
-    public CamaraController controller;
     public SaveGameSO saveGameSO;
     public HUDButtonPanel hUDButtonPanel;
     public GameObject hudObject;
@@ -35,7 +34,6 @@ public class GameManager : MonoBehaviour
         if (gameState == null) return;
         sudokuBoard.gameObject.SetActive(true);
         sudokuBoard.CreateBoard(gameState);
-        controller.InitiateCamera();
         if (hUDButtonPanel != null)
             hUDButtonPanel.HideShowButtons(TotalAlphabet);
         saveGameSO.lastGameState = gameState;

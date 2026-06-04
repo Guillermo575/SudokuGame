@@ -1,22 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using System.Linq;
-public class MenuButtonLoad : MonoBehaviour
+public class MenuButtonLoad : MenuButton
 {
     public TextMeshProUGUI txtDate;
     public TextMeshProUGUI txtBoard;
     public TextMeshProUGUI txtDifficult;
     private GameState gameState;
-    private GameManager gameManager;
-    private MenuManager menuManager;
-    private HUDManager hudManager;
     public void Initialize(GameState gameState)
     {
-        gameManager = GameManager.GetSingleton();
-        menuManager = MenuManager.GetSingleton();
-        hudManager = HUDManager.GetSingleton();
         this.gameState = gameState;
         txtDate.text = gameState.dateCreate;
         txtBoard.text = gameState.BoardType;
@@ -24,10 +15,7 @@ public class MenuButtonLoad : MonoBehaviour
     }
     public void OnButtonLoad()
     {
-        if (gameManager == null || gameState == null) return;
-        gameManager.StartGame(gameState);
-        menuManager.HideShow(false);
-        hudManager.HideShow(true);
+        LoadGame(gameState);
     }
     public void OnButtonDelete()
     {
