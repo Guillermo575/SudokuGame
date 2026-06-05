@@ -6,6 +6,8 @@ public class MenuManager : MonoBehaviour
     #region Public
     public GameObject container;
     public GameObject buttonContinue;
+    public GameObject menuPause;
+    public GameObject menuMain;
     public MenuConfirmar menuConfirmar;
     public List<GameObject> lstMenus;
     #endregion

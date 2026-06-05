@@ -45,6 +45,22 @@ public class MenuButton : MonoBehaviour
     }
     public void PauseGame()
     {
+        menuManager.SetActiveCanvas();
+        menuManager.lstMenuTree.Clear();
+        menuManager.ShowMenu(menuManager.menuPause);
+        menuManager.HideShow(true);
+        hudManager.HideShow(false);
+    }
+    public void ExitGame()
+    {
+        menuManager.menuConfirmar.MostrarPantallaConfirmar(EventExitGame, "Do you want to exit?");
+    }
+    public void EventExitGame()
+    {
+        gameManager.DestroyGame();
+        menuManager.SetActiveCanvas();
+        menuManager.lstMenuTree.Clear();
+        menuManager.ShowMenu(menuManager.menuMain);
         menuManager.HideShow(true);
         hudManager.HideShow(false);
     }

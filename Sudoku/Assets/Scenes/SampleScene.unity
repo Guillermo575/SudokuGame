@@ -1522,6 +1522,7 @@ GameObject:
   - component: {fileID: 380237027}
   - component: {fileID: 380237026}
   - component: {fileID: 380237029}
+  - component: {fileID: 380237030}
   m_Layer: 5
   m_Name: Menu_BtnExit
   m_TagString: Untagged
@@ -1592,7 +1593,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 380237027}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 380237030}
+        m_TargetAssemblyTypeName: MenuButton, Assembly-CSharp
+        m_MethodName: ExitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &380237027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1645,6 +1658,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeInLandscape: {x: 650, y: 150}
   sizeInPortrait: {x: 650, y: 200}
+--- !u!114 &380237030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380237024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76cf5aa28fd85346a8719e26dd57199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &416349208
 GameObject:
   m_ObjectHideFlags: 0
@@ -4395,6 +4420,7 @@ GameObject:
   - component: {fileID: 758959461}
   - component: {fileID: 758959460}
   - component: {fileID: 758959463}
+  - component: {fileID: 758959464}
   m_Layer: 5
   m_Name: Menu_BtnResume
   m_TagString: Untagged
@@ -4465,7 +4491,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 758959461}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 758959464}
+        m_TargetAssemblyTypeName: MenuButton, Assembly-CSharp
+        m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &758959461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4518,6 +4556,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeInLandscape: {x: 650, y: 150}
   sizeInPortrait: {x: 650, y: 200}
+--- !u!114 &758959464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758959458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76cf5aa28fd85346a8719e26dd57199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &779785654
 GameObject:
   m_ObjectHideFlags: 0
@@ -4970,6 +5020,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 561732604}
   buttonContinue: {fileID: 1414250853}
+  menuPause: {fileID: 1176428478}
+  menuMain: {fileID: 1082551389}
   menuConfirmar: {fileID: 1695325528}
   lstMenus:
   - {fileID: 1082551389}
@@ -5443,6 +5495,7 @@ GameObject:
   - component: {fileID: 1034659706}
   - component: {fileID: 1034659705}
   - component: {fileID: 1034659704}
+  - component: {fileID: 1034659707}
   m_Layer: 5
   m_Name: HUD_ButtonMenu
   m_TagString: Untagged
@@ -5513,7 +5566,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1034659705}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1034659707}
+        m_TargetAssemblyTypeName: MenuButton, Assembly-CSharp
+        m_MethodName: PauseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1034659705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5552,6 +5617,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034659702}
   m_CullTransparentMesh: 1
+--- !u!114 &1034659707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034659702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5389765cc63b45a47a725a3942a74b2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 968ee66f816a8e44e88eef9324c2dc61, type: 3}
+  pauseAction:
+    m_Name: Pause
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3333ebf2-41ba-492d-b140-68001c383e7a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &1055719888
 GameObject:
   m_ObjectHideFlags: 0
@@ -11290,7 +11377,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sudokuBoard: {fileID: 1546840822}
-  controller: {fileID: 963194229}
   saveGameSO: {fileID: 11400000, guid: 0db9e814c1418ce488dda2aba6df6602, type: 2}
   hUDButtonPanel: {fileID: 7954579218871001131}
   hudObject: {fileID: 227736408}

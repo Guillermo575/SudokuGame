@@ -40,6 +40,18 @@ public class GameManager : MonoBehaviour
         if (hUDButtonPanel != null)
             hUDButtonPanel.HideShowButtons(TotalAlphabet);
         saveGameSO.lastGameState = gameState;
+        _IsPause = true;
+    }
+    public void DestroyGame()
+    {
+        if (sudokuBoard != null)
+        {
+            sudokuBoard.DestroyBoard();
+            sudokuBoard.gameObject.SetActive(false);
+        }
+        if (hUDButtonPanel != null)
+            hUDButtonPanel.HideShowButtons(0);
+        _IsPause = false;
     }
     public bool setCellSelected(int Valor)
     {
