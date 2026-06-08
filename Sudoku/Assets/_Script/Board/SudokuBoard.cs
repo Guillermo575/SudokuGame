@@ -80,12 +80,15 @@ public class SudokuBoard : MonoBehaviour
     }
     public void DestroyBoard()
     {
-        Transform[] children = mainBoardPrefab.GetComponentsInChildren<Transform>();
-        foreach (Transform child in children)
+        if (subBoards != null)
         {
-            if (child != mainBoardPrefab.transform)
+            var children = subBoards;
+            foreach (var child in children)
             {
-                Destroy(child.gameObject);
+                if (child.transform != mainBoardPrefab.transform)
+                {
+                    Destroy(child.gameObject);
+                }
             }
         }
         LoopId = 1;
