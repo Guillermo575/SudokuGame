@@ -45,10 +45,7 @@ public class MenuButton : MonoBehaviour
     }
     public void PauseGame()
     {
-        menuManager.SetActiveCanvas();
-        menuManager.lstMenuTree.Clear();
-        menuManager.ShowMenu(menuManager.menuPause);
-        menuManager.HideShow(true);
+        menuManager.ClearAndShowMenu(gameManager.IsWin ? menuManager.menuWin : menuManager.menuPause);
         hudManager.HideShow(false);
     }
     public void ExitGame()
@@ -58,16 +55,17 @@ public class MenuButton : MonoBehaviour
     public void EventExitGame()
     {
         gameManager.DestroyGame();
-        menuManager.SetActiveCanvas();
-        menuManager.lstMenuTree.Clear();
-        menuManager.ShowMenu(menuManager.menuMain);
-        menuManager.HideShow(true);
+        menuManager.ClearAndShowMenu(menuManager.menuMain);
         hudManager.HideShow(false);
     }
     public void ResumeGame()
     {
         menuManager.HideShow(false);
         hudManager.HideShow(true);
+    }
+    public void AutoResolveGame()
+    {
+        gameManager.AutoResolveGame();
     }
     #endregion
 }

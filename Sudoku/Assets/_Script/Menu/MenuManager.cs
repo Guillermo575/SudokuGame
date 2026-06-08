@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
     public GameObject buttonContinue;
     public GameObject menuPause;
     public GameObject menuMain;
+    public GameObject menuWin;
     public MenuConfirmar menuConfirmar;
     public List<GameObject> lstMenus;
     #endregion
@@ -24,7 +25,7 @@ public class MenuManager : MonoBehaviour
     }
     #endregion
 
-    #region General	
+    #region General
     public void HideShow(bool Visible)
     {
         container.SetActive(Visible);
@@ -59,6 +60,13 @@ public class MenuManager : MonoBehaviour
             objBack.SetActive(true);
         }
     }
+    public void ClearAndShowMenu(GameObject objMenu)
+    {
+        SetActiveCanvas();
+        lstMenuTree.Clear();
+        ShowMenu(objMenu);
+        HideShow(true);
+    }
     public void ShowMenu(GameObject objMenu)
     {
         if (objMenu != null)
@@ -87,13 +95,13 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region Singleton
-    private static MenuManager SingletonGameManager;
+    private static MenuManager SingletonObject;
     private MenuManager() { }
     private void CreateSingleton()
     {
-        if (SingletonGameManager == null)
+        if (SingletonObject == null)
         {
-            SingletonGameManager = this;
+            SingletonObject = this;
         }
         else
         {
@@ -102,7 +110,7 @@ public class MenuManager : MonoBehaviour
     }
     public static MenuManager GetSingleton()
     {
-        return SingletonGameManager;
+        return SingletonObject;
     }
     #endregion
 }
