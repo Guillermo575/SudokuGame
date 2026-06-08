@@ -103,7 +103,10 @@ namespace Sudoku
             bool Validado = true;
             foreach (var objCelda in lstCeldas)
             {
-                if (!Validado || objCelda.Valor == 0) return false;
+                if (!Validado || objCelda.Valor == 0) 
+                {
+                    return false;
+                }
                 Validado = (from x in lstCeldas
                             where ((x.IdCuadrante == objCelda.IdCuadrante) ||
                                                        (x.CuadranteEjeX == objCelda.CuadranteEjeX && x.EjeX == objCelda.EjeX) ||

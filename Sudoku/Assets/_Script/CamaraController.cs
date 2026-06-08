@@ -272,6 +272,7 @@ public class CamaraController : MonoBehaviour
     }
     private void DetectButtonClick()
     {
+        if (gameManager.IsWin) return;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))

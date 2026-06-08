@@ -1,5 +1,6 @@
 using Sudoku;
 using UnityEngine;
+using System.Linq;
 public class GameManager : MonoBehaviour
 {
     #region Variables
@@ -17,6 +18,9 @@ public class GameManager : MonoBehaviour
     public bool IsGameActive { get { return sudokuBoard == null ? false : sudokuBoard.IsGameActive; } }
     public bool IsPause { get { return sudokuBoard == null ? false : sudokuBoard.IsGameActive ? _IsPause : false; } }
     private bool _IsPause;
+    public bool IsWin { get { return sudokuBoard == null ? false : sudokuBoard.IsGameActive ? _IsWin : false; } }
+    private bool _IsWin;
+    public bool ShowWinPanel;
     #endregion
 
     #region Awake & Start
@@ -40,7 +44,14 @@ public class GameManager : MonoBehaviour
         if (hUDButtonPanel != null)
             hUDButtonPanel.HideShowButtons(TotalAlphabet);
         saveGameSO.lastGameState = gameState;
-        _IsPause = true;
+        _IsPause = false;
+        ShowWinPanel = false;
+        _IsWin = CheckWinGame();
+    }
+    public void SaveGame()
+    {
+        if (gameState == null) return;
+        saveGameSO.SaveGame(saveGameSO.lastGameState);
     }
     public void DestroyGame()
     {
@@ -100,7 +111,10 @@ public class GameManager : MonoBehaviour
                 gameState.LogAdd(Id, Valor, ValorAntes);
             }
             setCellSelected(null);
-            CheckWinGame();
+            if (CheckWinGame())
+            {
+                _IsWin = true;
+            }
         }
     }
     #endregion
@@ -117,20 +131,33 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Win
-    private void AutoResolveGame()
+    public void AutoResolveGame()
     {
         var lstCeldas = gameState.lstCeldas;
         for (int l = 0; l < lstCeldas.Count; l++)
         {
-            lstCeldas[l].Valor = sudokuGenerator.lstCeldas[l].Valor;
+            var obj = lstCeldas[l];
+            if (!obj.bloqueado)
+            {
+                var objCelda = (from x in sudokuBoard.allCells where x.Id == obj.Id select x).ToList();
+                if (objCelda.Count > 0)
+                {
+                    sudokuNumberCellSelected = objCelda.First();
+                    setCellSelectedValue(sudokuGenerator.lstCeldas[l].Valor);
+                    obj.Valor = sudokuGenerator.lstCeldas[l].Valor;
+                }
+            }
         }
-        CheckWinGame();
+        if (CheckWinGame())
+        {
+            _IsWin = true;
+        }
     }
     private bool CheckWinGame()
     {
         if (Sudoku.SudokuGenerator.ValidarCeldas(gameState.lstCeldas))
         {
-            Debug.Log("COMPLETADO!!");
+            //Debug.Log("COMPLETADO!!");
             return true;
         }
         return false;
