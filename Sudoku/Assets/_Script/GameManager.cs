@@ -101,8 +101,7 @@ public class GameManager : MonoBehaviour
     }
     public void setCellSelectedValue(int Id, int Valor, bool AddLog = true)
     {
-        if (sudokuNumberCellSelected == null) return;
-        if (Valor > TotalAlphabet) return;
+        if (sudokuNumberCellSelected == null || Valor > TotalAlphabet || IsWin) return;
         int ValorAntes = sudokuNumberCellSelected.objCelda.Valor;
         if (sudokuNumberCellSelected.SetNumber(Valor))
         {
@@ -111,10 +110,7 @@ public class GameManager : MonoBehaviour
                 gameState.LogAdd(Id, Valor, ValorAntes);
             }
             setCellSelected(null);
-            if (CheckWinGame())
-            {
-                _IsWin = true;
-            }
+            _IsWin = CheckWinGame();
         }
     }
     #endregion
@@ -133,31 +129,26 @@ public class GameManager : MonoBehaviour
     #region Win
     public void AutoResolveGame()
     {
-        var lstCeldas = gameState.lstCeldas;
+        var lstCeldas = sudokuBoard.allCells;
         for (int l = 0; l < lstCeldas.Count; l++)
         {
             var obj = lstCeldas[l];
-            if (!obj.bloqueado)
+            if (!obj.objCelda.bloqueado)
             {
-                var objCelda = (from x in sudokuBoard.allCells where x.Id == obj.Id select x).ToList();
-                if (objCelda.Count > 0)
+                var objSudoku = (from x in sudokuGenerator.lstCeldas where x.Id == obj.Id select x).ToList();
+                if (objSudoku.Count > 0)
                 {
-                    sudokuNumberCellSelected = objCelda.First();
-                    setCellSelectedValue(sudokuGenerator.lstCeldas[l].Valor);
-                    obj.Valor = sudokuGenerator.lstCeldas[l].Valor;
+                    sudokuNumberCellSelected = obj;
+                    setCellSelectedValue(objSudoku.First().Valor);
                 }
             }
         }
-        if (CheckWinGame())
-        {
-            _IsWin = true;
-        }
+        _IsWin = CheckWinGame();
     }
     private bool CheckWinGame()
     {
         if (Sudoku.SudokuGenerator.ValidarCeldas(gameState.lstCeldas))
         {
-            //Debug.Log("COMPLETADO!!");
             return true;
         }
         return false;
