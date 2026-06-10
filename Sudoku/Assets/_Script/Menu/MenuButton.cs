@@ -45,6 +45,8 @@ public class MenuButton : MonoBehaviour
     }
     public void PauseGame()
     {
+        gameManager.setPause(true);
+        gameManager.CheckWinGame();
         menuManager.ClearAndShowMenu(gameManager.IsWin ? menuManager.menuWin : menuManager.menuPause);
         hudManager.HideShow(false);
     }
@@ -60,6 +62,7 @@ public class MenuButton : MonoBehaviour
     }
     public void ResumeGame()
     {
+        gameManager.setPause(false);
         menuManager.HideShow(false);
         hudManager.HideShow(true);
     }

@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
         saveGameSO.lastGameState = gameState;
         _IsPause = false;
         ShowWinPanel = false;
-        _IsWin = CheckWinGame();
+        _IsWin = false;
+        //CheckWinGame();
     }
     public void SaveGame()
     {
@@ -110,7 +111,7 @@ public class GameManager : MonoBehaviour
                 gameState.LogAdd(Id, Valor, ValorAntes);
             }
             setCellSelected(null);
-            _IsWin = CheckWinGame();
+            CheckWinGame();
         }
     }
     #endregion
@@ -143,15 +144,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        _IsWin = CheckWinGame();
+        CheckWinGame();
     }
-    private bool CheckWinGame()
+    public bool CheckWinGame()
     {
-        if (Sudoku.SudokuGenerator.ValidarCeldas(gameState.lstCeldas))
-        {
-            return true;
-        }
-        return false;
+        _IsWin = Sudoku.SudokuGenerator.ValidarCeldas(gameState.lstCeldas);
+        return _IsWin;
     }
     #endregion
 

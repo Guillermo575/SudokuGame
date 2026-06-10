@@ -72,6 +72,7 @@ public class CamaraController : MonoBehaviour
         HandleClick();
         DetectKey();
         CurrentOrientation = orientationManager.CurrentOrientation;
+        transform.rotation = Quaternion.Euler(gameManager.IsPause ? - 90f : 90f, 0f, 0f);
     }
     #endregion
 
