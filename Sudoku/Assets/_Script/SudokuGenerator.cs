@@ -33,15 +33,23 @@ namespace Sudoku
                 Tabla += "<table>";
                 for (int m = 0; m < ColumnasY; m++)
                 {
-                    for (int y = 0; y < ColumnasY; y++)
+                    for (int y = 0; y < ColumnasX; y++)
                     {
                         Tabla += "<tr>";
                         for (int l = 0; l < ColumnasX; l++)
                         {
-                            for (int x = 0; x < ColumnasX; x++)
+                            for (int x = 0; x < ColumnasY; x++)
                             {
-                                var objCelda = (from obj in lstCeldas where obj.CuadranteEjeX == l && obj.CuadranteEjeY == m && obj.EjeX == x && obj.EjeY == y select obj).ToList().First();
-                                Tabla += $"<td {(objCelda.IdCuadrante % 2 == 0 ? "style='background-color:#DDD'" : "style='background-color:#FFF'")}> {Alphabet.getAlphaChar(objCelda.Valor)} </td>";
+                                try
+                                {
+                                    var objCelda = (from obj in lstCeldas where obj.EjeX == x && obj.CuadranteEjeX == l && obj.EjeY == y && obj.CuadranteEjeY == m select obj).ToList().First();
+                                    Tabla += $"<td {(objCelda.IdCuadrante % 2 == 0 ? "style='background-color:#DDD'" : "style='background-color:#FFF'")}> {Alphabet.getAlphaChar(objCelda.Valor)} </td>";
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine($"Error al generar la tabla HTML: {ex.Message}");
+                                    return "Error al generar la tabla HTML";
+                                }
                             }
                         }
                         Tabla += "</tr>";

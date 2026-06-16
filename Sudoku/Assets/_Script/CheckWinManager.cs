@@ -15,6 +15,7 @@ public class CheckWinManager : MonoBehaviour
         if (gameManager.IsWin && !gameManager.ShowWinPanel)
         {
             gameManager.ShowWinPanel = true;
+            gameManager.setPause(true);
             menuManager.ClearAndShowMenu(menuManager.menuWin);
             hudManager.HideShow(false);
         }
