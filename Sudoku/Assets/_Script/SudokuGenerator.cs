@@ -18,9 +18,11 @@ namespace Sudoku
         public int SumaBases { get { return ((ValorFinal + 1) * ValorInicial) / 2; } }
         private List<Bitacora> lstBitacora = new List<Bitacora>();
         private List<Bitacora> lstBitacoraBloqueo = new List<Bitacora>();
+        private Random rnd = new Random();
         public bool Exito { private set; get; }
         public bool Validado { private set; get; }
         public int ConteoErrores { private set; get; }
+        public int ConteoAciertos { private set; get; }
         public long TiempoEjecutado { private set; get; }
         #endregion
 
@@ -43,7 +45,8 @@ namespace Sudoku
                                 try
                                 {
                                     var objCelda = (from obj in lstCeldas where obj.EjeX == x && obj.CuadranteEjeX == l && obj.EjeY == y && obj.CuadranteEjeY == m select obj).ToList().First();
-                                    Tabla += $"<td {(objCelda.IdCuadrante % 2 == 0 ? "style='background-color:#DDD'" : "style='background-color:#FFF'")}> {Alphabet.getAlphaChar(objCelda.Valor)} </td>";
+                                    bool esColorAlterno = (objCelda.CuadranteEjeX + objCelda.CuadranteEjeY) % 2 == 0;
+                                    Tabla += $"<td {(esColorAlterno ? "style='background-color:#DDD'" : "style='background-color:#FFF'")}> {Alphabet.getAlphaChar(objCelda.Valor)} </td>";
                                 }
                                 catch (Exception ex)
                                 {
@@ -102,6 +105,7 @@ namespace Sudoku
             foreach (var obj in lstCeldas)
             {
                 Validado = Validado ? ValidoSoloUno(obj) : false;
+                obj.lstWarnings = null;
             }
             stopwatch.Stop();
             TiempoEjecutado = stopwatch.ElapsedMilliseconds;
@@ -181,6 +185,7 @@ namespace Sudoku
         }
         private void SetDatos()
         {
+            int celdaGenerada = 0;
             int ValorActual = ValorInicial;
             while (ValorActual <= ValorFinal)
             {
@@ -198,6 +203,7 @@ namespace Sudoku
                             lstBitacoraBloqueo = (from x in lstBitacoraBloqueo where (x.Valor < ValorActual) || (x.Valor == ValorActual && x.Bloque.IdCuadrante <= CuadranteIndex) select x).ToList();
                         }
                         CuadranteIndex++;
+                        celdaGenerada++;
                     }
                     else
                     {
@@ -216,6 +222,7 @@ namespace Sudoku
                             objNewLast.lstWarnings.Add(new Bitacora { Bloque = objLast.Bloque, Valor = 1 });
                         }
                         CuadranteIndex--;
+                        celdaGenerada--;
                         if (CuadranteIndex <= 0)
                         {
                             ValorActual--;
@@ -227,6 +234,7 @@ namespace Sudoku
                         }
                         lstBitacoraBloqueo.Add(new Bitacora() { Bloque = objLast.Bloque, Valor = ValorActual });
                     }
+                    ConteoAciertos += celdaGenerada > ConteoAciertos ? 1 : 0;
                 }
                 ValorActual++;
             }
@@ -241,34 +249,30 @@ namespace Sudoku
                 if (objLast != null && objLast.lstWarnings.Count > 0)
                 {
                     int MaxWarnings = objLast.lstWarnings.Max(x => x.Valor);
-                    int MaxCalif = MaxWarnings;
+                    var warningDict = objLast.lstWarnings.ToDictionary(x => x.Bloque.Id, x => x.Valor);
                     foreach (var obj in lst)
                     {
-                        var lstObjWarning = (from x in objLast.lstWarnings where x.Bloque.Id == obj.Id select x).ToList();
-                        int ObjWarnings = lstObjWarning.Count > 0 ? lstObjWarning.Last().Valor : 0;
-                        obj.Peso = ((MaxWarnings - ObjWarnings) * MaxCalif) / MaxCalif;
-                        obj.Peso = obj.Peso == 0 ? 1 : obj.Peso;
+                        int ObjWarnings = warningDict.ContainsKey(obj.Id) ? warningDict[obj.Id] : 0;
+                        obj.Peso = Math.Max(1, MaxWarnings - ObjWarnings);
                     }
                 }
             }
-            Random rnd = new Random();
-            var SumaPesos = (from x in lst select x.Peso).Sum();
-            var NumeroElegido = rnd.Next(SumaPesos);
-            int IndexMinimo = 0;
-            int IndexMaximo = lst[0].Peso;
+            int SumaPesos = 0;
+            foreach (var obj in lst)
+            {
+                SumaPesos += obj.Peso;
+            }
+            int NumeroElegido = rnd.Next(SumaPesos);
+            int acumulado = 0;
             for (int l = 0; l < lst.Count; l++)
             {
-                if (NumeroElegido >= IndexMinimo && NumeroElegido <= IndexMaximo)
+                acumulado += lst[l].Peso;
+                if (NumeroElegido < acumulado)
                 {
                     return lst[l];
                 }
-                else if (l + 1 < lst.Count)
-                {
-                    IndexMinimo = IndexMaximo + 1;
-                    IndexMaximo = IndexMinimo + lst[l + 1].Peso;
-                }
             }
-            return null;
+            return lst[lst.Count - 1];
         }
         #endregion
 
@@ -294,8 +298,9 @@ namespace Sudoku
                 this.CuadranteEjeY = CuadranteEjeY;
                 this.EjeX = EjeX;
                 this.EjeY = EjeY;
+                lstWarnings = new List<Bitacora>();
             }
-            public List<Bitacora> lstWarnings = new List<Bitacora>();
+            public List<Bitacora> lstWarnings;
         }
         #endregion
 
