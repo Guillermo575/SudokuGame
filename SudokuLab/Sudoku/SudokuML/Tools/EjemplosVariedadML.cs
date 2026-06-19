@@ -12,35 +12,35 @@ namespace Sudoku.Tools
         /// </summary>
         public static void EjemploEntrenamientoYGeneracion()
         {
-            Console.WriteLine("=== ENTRENAMIENTO DEL AGENTE ===\n");
-            
-            // Entrenar el agente con 500 episodios
+            Console.WriteLine("=== AGENT TRAINING ===\n");
+
+            // Train the agent with 500 episodes
             SudokuGenerator.EntrenarAgente(episodios: 500, columnasX: 3, columnasY: 3);
-            
-            // Ver estadísticas
+
+            // View statistics
             Console.WriteLine("\n" + SudokuGenerator.ObtenerEstadisticasML());
-            
-            Console.WriteLine("\n=== GENERANDO SUDOKUS DIVERSOS ===\n");
-            
-            // Generar 5 sudokus diferentes
+
+            Console.WriteLine("\n=== GENERATING DIVERSE SUDOKUS ===\n");
+
+            // Generate 5 different sudokus
             var hashsGenerados = new System.Collections.Generic.HashSet<string>();
-            
+
             for (int i = 0; i < 5; i++)
             {
                 var sudoku = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
-                
+
                 if (sudoku.Exito)
                 {
                     hashsGenerados.Add(sudoku.HashSudoku);
                     Console.WriteLine($"Sudoku #{i + 1}");
                     Console.WriteLine($"Hash: {sudoku.HashSudoku.Substring(0, 20)}...");
-                    Console.WriteLine($"Errores: {sudoku.ConteoErrores}");
+                    Console.WriteLine($"Errors: {sudoku.ConteoErrores}");
                     Console.WriteLine(sudoku.ResumenASCII);
                     Console.WriteLine();
                 }
             }
-            
-            Console.WriteLine($"Sudokus únicos generados: {hashsGenerados.Count} de 5");
+
+            Console.WriteLine($"Unique sudokus generated: {hashsGenerados.Count} of 5");
         }
         
         /// <summary>
@@ -48,28 +48,28 @@ namespace Sudoku.Tools
         /// </summary>
         public static void EjemploCompararEstrategias()
         {
-            Console.WriteLine("=== COMPARACIÓN DE ESTRATEGIAS ===\n");
-            
+            Console.WriteLine("=== STRATEGY COMPARISON ===\n");
+
             var estrategias = new[]
             {
                 SudokuRLAgent.EstrategiaExploracion.EpsilonGreedy,
                 SudokuRLAgent.EstrategiaExploracion.Softmax,
                 SudokuRLAgent.EstrategiaExploracion.Hibrida
             };
-            
+
             foreach (var estrategia in estrategias)
             {
-                Console.WriteLine($"--- Estrategia: {estrategia} ---");
-                
-                // Crear un nuevo agente para cada estrategia
+                Console.WriteLine($"--- Strategy: {estrategia} ---");
+
+                // Create a new agent for each strategy
                 var agente = new SudokuRLAgent();
                 agente.Estrategia = estrategia;
                 agente.SetEpsilonUso(0.2);
-                
-                // Generar 10 sudokus y medir diversidad
+
+                // Generate 10 sudokus and measure diversity
                 var hashs = new System.Collections.Generic.HashSet<string>();
                 int totalErrores = 0;
-                
+
                 for (int i = 0; i < 10; i++)
                 {
                     var sudoku = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
@@ -79,9 +79,9 @@ namespace Sudoku.Tools
                         totalErrores += sudoku.ConteoErrores;
                     }
                 }
-                
-                Console.WriteLine($"Sudokus únicos: {hashs.Count}/10");
-                Console.WriteLine($"Errores promedio: {totalErrores / 10.0:F2}");
+
+                Console.WriteLine($"Unique sudokus: {hashs.Count}/10");
+                Console.WriteLine($"Average errors: {totalErrores / 10.0:F2}");
                 Console.WriteLine();
             }
         }
@@ -91,24 +91,24 @@ namespace Sudoku.Tools
         /// </summary>
         public static void EjemploMaximaVariedad()
         {
-            Console.WriteLine("=== CONFIGURACIÓN PARA MÁXIMA VARIEDAD ===\n");
-            
-            // Configurar agente para máxima variedad
+            Console.WriteLine("=== CONFIGURATION FOR MAXIMUM VARIETY ===\n");
+
+            // Configure agent for maximum variety
             var agente = new SudokuRLAgent();
-            agente.SetEpsilonUso(0.3);        // 30% exploración
-            agente.SetTemperature(2.0);        // Alta temperatura
+            agente.SetEpsilonUso(0.3);        // 30% exploration
+            agente.SetTemperature(2.0);        // High temperature
             agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Softmax;
-            
-            Console.WriteLine("Configuración:");
-            Console.WriteLine("- Epsilon uso: 0.3 (30% exploración)");
-            Console.WriteLine("- Temperatura: 2.0");
-            Console.WriteLine("- Estrategia: Softmax\n");
-            
-            // Generar 20 sudokus
+
+            Console.WriteLine("Configuration:");
+            Console.WriteLine("- Epsilon usage: 0.3 (30% exploration)");
+            Console.WriteLine("- Temperature: 2.0");
+            Console.WriteLine("- Strategy: Softmax\n");
+
+            // Generate 20 sudokus
             var hashs = new System.Collections.Generic.HashSet<string>();
             int totalErrores = 0;
             int exitos = 0;
-            
+
             for (int i = 0; i < 20; i++)
             {
                 var sudoku = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
@@ -119,12 +119,12 @@ namespace Sudoku.Tools
                     totalErrores += sudoku.ConteoErrores;
                 }
             }
-            
-            Console.WriteLine("Resultados:");
-            Console.WriteLine($"- Éxitos: {exitos}/20");
-            Console.WriteLine($"- Sudokus únicos: {hashs.Count}/{exitos}");
-            Console.WriteLine($"- Tasa de unicidad: {(double)hashs.Count / exitos * 100:F2}%");
-            Console.WriteLine($"- Errores promedio: {(double)totalErrores / exitos:F2}");
+
+            Console.WriteLine("Results:");
+            Console.WriteLine($"- Successful: {exitos}/20");
+            Console.WriteLine($"- Unique sudokus: {hashs.Count}/{exitos}");
+            Console.WriteLine($"- Uniqueness rate: {(double)hashs.Count / exitos * 100:F2}%");
+            Console.WriteLine($"- Average errors: {(double)totalErrores / exitos:F2}");
         }
         
         /// <summary>
@@ -132,32 +132,32 @@ namespace Sudoku.Tools
         /// </summary>
         public static void EjemploMonitoreoDiversidad()
         {
-            Console.WriteLine("=== MONITOREO DE DIVERSIDAD DURANTE ENTRENAMIENTO ===\n");
-            
+            Console.WriteLine("=== DIVERSITY MONITORING DURING TRAINING ===\n");
+
             var agente = new SudokuRLAgent();
-            agente.ResetearModelo(); // Empezar desde cero
-            
+            agente.ResetearModelo(); // Start from scratch
+
             int episodios = 200;
-            
+
             for (int i = 0; i < episodios; i++)
             {
                 var sudoku = new SudokuGenerator(3, 3, usarML: true, entrenar: true);
                 double recompensa = sudoku.Exito ? 100 : -50;
                 agente.RegistrarEpisodio(recompensa, sudoku.HashSudoku);
-                
-                // Reportar cada 50 episodios
+
+                // Report every 50 episodes
                 if ((i + 1) % 50 == 0)
                 {
                     double tasaUnicidad = (double)agente.SudokusUnicos / agente.EpisodiosEntrenados * 100;
-                    Console.WriteLine($"Episodio {i + 1}:");
-                    Console.WriteLine($"  - Sudokus únicos: {agente.SudokusUnicos}");
-                    Console.WriteLine($"  - Tasa de unicidad: {tasaUnicidad:F2}%");
-                    Console.WriteLine($"  - Recompensa promedio: {agente.RecompensaPromedio:F2}");
+                    Console.WriteLine($"Episode {i + 1}:");
+                    Console.WriteLine($"  - Unique sudokus: {agente.SudokusUnicos}");
+                    Console.WriteLine($"  - Uniqueness rate: {tasaUnicidad:F2}%");
+                    Console.WriteLine($"  - Average reward: {agente.RecompensaPromedio:F2}");
                     Console.WriteLine();
                 }
             }
-            
-            Console.WriteLine("Entrenamiento completado.");
+
+            Console.WriteLine("Training completed.");
         }
         
         /// <summary>

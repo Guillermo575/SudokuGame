@@ -13,19 +13,19 @@ namespace Sudoku.Tools
         /// <param name="episodiosPorTamanio">Cantidad de sudokus a generar por cada tamaño</param>
         public static void EntrenamientoCompleto(int episodiosPorTamanio = 500)
         {
-            Console.WriteLine("=== ENTRENAMIENTO DEL AGENTE DE MACHINE LEARNING ===\n");
+            Console.WriteLine("=== ML AGENT TRAINING ===\n");
 
-            // Entrenar con diferentes tamaños
-            Console.WriteLine("Fase 1: Entrenamiento con Sudoku 3x3 (9x9)");
+            // Train with different sizes
+            Console.WriteLine("Phase 1: Training with 3x3 Sudoku (9x9)");
             SudokuGenerator.EntrenarAgente(episodiosPorTamanio, 3, 3);
 
-            Console.WriteLine("\nFase 2: Entrenamiento con Sudoku 2x3 (6x6)");
+            Console.WriteLine("\nPhase 2: Training with 2x3 Sudoku (6x6)");
             SudokuGenerator.EntrenarAgente(episodiosPorTamanio / 2, 2, 3);
 
-            Console.WriteLine("\nFase 3: Entrenamiento con Sudoku 4x4 (16x16)");
+            Console.WriteLine("\nPhase 3: Training with 4x4 Sudoku (16x16)");
             SudokuGenerator.EntrenarAgente(episodiosPorTamanio * 2, 4, 4);
 
-            Console.WriteLine("\n=== ENTRENAMIENTO COMPLETADO ===");
+            Console.WriteLine("\n=== TRAINING COMPLETED ===");
             Console.WriteLine(SudokuGenerator.ObtenerEstadisticasML());
         }
 
@@ -34,34 +34,34 @@ namespace Sudoku.Tools
         /// </summary>
         public static void CompararRendimiento(int cantidadPruebas = 100, int columnasX = 4, int columnasY = 4)
         {
-            Console.WriteLine($"\n=== COMPARACIÓN DE RENDIMIENTO ({columnasX}x{columnasY}) ===\n");
+            Console.WriteLine($"\n=== PERFORMANCE COMPARISON ({columnasX}x{columnasY}) ===\n");
 
-            // Prueba SIN Machine Learning
-            Console.WriteLine($"Generando {cantidadPruebas} Sudokus SIN Machine Learning...");
+            // Test WITHOUT Machine Learning
+            Console.WriteLine($"Generating {cantidadPruebas} Sudokus WITHOUT Machine Learning...");
             var estadisticasSinML = EjecutarPruebas(cantidadPruebas, columnasX, columnasY, usarML: false);
 
-            // Prueba CON Machine Learning
-            Console.WriteLine($"\nGenerando {cantidadPruebas} Sudokus CON Machine Learning...");
+            // Test WITH Machine Learning
+            Console.WriteLine($"\nGenerating {cantidadPruebas} Sudokus WITH Machine Learning...");
             var estadisticasConML = EjecutarPruebas(cantidadPruebas, columnasX, columnasY, usarML: true);
 
-            // Mostrar resultados
-            Console.WriteLine("\n--- RESULTADOS ---");
-            Console.WriteLine("\nSIN Machine Learning:");
+            // Show results
+            Console.WriteLine("\n--- RESULTS ---");
+            Console.WriteLine("\nWITHOUT Machine Learning:");
             MostrarEstadisticas(estadisticasSinML);
 
-            Console.WriteLine("\nCON Machine Learning:");
+            Console.WriteLine("\nWITH Machine Learning:");
             MostrarEstadisticas(estadisticasConML);
 
-            // Calcular mejora
+            // Calculate improvement
             double mejoraTiempo = estadisticasSinML.TiempoPromedio == 0 ? 0 :((estadisticasSinML.TiempoPromedio - estadisticasConML.TiempoPromedio) 
                                    / estadisticasSinML.TiempoPromedio) * 100;
             double mejoraBacktrack = estadisticasSinML.BacktrackingPromedio == 0 ? 0 :((estadisticasSinML.BacktrackingPromedio - estadisticasConML.BacktrackingPromedio) 
                                       / estadisticasSinML.BacktrackingPromedio) * 100;
 
-            Console.WriteLine("\n--- MEJORAS CON MACHINE LEARNING ---");
-            Console.WriteLine($"Reducción en tiempo: {mejoraTiempo:F2}%");
-            Console.WriteLine($"Reducción en backtracking: {mejoraBacktrack:F2}%");
-            Console.WriteLine($"Mejora en tasa de éxito: {estadisticasConML.TasaExito - estadisticasSinML.TasaExito:F2}%");
+            Console.WriteLine("\n--- IMPROVEMENTS WITH MACHINE LEARNING ---");
+            Console.WriteLine($"Time reduction: {mejoraTiempo:F2}%");
+            Console.WriteLine($"Backtracking reduction: {mejoraBacktrack:F2}%");
+            Console.WriteLine($"Success rate improvement: {estadisticasConML.TasaExito - estadisticasSinML.TasaExito:F2}%");
         }
 
         private static Estadisticas EjecutarPruebas(int cantidad, int columnasX, int columnasY, bool usarML)
@@ -93,11 +93,11 @@ namespace Sudoku.Tools
 
         private static void MostrarEstadisticas(Estadisticas stats)
         {
-            Console.WriteLine($"  Tasa de éxito: {stats.TasaExito:F2}% ({stats.CantidadExitosos} exitosos)");
-            Console.WriteLine($"  Tiempo promedio: {stats.TiempoPromedio:F2} ms");
-            Console.WriteLine($"  Backtracking promedio: {stats.BacktrackingPromedio:F2}");
-            Console.WriteLine($"  Backtracking mínimo: {stats.BacktrackingMin}");
-            Console.WriteLine($"  Backtracking máximo: {stats.BacktrackingMax}");
+            Console.WriteLine($"  Success rate: {stats.TasaExito:F2}% ({stats.CantidadExitosos} successful)");
+            Console.WriteLine($"  Average time: {stats.TiempoPromedio:F2} ms");
+            Console.WriteLine($"  Average backtracking: {stats.BacktrackingPromedio:F2}");
+            Console.WriteLine($"  Minimum backtracking: {stats.BacktrackingMin}");
+            Console.WriteLine($"  Maximum backtracking: {stats.BacktrackingMax}");
         }
 
         private class Estadisticas
@@ -117,40 +117,40 @@ namespace Sudoku.Tools
         /// </summary>
         public static void EjemploUso()
         {
-            Console.WriteLine("=== EJEMPLO DE USO ===\n");
+            Console.WriteLine("=== BASIC USAGE EXAMPLE ===\n");
 
-            // 1. Generar un Sudoku tradicional (sin ML)
-            Console.WriteLine("1. Generando Sudoku 3x3 sin Machine Learning...");
+            // 1. Generate a traditional Sudoku (without ML)
+            Console.WriteLine("1. Generating 3x3 Sudoku without Machine Learning...");
             var sudokuTradicional = new SudokuGenerator(3, 3, usarML: false);
             Console.WriteLine($"   Backtracking: {sudokuTradicional.ConteoErrores}");
-            Console.WriteLine($"   Tiempo: {sudokuTradicional.TiempoEjecutado} ms");
-            Console.WriteLine($"   Éxito: {sudokuTradicional.Exito}");
+            Console.WriteLine($"   Time: {sudokuTradicional.TiempoEjecutado} ms");
+            Console.WriteLine($"   Success: {sudokuTradicional.Exito}");
 
-            // 2. Generar un Sudoku con ML (sin entrenar)
-            Console.WriteLine("\n2. Generando Sudoku 3x3 con Machine Learning (modelo inicial)...");
+            // 2. Generate a Sudoku with ML (without training)
+            Console.WriteLine("\n2. Generating 3x3 Sudoku with Machine Learning (initial model)...");
             var sudokuML = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
             Console.WriteLine($"   Backtracking: {sudokuML.ConteoErrores}");
-            Console.WriteLine($"   Tiempo: {sudokuML.TiempoEjecutado} ms");
-            Console.WriteLine($"   Éxito: {sudokuML.Exito}");
+            Console.WriteLine($"   Time: {sudokuML.TiempoEjecutado} ms");
+            Console.WriteLine($"   Success: {sudokuML.Exito}");
 
-            // 3. Entrenar el agente
-            Console.WriteLine("\n3. Entrenando el agente con 100 episodios...");
+            // 3. Train the agent
+            Console.WriteLine("\n3. Training the agent with 100 episodes...");
             SudokuGenerator.EntrenarAgente(100, 3, 3);
 
-            // 4. Generar un Sudoku con ML entrenado
-            Console.WriteLine("\n4. Generando Sudoku 3x3 con Machine Learning (modelo entrenado)...");
+            // 4. Generate a Sudoku with trained ML
+            Console.WriteLine("\n4. Generating 3x3 Sudoku with Machine Learning (trained model)...");
             var sudokuMLEntrenado = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
             Console.WriteLine($"   Backtracking: {sudokuMLEntrenado.ConteoErrores}");
-            Console.WriteLine($"   Tiempo: {sudokuMLEntrenado.TiempoEjecutado} ms");
-            Console.WriteLine($"   Éxito: {sudokuMLEntrenado.Exito}");
+            Console.WriteLine($"   Time: {sudokuMLEntrenado.TiempoEjecutado} ms");
+            Console.WriteLine($"   Success: {sudokuMLEntrenado.Exito}");
             Console.WriteLine($"\n{SudokuGenerator.ObtenerEstadisticasML()}");
 
-            // 5. Generar Sudoku 4x4 (el más problemático)
-            Console.WriteLine("\n5. Generando Sudoku 4x4 con Machine Learning...");
+            // 5. Generate 4x4 Sudoku (the most problematic)
+            Console.WriteLine("\n5. Generating 4x4 Sudoku with Machine Learning...");
             var sudoku4x4 = new SudokuGenerator(4, 4, usarML: true, entrenar: false);
             Console.WriteLine($"   Backtracking: {sudoku4x4.ConteoErrores}");
-            Console.WriteLine($"   Tiempo: {sudoku4x4.TiempoEjecutado} ms");
-            Console.WriteLine($"   Éxito: {sudoku4x4.Exito}");
+            Console.WriteLine($"   Time: {sudoku4x4.TiempoEjecutado} ms");
+            Console.WriteLine($"   Success: {sudoku4x4.Exito}");
         }
     }
 }

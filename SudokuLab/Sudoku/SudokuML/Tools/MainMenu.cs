@@ -19,22 +19,22 @@ namespace Sudoku.Tools
             {
             }
             Console.WriteLine("╔════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║   🤖 SISTEMA DE MACHINE LEARNING PARA GENERACIÓN DE SUDOKU   ║");
+            Console.WriteLine("║   🤖 ML SYSTEM FOR SUDOKU GENERATION   ║");
             Console.WriteLine("╚════════════════════════════════════════════════════════════╝\n");
             while (true)
             {
-                Console.WriteLine("\n╔═══════════ 📋 MENÚ PRINCIPAL ═══════════╗");
+                Console.WriteLine("\n╔═══════════ 📋 MAIN MENU ═══════════╗");
                 Console.WriteLine("║                                          ║");
-                Console.WriteLine("║  1. 🚀 INICIO RÁPIDO                    ║");
-                Console.WriteLine("║  2. 🎲 Generar Sudoku                   ║");
-                Console.WriteLine("║  3. 🏋️  Entrenar Modelo                  ║");
-                Console.WriteLine("║  4. ⚙️  Configuración                    ║");
-                Console.WriteLine("║  5. 🔬 Análisis y Tests                 ║");
-                Console.WriteLine("║  6. 📊 Ver Estadísticas                 ║");
-                Console.WriteLine("║  0. 🚪 Salir                            ║");
+                Console.WriteLine("║  1. 🚀 Quick Start                      ║");
+                Console.WriteLine("║  2. 🎲 Generate Sudoku                  ║");
+                Console.WriteLine("║  3. 🏋️  Train Model                     ║");
+                Console.WriteLine("║  4. ⚙️  Configuration                   ║");
+                Console.WriteLine("║  5. 🔬 Analysis & Tests                 ║");
+                Console.WriteLine("║  6. 📊 View Statistics                  ║");
+                Console.WriteLine("║  0. 🚪 Exit                             ║");
                 Console.WriteLine("║                                          ║");
                 Console.WriteLine("╚══════════════════════════════════════════╝");
-                Console.Write("\n👉 Seleccione una opción: ");
+                Console.Write("\n👉 Select an option: ");
 
                 string opcion = Console.ReadLine();
                 Console.WriteLine();
@@ -65,8 +65,8 @@ namespace Sudoku.Tools
                     case "0":
                         return;
                     default:
-                        Console.WriteLine("❌ Opción no válida.");
-                        Console.WriteLine("\n⏸️  Presione cualquier tecla para continuar...");
+                        Console.WriteLine("❌ Invalid option.");
+                        Console.WriteLine("\n⏸️  Press any key to continue...");
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -77,15 +77,15 @@ namespace Sudoku.Tools
         static void MenuInicioRapido()
         {
             Console.Clear();
-            Console.WriteLine("╔═══════════ 🚀 INICIO RÁPIDO ═══════════╗\n");
-            Console.WriteLine("1. ⚡ Prueba Rápida (Recomendado)");
-            Console.WriteLine("   💡 Entrena + genera + verifica variedad");
-            Console.WriteLine("\n2. 📚 Ejemplo de uso básico");
-            Console.WriteLine("   🎯 Demostración simple del sistema");
-            Console.WriteLine("\n3. ⚖️  Comparativa antes/después");
-            Console.WriteLine("   📈 Ver impacto de las mejoras");
-            Console.WriteLine("\n0. ↩️  Volver al menú principal");
-            Console.Write("\n👉 Seleccione una opción: ");
+            Console.WriteLine("╔═══════════ 🚀 QUICK START ═══════════╗\n");
+            Console.WriteLine("1. ⚡ Quick Test (Recommended)");
+            Console.WriteLine("   💡 Train + generate + verify diversity");
+            Console.WriteLine("\n2. 📚 Basic usage example");
+            Console.WriteLine("   🎯 Simple system demo");
+            Console.WriteLine("\n3. ⚖️  Before/After Comparison");
+            Console.WriteLine("   📈 See improvements impact");
+            Console.WriteLine("\n0. ↩️  Back to main menu");
+            Console.Write("\n👉 Select an option: ");
 
             string opcion = Console.ReadLine();
             Console.WriteLine();
@@ -117,12 +117,12 @@ namespace Sudoku.Tools
         static void MenuGenerarSudoku()
         {
             Console.Clear();
-            Console.WriteLine("╔═══════════ 🎲 GENERAR SUDOKU ═══════════╗\n");
-            Console.WriteLine("1. 🤖 Generar con Machine Learning");
-            Console.WriteLine("2. 🔧 Generar sin ML (tradicional)");
-            Console.WriteLine("3. 🌈 Demostrar variedad (genera varios)");
-            Console.WriteLine("\n0. ↩️  Volver al menú principal");
-            Console.Write("\n👉 Seleccione una opción: ");
+            Console.WriteLine("╔═══════════ 🎲 GENERATE SUDOKU ═══════════╗\n");
+            Console.WriteLine("1. 🤖 Generate with Machine Learning");
+            Console.WriteLine("2. 🔧 Generate without ML (traditional)");
+            Console.WriteLine("3. 🌈 Demonstrate variety (generate multiple)");
+            Console.WriteLine("\n0. ↩️  Back to main menu");
+            Console.Write("\n👉 Select an option: ");
 
             string opcion = Console.ReadLine();
             Console.WriteLine();
@@ -142,11 +142,11 @@ namespace Sudoku.Tools
                     Console.Clear();
                     return;
                 default:
-                    Console.WriteLine("❌ Opción no válida.");
+                    Console.WriteLine("❌ Invalid option.");
                     break;
             }
 
-            Console.WriteLine("\n⏸️  Presione cualquier tecla para continuar...");
+            Console.WriteLine("\n⏸️  Press any key to continue...");
             Console.ReadKey();
             Console.Clear();
         }
@@ -154,14 +154,14 @@ namespace Sudoku.Tools
         static void MenuEntrenar()
         {
             Console.Clear();
-            Console.WriteLine("╔═══════════ 🏋️  ENTRENAR MODELO ═══════════╗\n");
-            Console.WriteLine("1. ⚡ Entrenamiento rápido (100 episodios)");
-            Console.WriteLine("2. 💪 Entrenamiento completo (1000 episodios)");
-            Console.WriteLine("3. 🎯 Entrenar para Sudoku 4x4 (2000 episodios)");
-            Console.WriteLine("4. 🛠️  Entrenar personalizado");
-            Console.WriteLine("5. 📊 Monitorear diversidad durante entrenamiento");
-            Console.WriteLine("\n0. ↩️  Volver al menú principal");
-            Console.Write("\n👉 Seleccione una opción: ");
+            Console.WriteLine("╔═══════════ 🏋️  TRAIN MODEL ═══════════╗\n");
+            Console.WriteLine("1. ⚡ Quick training (100 episodes)");
+            Console.WriteLine("2. 💪 Full training (1000 episodes)");
+            Console.WriteLine("3. 🎯 Train for 4x4 Sudoku (2000 episodes)");
+            Console.WriteLine("4. 🛠️  Custom training");
+            Console.WriteLine("5. 📊 Monitor diversity during training");
+            Console.WriteLine("\n0. ↩️  Back to main menu");
+            Console.Write("\n👉 Select an option: ");
 
             string opcion = Console.ReadLine();
             Console.WriteLine();
@@ -177,16 +177,16 @@ namespace Sudoku.Tools
                     Console.WriteLine("\n" + SudokuGenerator.ObtenerEstadisticasML());
                     break;
                 case "3":
-                    Console.WriteLine("Entrenando para Sudoku 4x4 (esto puede tomar varios minutos)...");
+                    Console.WriteLine("Training for 4x4 Sudoku (this may take several minutes)...");
                     SudokuGenerator.EntrenarAgente(2000, 4, 4);
                     Console.WriteLine("\n" + SudokuGenerator.ObtenerEstadisticasML());
                     break;
                 case "4":
-                    Console.Write("Episodios: ");
+                    Console.Write("Episodes: ");
                     if (!int.TryParse(Console.ReadLine(), out int episodios)) episodios = 1000;
-                    Console.Write("Columnas X: ");
+                    Console.Write("Columns X: ");
                     if (!int.TryParse(Console.ReadLine(), out int colX)) colX = 3;
-                    Console.Write("Columnas Y: ");
+                    Console.Write("Columns Y: ");
                     if (!int.TryParse(Console.ReadLine(), out int colY)) colY = 3;
                     SudokuGenerator.EntrenarAgente(episodios, colX, colY);
                     Console.WriteLine("\n" + SudokuGenerator.ObtenerEstadisticasML());
@@ -198,11 +198,11 @@ namespace Sudoku.Tools
                     Console.Clear();
                     return;
                 default:
-                    Console.WriteLine("❌ Opción no válida.");
+                    Console.WriteLine("❌ Invalid option.");
                     break;
             }
 
-            Console.WriteLine("\n⏸️  Presione cualquier tecla para continuar...");
+            Console.WriteLine("\n⏸️  Press any key to continue...");
             Console.ReadKey();
             Console.Clear();
         }
@@ -210,12 +210,12 @@ namespace Sudoku.Tools
         static void MenuConfiguracion()
         {
             Console.Clear();
-            Console.WriteLine("╔═══════════ ⚙️  CONFIGURACIÓN ═══════════╗\n");
-            Console.WriteLine("1. 🎛️  Configurar parámetros de exploración");
-            Console.WriteLine("   💡 Presets: Variedad, Balance, Rendimiento");
-            Console.WriteLine("\n2. 👀 Ver parámetros actuales");
-            Console.WriteLine("\n0. ↩️  Volver al menú principal");
-            Console.Write("\n👉 Seleccione una opción: ");
+            Console.WriteLine("╔═══════════ ⚙️  CONFIGURATION ═══════════╗\n");
+            Console.WriteLine("1. 🎛️  Configure exploration parameters");
+            Console.WriteLine("   💡 Presets: Variety, Balance, Performance");
+            Console.WriteLine("\n2. 👀 View current parameters");
+            Console.WriteLine("\n0. ↩️  Back to main menu");
+            Console.Write("\n👉 Select an option: ");
 
             string opcion = Console.ReadLine();
             Console.WriteLine();
@@ -232,11 +232,11 @@ namespace Sudoku.Tools
                     Console.Clear();
                     return;
                 default:
-                    Console.WriteLine("❌ Opción no válida.");
+                    Console.WriteLine("❌ Invalid option.");
                     break;
             }
 
-            Console.WriteLine("\n⏸️  Presione cualquier tecla para continuar...");
+            Console.WriteLine("\n⏸️  Press any key to continue...");
             Console.ReadKey();
             Console.Clear();
         }
@@ -244,12 +244,12 @@ namespace Sudoku.Tools
         static void MenuAnalisis()
         {
             Console.Clear();
-            Console.WriteLine("╔═══════════ 🔬 ANÁLISIS Y TESTS ═══════════╗\n");
-            Console.WriteLine("1. ⚔️  Comparar rendimiento (con vs sin ML)");
-            Console.WriteLine("2. 🔀 Comparar estrategias de exploración");
-            Console.WriteLine("3. 🧪 Testeo masivo (50 sudokus)");
-            Console.WriteLine("\n0. ↩️  Volver al menú principal");
-            Console.Write("\n👉 Seleccione una opción: ");
+            Console.WriteLine("╔═══════════ 🔬 ANALYSIS & TESTS ═══════════╗\n");
+            Console.WriteLine("1. ⚔️  Compare performance (with vs without ML)");
+            Console.WriteLine("2. 🔀 Compare exploration strategies");
+            Console.WriteLine("3. 🧪 Massive test (50 sudokus)");
+            Console.WriteLine("\n0. ↩️  Back to main menu");
+            Console.Write("\n👉 Select an option: ");
 
             string opcion = Console.ReadLine();
             Console.WriteLine();
@@ -257,7 +257,7 @@ namespace Sudoku.Tools
             switch (opcion)
             {
                 case "1":
-                    Console.Write("Tamaño del Sudoku (ej: 3 para 3x3, 4 para 4x4): ");
+                    Console.Write("Sudoku size (e.g. 3 for 3x3, 4 for 4x4): ");
                     if (int.TryParse(Console.ReadLine(), out int tam))
                     {
                         SudokuMLHelper.CompararRendimiento(100, tam, tam);
@@ -273,31 +273,31 @@ namespace Sudoku.Tools
                     Console.Clear();
                     return;
                 default:
-                    Console.WriteLine("❌ Opción no válida.");
+                    Console.WriteLine("❌ Invalid option.");
                     break;
             }
 
-            Console.WriteLine("\n⏸️  Presione cualquier tecla para continuar...");
+            Console.WriteLine("\n⏸️  Press any key to continue...");
             Console.ReadKey();
             Console.Clear();
         }
 
         static void GenerarSudoku(bool usarML)
         {
-            Console.Write("Columnas X (ej: 3): ");
+            Console.Write("Columns X (e.g. 3): ");
             if (!int.TryParse(Console.ReadLine(), out int colX)) colX = 3;
 
-            Console.Write("Columnas Y (ej: 3): ");
+            Console.Write("Columns Y (e.g. 3): ");
             if (!int.TryParse(Console.ReadLine(), out int colY)) colY = 3;
 
-            Console.WriteLine($"\n🎲 Generando Sudoku {colX}x{colY} {(usarML ? "CON 🤖" : "SIN 🔧")} Machine Learning...\n");
+            Console.WriteLine($"\n🎲 Generating Sudoku {colX}x{colY} {(usarML ? "WITH 🤖" : "WITHOUT 🔧")} Machine Learning...\n");
 
             var sudoku = new SudokuGenerator(colX, colY, usarML, entrenar: false);
 
-            Console.WriteLine($"Éxito: {(sudoku.Exito ? "✅ SÍ" : "❌ NO")}");
-            Console.WriteLine($"⏱️  Tiempo: {sudoku.TiempoEjecutado} ms");
+            Console.WriteLine($"Success: {(sudoku.Exito ? "✅ YES" : "❌ NO")}");
+            Console.WriteLine($"⏱️  Time: {sudoku.TiempoEjecutado} ms");
             Console.WriteLine($"🔄 Backtracking: {sudoku.ConteoErrores}");
-            Console.WriteLine($"Validado: {(sudoku.Validado ? "✅ SÍ" : "❌ NO")}");
+            Console.WriteLine($"Validated: {(sudoku.Validado ? "✅ YES" : "❌ NO")}");
 
             if (sudoku.Exito)
             {
@@ -307,16 +307,16 @@ namespace Sudoku.Tools
 
         static void TesteoMasivo()
         {
-            Console.Write("🔢 Cantidad de Sudokus: ");
+            Console.Write("🔢 Number of Sudokus: ");
             if (!int.TryParse(Console.ReadLine(), out int cantidad)) cantidad = 50;
 
-            Console.Write("📏 Columnas X (ej: 3): ");
+            Console.Write("📏 Columns X (e.g. 3): ");
             if (!int.TryParse(Console.ReadLine(), out int colX)) colX = 3;
 
-            Console.Write("📏 Columnas Y (ej: 3): ");
+            Console.Write("📏 Columns Y (e.g. 3): ");
             if (!int.TryParse(Console.ReadLine(), out int colY)) colY = 3;
 
-            Console.WriteLine($"\n🚀 Generando {cantidad} sudokus {colX}x{colY}...\n");
+            Console.WriteLine($"\n🚀 Generating {cantidad} sudokus {colX}x{colY}...\n");
 
             int exitosos = 0;
             long tiempoTotal = 0;
@@ -339,16 +339,16 @@ namespace Sudoku.Tools
 
                 if ((i + 1) % 10 == 0)
                 {
-                    Console.WriteLine($"📊 Progreso: {i + 1}/{cantidad}");
+                    Console.WriteLine($"📊 Progress: {i + 1}/{cantidad}");
                 }
             }
 
-            Console.WriteLine("\n╔═══ 📈 RESULTADOS ═══╗");
-            Console.WriteLine($"✅ Exitosos: {exitosos}/{cantidad} ({(double)exitosos / cantidad * 100:F2}%)");
-            Console.WriteLine($"⏱️  Tiempo promedio: {(exitosos > 0 ? tiempoTotal / exitosos : 0)} ms");
-            Console.WriteLine($"🔄 Backtracking promedio: {(exitosos > 0 ? backtrackTotal / exitosos : 0)}");
-            Console.WriteLine($"⬇️  Backtracking mínimo: {(backtrackMin == int.MaxValue ? 0 : backtrackMin)}");
-            Console.WriteLine($"⬆️  Backtracking máximo: {backtrackMax}");
+            Console.WriteLine("\n╔═══ 📈 RESULTS ═══╗");
+            Console.WriteLine($"✅ Successful: {exitosos}/{cantidad} ({(double)exitosos / cantidad * 100:F2}%)");
+            Console.WriteLine($"⏱️  Average time: {(exitosos > 0 ? tiempoTotal / exitosos : 0)} ms");
+            Console.WriteLine($"🔄 Average backtracking: {(exitosos > 0 ? backtrackTotal / exitosos : 0)}");
+            Console.WriteLine($"⬇️  Minimum backtracking: {(backtrackMin == int.MaxValue ? 0 : backtrackMin)}");
+            Console.WriteLine($"⬆️  Maximum backtracking: {backtrackMax}");
         }
 
         /// <summary>
@@ -356,14 +356,14 @@ namespace Sudoku.Tools
         /// </summary>
         public static void EjemploBasico()
         {
-            Console.WriteLine("╔═══ 🎲 GENERACIÓN DE SUDOKU CON ML ═══╗\n");
+            Console.WriteLine("╔═══ 🎲 SUDOKU GENERATION WITH ML ═══╗\n");
 
-            // Generar un sudoku 3x3 usando Machine Learning
+            // Generate a 3x3 sudoku using Machine Learning
             var sudoku = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
 
-            Console.WriteLine($"✅ Éxito: {sudoku.Exito}");
+            Console.WriteLine($"✅ Success: {sudoku.Exito}");
             Console.WriteLine($"🔄 Backtracking: {sudoku.ConteoErrores}");
-            Console.WriteLine($"⏱️  Tiempo: {sudoku.TiempoEjecutado} ms");
+            Console.WriteLine($"⏱️  Time: {sudoku.TiempoEjecutado} ms");
             Console.WriteLine($"\n{sudoku.ResumenHTML}");
         }
 
@@ -372,9 +372,9 @@ namespace Sudoku.Tools
         /// </summary>
         public static void EntrenarModelo(int episodios = 1000, int columnasX = 3, int columnasY = 3)
         {
-            Console.WriteLine($"╔═══ 🏋️  ENTRENAMIENTO DEL AGENTE ═══╗");
-            Console.WriteLine($"📐 Tamaño: {columnasX}x{columnasY}");
-            Console.WriteLine($"🔢 Episodios: {episodios}\n");
+            Console.WriteLine($"╔═══ 🏋️  AGENT TRAINING ═══╗");
+            Console.WriteLine($"📐 Size: {columnasX}x{columnasY}");
+            Console.WriteLine($"🔢 Episodes: {episodios}\n");
 
             SudokuGenerator.EntrenarAgente(episodios, columnasX, columnasY);
 
@@ -386,9 +386,9 @@ namespace Sudoku.Tools
         /// </summary>
         public static void CompararRendimiento(int cantidad = 100, int columnasX = 4, int columnasY = 4)
         {
-            Console.WriteLine($"╔═══ ⚔️  COMPARACIÓN DE RENDIMIENTO ═══╗");
-            Console.WriteLine($"📐 Tamaño: {columnasX}x{columnasY}");
-            Console.WriteLine($"🔢 Cantidad: {cantidad} sudokus\n");
+            Console.WriteLine($"╔═══ ⚔️  PERFORMANCE COMPARISON ═══╗");
+            Console.WriteLine($"📐 Size: {columnasX}x{columnasY}");
+            Console.WriteLine($"🔢 Quantity: {cantidad} sudokus\n");
 
             SudokuMLHelper.CompararRendimiento(cantidad, columnasX, columnasY);
         }
@@ -417,11 +417,11 @@ namespace Sudoku.Tools
         /// </summary>
         static void DemostrarVariedad()
         {
-            Console.WriteLine("╔═══ 🌈 DEMOSTRACIÓN DE SUDOKUS DIVERSOS ═══╗\n");
-            Console.Write("🔢 ¿Cuántos sudokus generar? (recomendado: 5-10): ");
+            Console.WriteLine("╔═══ 🌈 DEMONSTRATION OF DIVERSE SUDOKUS ═══╗\n");
+            Console.Write("🔢 How many sudokus to generate? (recommended: 5-10): ");
             if (!int.TryParse(Console.ReadLine(), out int cantidad)) cantidad = 5;
-            
-            Console.WriteLine($"\n🚀 Generando {cantidad} sudokus con ML...\n");
+
+            Console.WriteLine($"\n🚀 Generating {cantidad} sudokus with ML...\n");
             
             var hashsGenerados = new System.Collections.Generic.HashSet<string>();
             var listaHashs = new System.Collections.Generic.List<string>();
@@ -435,9 +435,9 @@ namespace Sudoku.Tools
                     bool esUnico = hashsGenerados.Add(sudoku.HashSudoku);
                     listaHashs.Add(sudoku.HashSudoku);
                     
-                    Console.WriteLine($"🎲 Sudoku #{i + 1} {(esUnico ? "✨ ÚNICO" : "🔁 REPETIDO")}");
+                    Console.WriteLine($"🎲 Sudoku #{i + 1} {(esUnico ? "✨ UNIQUE" : "🔁 REPEATED")}");
                     Console.WriteLine($"🔑 Hash: {sudoku.HashSudoku.Substring(0, Math.Min(30, sudoku.HashSudoku.Length))}...");
-                    Console.WriteLine($"❌ Errores: {sudoku.ConteoErrores}, ⏱️  Tiempo: {sudoku.TiempoEjecutado}ms");
+                    Console.WriteLine($"❌ Errors: {sudoku.ConteoErrores}, ⏱️  Time: {sudoku.TiempoEjecutado}ms");
                     
                     if (i < 3) // Mostrar solo los primeros 3 completos
                     {
@@ -447,16 +447,16 @@ namespace Sudoku.Tools
                 }
             }
             
-            Console.WriteLine($"\n╔═══ 📊 RESUMEN ═══╗");
-            Console.WriteLine($"✨ Sudokus únicos: {hashsGenerados.Count}/{cantidad}");
-            Console.WriteLine($"📈 Tasa de unicidad: {(double)hashsGenerados.Count / cantidad * 100:F2}%");
+            Console.WriteLine($"\n╔═══ 📊 SUMMARY ═══╗");
+            Console.WriteLine($"✨ Unique sudokus: {hashsGenerados.Count}/{cantidad}");
+            Console.WriteLine($"📈 Uniqueness rate: {(double)hashsGenerados.Count / cantidad * 100:F2}%");
             
             if (hashsGenerados.Count < cantidad)
             {
-                Console.WriteLine("\n💡 Tip: Para mayor variedad, intenta:");
-                Console.WriteLine("   📌 Aumentar epsilon de uso (opción 13)");
-                Console.WriteLine("   📌 Cambiar a estrategia Softmax");
-                Console.WriteLine("   📌 Entrenar más episodios");
+                Console.WriteLine("\n💡 Tip: For more variety, try:");
+                Console.WriteLine("   📌 Increase epsilon usage");
+                Console.WriteLine("   📌 Switch to Softmax strategy");
+                Console.WriteLine("   📌 Train more episodes");
             }
         }
         
@@ -465,7 +465,7 @@ namespace Sudoku.Tools
         /// </summary>
         static void CompararEstrategias()
         {
-            Console.WriteLine("╔═══ 🔀 COMPARACIÓN DE ESTRATEGIAS DE EXPLORACIÓN ═══╗\n");
+            Console.WriteLine("╔═══ 🔀 EXPLORATION STRATEGIES COMPARISON ═══╗\n");
             
             int sudokusPorEstrategia = 10;
             
@@ -473,15 +473,15 @@ namespace Sudoku.Tools
             {
                 (SudokuRLAgent.EstrategiaExploracion.EpsilonGreedy, "Epsilon-Greedy"),
                 (SudokuRLAgent.EstrategiaExploracion.Softmax, "Softmax"),
-                (SudokuRLAgent.EstrategiaExploracion.Hibrida, "Híbrida")
+                (SudokuRLAgent.EstrategiaExploracion.Hibrida, "Hybrid")
             };
             
             foreach (var (estrategia, nombre) in estrategias)
             {
-                Console.WriteLine($"\n╠═══ 🎯 Estrategia: {nombre} ═══╣");
-                
-                // Nota: Idealmente deberías tener acceso al agente para cambiar la estrategia
-                // Por ahora, generamos con la estrategia por defecto
+                Console.WriteLine($"\n╠═══ 🎯 Strategy: {nombre} ═══╣");
+
+                // Note: Ideally you should have access to the agent to change the strategy
+                // For now, we generate with the default strategy
                 var hashs = new System.Collections.Generic.HashSet<string>();
                 int totalErrores = 0;
                 long totalTiempo = 0;
@@ -499,14 +499,14 @@ namespace Sudoku.Tools
                     }
                 }
                 
-                Console.WriteLine($"✨ Sudokus únicos: {hashs.Count}/{exitos}");
-                Console.WriteLine($"📈 Tasa de unicidad: {(exitos > 0 ? (double)hashs.Count / exitos * 100 : 0):F2}%");
-                Console.WriteLine($"❌ Errores promedio: {(exitos > 0 ? (double)totalErrores / exitos : 0):F2}");
-                Console.WriteLine($"⏱️  Tiempo promedio: {(exitos > 0 ? totalTiempo / exitos : 0)}ms");
+                Console.WriteLine($"✨ Unique sudokus: {hashs.Count}/{exitos}");
+                Console.WriteLine($"📈 Uniqueness rate: {(exitos > 0 ? (double)hashs.Count / exitos * 100 : 0):F2}%");
+                Console.WriteLine($"❌ Average errors: {(exitos > 0 ? (double)totalErrores / exitos : 0):F2}");
+                Console.WriteLine($"⏱️  Average time: {(exitos > 0 ? totalTiempo / exitos : 0)}ms");
                 Console.WriteLine();
             }
             
-            Console.WriteLine("💡 Nota: Para cambiar estrategias, usa la opción 13");
+            Console.WriteLine("💡 Note: To change strategies, use the configuration option");
         }
         
         /// <summary>
@@ -514,13 +514,13 @@ namespace Sudoku.Tools
         /// </summary>
         static void MonitorearDiversidad()
         {
-            Console.WriteLine("╔═══ 📊 MONITOREO DE DIVERSIDAD DURANTE ENTRENAMIENTO ═══╗\n");
-            Console.Write("🔢 ¿Cuántos episodios entrenar?: ");
+            Console.WriteLine("╔═══ 📊 DIVERSITY MONITORING DURING TRAINING ═══╗\n");
+            Console.Write("🔢 How many episodes to train?: ");
             if (!int.TryParse(Console.ReadLine(), out int episodios)) episodios = 200;
+
+            Console.WriteLine($"\n🚀 Training {episodios} episodes and monitoring diversity...\n");
             
-            Console.WriteLine($"\n🚀 Entrenando {episodios} episodios y monitoreando diversidad...\n");
-            
-            // Aquí ejecutamos el entrenamiento con tracking
+            // Execute training with tracking
             var hashsVistos = new System.Collections.Generic.HashSet<string>();
             int reporteCada = Math.Max(1, episodios / 10);
             
@@ -536,17 +536,17 @@ namespace Sudoku.Tools
                 if ((i + 1) % reporteCada == 0)
                 {
                     double tasaUnicidad = (double)hashsVistos.Count / (i + 1) * 100;
-                    Console.WriteLine($"📍 Episodio {i + 1}/{episodios}:");
-                    Console.WriteLine($"  ✨ Sudokus únicos: {hashsVistos.Count}");
-                    Console.WriteLine($"  📈 Tasa de unicidad: {tasaUnicidad:F2}%");
+                    Console.WriteLine($"📍 Episode {i + 1}/{episodios}:");
+                    Console.WriteLine($"  ✨ Unique sudokus: {hashsVistos.Count}");
+                    Console.WriteLine($"  📈 Uniqueness rate: {tasaUnicidad:F2}%");
                     Console.WriteLine();
                 }
             }
             
-            Console.WriteLine($"\n╔═══ 🏆 RESULTADOS FINALES ═══╗");
-            Console.WriteLine($"🔢 Total episodios: {episodios}");
-            Console.WriteLine($"✨ Sudokus únicos: {hashsVistos.Count}");
-            Console.WriteLine($"📈 Tasa de unicidad: {(double)hashsVistos.Count / episodios * 100:F2}%");
+            Console.WriteLine($"\n╔═══ 🏆 FINAL RESULTS ═══╗");
+            Console.WriteLine($"🔢 Total episodes: {episodios}");
+            Console.WriteLine($"✨ Unique sudokus: {hashsVistos.Count}");
+            Console.WriteLine($"📈 Uniqueness rate: {(double)hashsVistos.Count / episodios * 100:F2}%");
             Console.WriteLine($"\n{SudokuGenerator.ObtenerEstadisticasML()}");
         }
         
@@ -555,31 +555,31 @@ namespace Sudoku.Tools
         /// </summary>
         static void ConfigurarParametros()
         {
-            Console.WriteLine("╔═══ 🎛️  CONFIGURACIÓN DE PARÁMETROS DE EXPLORACIÓN ═══╗\n");
-            
-            Console.WriteLine("📊 Parámetros actuales:");
+            Console.WriteLine("╔═══ 🎛️  EXPLORATION PARAMETERS CONFIGURATION ═══╗\n");
+
+            Console.WriteLine("📊 Current parameters:");
             Console.WriteLine(SudokuGenerator.ObtenerEstadisticasML());
             Console.WriteLine();
             
-            Console.WriteLine("🎯 Seleccione un preset:\n");
-            Console.WriteLine("1. 🌈 MÁXIMA VARIEDAD");
-            Console.WriteLine("   📌 Epsilon uso: 0.3 (30% exploración)");
-            Console.WriteLine("   📌 Temperatura: 2.0");
-            Console.WriteLine("   📌 Estrategia: Softmax\n");
-            
-            Console.WriteLine("2. ⚖️  BALANCE (recomendado)");
-            Console.WriteLine("   📌 Epsilon uso: 0.15 (15% exploración)");
-            Console.WriteLine("   📌 Temperatura: 0.8");
-            Console.WriteLine("   📌 Estrategia: Híbrida\n");
-            
-            Console.WriteLine("3. ⚡ MÁXIMO RENDIMIENTO");
-            Console.WriteLine("   📌 Epsilon uso: 0.05 (5% exploración)");
-            Console.WriteLine("   📌 Temperatura: 0.3");
-            Console.WriteLine("   📌 Estrategia: EpsilonGreedy\n");
-            
-            Console.WriteLine("4. 🛠️  PERSONALIZADO\n");
-            
-            Console.Write("👉 Seleccione opción (1-4): ");
+            Console.WriteLine("🎯 Select a preset:\n");
+            Console.WriteLine("1. 🌈 MAXIMUM VARIETY");
+            Console.WriteLine("   📌 Epsilon usage: 0.3 (30% exploration)");
+            Console.WriteLine("   📌 Temperature: 2.0");
+            Console.WriteLine("   📌 Strategy: Softmax\n");
+
+            Console.WriteLine("2. ⚖️  BALANCED (recommended)");
+            Console.WriteLine("   📌 Epsilon usage: 0.15 (15% exploration)");
+            Console.WriteLine("   📌 Temperature: 0.8");
+            Console.WriteLine("   📌 Strategy: Hybrid\n");
+
+            Console.WriteLine("3. ⚡ MAXIMUM PERFORMANCE");
+            Console.WriteLine("   📌 Epsilon usage: 0.05 (5% exploration)");
+            Console.WriteLine("   📌 Temperature: 0.3");
+            Console.WriteLine("   📌 Strategy: EpsilonGreedy\n");
+
+            Console.WriteLine("4. 🛠️  CUSTOM\n");
+
+            Console.Write("👉 Select option (1-4): ");
             string opcion = Console.ReadLine();
             
             var agente = SudokuGenerator.agenteML;
@@ -590,41 +590,41 @@ namespace Sudoku.Tools
                     agente.SetEpsilonUso(0.3);
                     agente.SetTemperature(2.0);
                     agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Softmax;
-                    Console.WriteLine("\n✅ Configuración aplicada: MÁXIMA VARIEDAD 🌈");
+                    Console.WriteLine("\n✅ Configuration applied: MAXIMUM VARIETY 🌈");
                     break;
-                
+
                 case "2":
                     agente.SetEpsilonUso(0.15);
                     agente.SetTemperature(0.8);
                     agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Hibrida;
-                    Console.WriteLine("\n✅ Configuración aplicada: BALANCE ⚖️");
+                    Console.WriteLine("\n✅ Configuration applied: BALANCED ⚖️");
                     break;
-                
+
                 case "3":
                     agente.SetEpsilonUso(0.05);
                     agente.SetTemperature(0.3);
                     agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.EpsilonGreedy;
-                    Console.WriteLine("\n✅ Configuración aplicada: MÁXIMO RENDIMIENTO ⚡");
+                    Console.WriteLine("\n✅ Configuration applied: MAXIMUM PERFORMANCE ⚡");
                     break;
                 
                 case "4":
-                    Console.Write("\n🎚️  Epsilon de uso (0.0 - 1.0, actual: 0.15): ");
+                    Console.Write("\n🎚️  Epsilon usage (0.0 - 1.0, current: 0.15): ");
                     if (double.TryParse(Console.ReadLine(), out double epsilon))
                     {
                         agente.SetEpsilonUso(epsilon);
                     }
-                    
-                    Console.Write("🌡️  Temperatura (0.1 - 5.0, actual: 1.0): ");
+
+                    Console.Write("🌡️  Temperature (0.1 - 5.0, current: 1.0): ");
                     if (double.TryParse(Console.ReadLine(), out double temp))
                     {
                         agente.SetTemperature(temp);
                     }
-                    
-                    Console.WriteLine("\n🎯 Estrategia:");
+
+                    Console.WriteLine("\n🎯 Strategy:");
                     Console.WriteLine("1. 🎲 EpsilonGreedy");
                     Console.WriteLine("2. 🔥 Softmax");
-                    Console.WriteLine("3. 🔀 Híbrida");
-                    Console.Write("👉 Seleccione (1-3): ");
+                    Console.WriteLine("3. 🔀 Hybrid");
+                    Console.Write("👉 Select (1-3): ");
                     
                     switch (Console.ReadLine())
                     {
@@ -639,18 +639,18 @@ namespace Sudoku.Tools
                             break;
                     }
                     
-                    Console.WriteLine("\n✅ Configuración personalizada aplicada 🛠️");
+                    Console.WriteLine("\n✅ Custom configuration applied 🛠️");
                     break;
-                
+
                 default:
-                    Console.WriteLine("\n❌ Opción no válida");
+                    Console.WriteLine("\n❌ Invalid option");
                     return;
             }
             
-            Console.WriteLine("\n📊 Nuevos parámetros:");
+            Console.WriteLine("\n📊 New parameters:");
             Console.WriteLine(SudokuGenerator.ObtenerEstadisticasML());
-            
-            Console.WriteLine("\n💡 Genera algunos sudokus (opción 6 o 10) para ver el efecto de los cambios.");
+
+            Console.WriteLine("\n💡 Generate some sudokus to see the effect of the changes.");
         }
     }
 }

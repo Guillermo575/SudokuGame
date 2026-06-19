@@ -590,34 +590,42 @@ namespace Sudoku
         }
 
         /// <summary>
-        /// Entrena el agente de ML con múltiples episodios
+        /// Trains the ML agent with multiple episodes
         /// </summary>
         public static void EntrenarAgente(int episodios = 1000, int columnasX = 3, int columnasY = 3)
         {
-            Console.WriteLine($"Iniciando entrenamiento del agente ML con {episodios} episodios...");
-            
+            Console.WriteLine($"Starting ML agent training with {episodios} episodes...");
+            var tiempoInicio = DateTime.Now;
+            var tiempoEpisodioAnterior = tiempoInicio;
+
             for (int i = 0; i < episodios; i++)
             {
                 var sudoku = new SudokuGenerator(columnasX, columnasY, usarML: true, entrenar: true);
-                
+
                 double recompensaTotal = sudoku.Exito ? 100 : -50;
                 agenteML.RegistrarEpisodio(recompensaTotal, sudoku.HashSudoku);
 
+                var tiempoActual = DateTime.Now;
+                var tiempoTranscurrido = tiempoActual - tiempoEpisodioAnterior;
+                tiempoEpisodioAnterior = tiempoActual;
+
                 //if ((i + 1) % 5 == 0)
                 {
-                    Console.WriteLine($"Episodio {i + 1}/{episodios} - Recompensa promedio: {agenteML.RecompensaPromedio:F2} - Exito: {sudoku.Exito} - Sudokus únicos: {agenteML.SudokusUnicos}");
+                    Console.WriteLine($"Ep. {i + 1}/{episodios} | Rec.: {agenteML.RecompensaPromedio:F2} | OK: {sudoku.Exito} | Uniques: {agenteML.SudokusUnicos} | Δt: {tiempoTranscurrido.TotalMilliseconds:F0}ms | End: {tiempoActual:HH:mm:ss}");
                 }
             }
-            
-            Console.WriteLine($"Entrenamiento completado. Total de episodios: {agenteML.EpisodiosEntrenados}, Sudokus únicos: {agenteML.SudokusUnicos}");
+
+            var tiempoFinal = DateTime.Now;
+            var tiempoTotalEntrenamiento = tiempoFinal - tiempoInicio;
+            Console.WriteLine($"✓ Training completed. Episodes: {agenteML.EpisodiosEntrenados} | Uniques: {agenteML.SudokusUnicos} | Total time: {tiempoTotalEntrenamiento.TotalSeconds:F2}s | End: {tiempoFinal:HH:mm:ss}");
         }
 
         /// <summary>
-        /// Obtiene estadísticas del agente de ML
+        /// Gets ML agent statistics
         /// </summary>
         public static string ObtenerEstadisticasML()
         {
-            return $"Agente ML - Episodios: {agenteML.EpisodiosEntrenados}, Recompensa Promedio: {agenteML.RecompensaPromedio:F2}, Sudokus Únicos: {agenteML.SudokusUnicos}, Estrategia: {agenteML.Estrategia}";
+            return $"ML Agent - Episodes: {agenteML.EpisodiosEntrenados}, Avg Reward: {agenteML.RecompensaPromedio:F2}, Unique Sudokus: {agenteML.SudokusUnicos}, Strategy: {agenteML.Estrategia}";
         }
         
         /// <summary>
