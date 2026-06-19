@@ -1,0 +1,9 @@
+1.-	Colocar fecha cuando finalice entre episodios y el tiempo que se tomo en cada uno
+2.-	Cambiar mensajes de la consola a Ingles
+3.-	Castigo por no llegar a la meta: Si el agente no llega a la meta en un número determinado de pasos, se le asigna una recompensa negativa para incentivar que encuentre una solución más eficiente (solo en modo entrenamiento)
+4.- Implementar un sistema de guardado y carga de modelos para que el agente pueda guardar su progreso y continuar entrenando en sesiones posteriores
+5.- Agregar una función de evaluación para medir el rendimiento del agente después de cada episodio, como la cantidad de pasos necesarios para alcanzar la meta o la recompensa total obtenida.
+6.- Implementar una función de visualización para mostrar el progreso del agente durante el entrenamiento, como un gráfico de la recompensa total obtenida a lo largo de los episodios o una representación visual del entorno y las acciones del agente.
+7.- Agregar la opción de ajustar los hiperparámetros del algoritmo de aprendizaje por refuerzo, como la tasa de aprendizaje, el factor de descuento y la política de exploración, para mejorar el rendimiento del agente. (cargarlos desde un json)
+8.- Implementar un sistema de logging para registrar las acciones del agente, las recompensas obtenidas y otros datos relevantes durante el entrenamiento, lo que facilitará el análisis y la depuración del modelo.
+9.- Agregar la opción de utilizar diferentes algoritmos de aprendizaje por refuerzo, como Q-learning, SARSA o Deep Q-Networks, para comparar su rendimiento en el entorno de laberinto.
