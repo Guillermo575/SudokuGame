@@ -8,7 +8,7 @@ Sistema avanzado de generacion de Sudoku que utiliza **Reinforcement Learning (Q
 # Ejecutar el programa
 dotnet run
 
-# En el menu, selecciona: 1 -> 1 (Prueba Rapida)
+# En el menu, selecciona: 1 -> 1 (Quick Test)
 ```
 
 ## Caracteristicas Principales
@@ -26,8 +26,8 @@ dotnet run
 // Generar un sudoku con ML
 var sudoku = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
 
-Console.WriteLine($"Exito: {sudoku.Exito}");
-Console.WriteLine($"Errores: {sudoku.ConteoErrores}");
+Console.WriteLine($"Success: {sudoku.Exito}");
+Console.WriteLine($"Errors: {sudoku.ConteoErrores}");
 Console.WriteLine(sudoku.ResumenASCII);
 
 // Cada sudoku sera diferente
@@ -48,15 +48,15 @@ Console.WriteLine($"Hash unico: {sudoku.HashSudoku}");
 El menu esta organizado en **6 categorias principales**:
 
 ```
-1. INICIO RAPIDO        -> Tests y ejemplos rapidos
-2. Generar Sudoku       -> Crear puzzles con/sin ML
-3. Entrenar Modelo      -> Entrenamiento en diferentes modos
-4. Configuracion        -> Presets y ajustes personalizados
-5. Analisis y Tests     -> Comparativas y benchmarks
-6. Ver Estadisticas     -> Estado del modelo actual
+1. ?? Quick Start          -> Tests y ejemplos rapidos
+2. ?? Generate Sudoku      -> Crear puzzles con/sin ML
+3. ???  Train Model          -> Entrenamiento en diferentes modos
+4. ??  Configuration        -> Presets y ajustes personalizados
+5. ?? Analysis & Tests      -> Comparativas y benchmarks
+6. ?? View Statistics       -> Estado del modelo actual
 ```
 
-**Para comenzar**: Selecciona opcion **1 -> 1** (Prueba Rapida)
+**Para comenzar**: Selecciona opcion **1 -> 1** (Quick Test)
 
 ## Documentacion Completa
 

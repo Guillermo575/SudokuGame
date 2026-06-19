@@ -49,7 +49,7 @@ SudokuGenerator.EntrenarAgente(episodios: 1000, columnasX: 3, columnasY: 3);
 
 // Ver estadísticas
 Console.WriteLine(SudokuGenerator.ObtenerEstadisticasML());
-// Output: "Agente ML - Episodios: 1000, Recompensa Promedio: 85.32, Sudokus Únicos: 987, Estrategia: Hibrida"
+// Output: "ML Agent - Episodes: 1000, Average Reward: 85.32, Unique Sudokus: 987, Strategy: Hybrid"
 ```
 
 ### Generar Sudokus Diversos con ML
@@ -61,10 +61,10 @@ for (int i = 0; i < 10; i++)
     var sudoku = new SudokuGenerator(
         ColumnasX: 3, 
         ColumnasY: 3, 
-        usarML: true,      // Usar Machine Learning
-        entrenar: false    // Modo uso (no entrenamiento)
+        usarML: true,      // Use Machine Learning
+        entrenar: false    // Use mode (no training)
     );
-    
+
     if (sudoku.Exito)
     {
         Console.WriteLine($"Sudoku {i+1}: {sudoku.HashSudoku}");
@@ -76,16 +76,16 @@ for (int i = 0; i < 10; i++)
 ### Configurar Estrategia de Exploración
 
 ```csharp
-// Obtener acceso al agente (necesitarás hacer público el campo agenteML)
+// Obtener acceso al agente
 var agente = SudokuGenerator.agenteML;
 
-// Usar solo Epsilon-Greedy
+// Use only Epsilon-Greedy
 agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.EpsilonGreedy;
 
-// Usar solo Softmax
+// Use only Softmax
 agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Softmax;
 
-// Usar estrategia híbrida (recomendado)
+// Use hybrid strategy (recommended)
 agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Hibrida;
 ```
 
@@ -94,14 +94,14 @@ agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Hibrida;
 ```csharp
 var agente = new SudokuRLAgent();
 
-// Configurar epsilon de entrenamiento y uso
-agente.SetEpsilonEntrenamiento(0.4);  // 40% exploración en entrenamiento
-agente.SetEpsilonUso(0.2);            // 20% exploración en uso
+// Configure training and usage epsilon
+agente.SetEpsilonEntrenamiento(0.4);  // 40% exploration in training
+agente.SetEpsilonUso(0.2);            // 20% exploration in usage
 
-// Ajustar temperatura de Softmax
-agente.SetTemperature(1.5);  // Mayor temperatura = más exploración
+// Adjust Softmax temperature
+agente.SetTemperature(1.5);  // Higher temperature = more exploration
 
-// Restaurar valores por defecto
+// Restore default values
 agente.ResetearModelo();
 ```
 
@@ -112,7 +112,7 @@ agente.ResetearModelo();
 var sudoku = new SudokuGenerator(
     ColumnasX: 3, 
     ColumnasY: 3, 
-    usarML: false,  // Desactivar ML
+    usarML: false,  // Disable ML
     entrenar: false
 );
 
@@ -124,8 +124,8 @@ Console.WriteLine(sudoku.ResumenASCII);
 ### Para Máxima Variedad Durante Entrenamiento
 ```csharp
 var agente = new SudokuRLAgent();
-agente.SetEpsilonEntrenamiento(0.5);  // 50% exploración
-agente.SetTemperature(2.0);           // Alta temperatura
+agente.SetEpsilonEntrenamiento(0.5);  // 50% exploration
+agente.SetTemperature(2.0);           // High temperature
 agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Softmax;
 ```
 

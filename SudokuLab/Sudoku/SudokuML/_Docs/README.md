@@ -60,45 +60,45 @@ El menu ha sido reorganizado en **6 categorias principales** con submenus para f
 0. Salir
 ```
 
-### 1. INICIO RAPIDO
-- **Prueba Rapida (Recomendado)**: Test completo automatizado
-- **Ejemplo de uso basico**: Demostracion simple
-- **Comparativa antes/despues**: Impacto de las mejoras
+### 1. QUICK START
+- **Quick Test (Recommended)**: Test completo automatizado
+- **Basic usage example**: Demostracion simple
+- **Before/After Comparison**: Impacto de las mejoras
 
-### 2. Generar Sudoku
-- **Generar con ML**: Usando modelo entrenado
-- **Generar sin ML**: Metodo tradicional
-- **Demostrar variedad**: Multiples sudokus unicos
+### 2. Generate Sudoku
+- **Generate with ML**: Usando modelo entrenado
+- **Generate without ML**: Metodo tradicional
+- **Demonstrate variety**: Multiples sudokus unicos
 
-### 3. Entrenar Modelo
-- **Rapido**: 100 episodios - ideal para pruebas
-- **Completo**: 1000 episodios - recomendado
-- **Para 4x4**: 2000 episodios - sudokus complejos
-- **Personalizado**: Configura manualmente
-- **Monitorear diversidad**: Tracking en tiempo real
+### 3. Train Model
+- **Fast**: 100 episodios - ideal para pruebas
+- **Complete**: 1000 episodios - recomendado
+- **For 4x4**: 2000 episodios - sudokus complejos
+- **Custom**: Configura manualmente
+- **Monitor variety**: Tracking en tiempo real
 
-### 4. Configuracion
-- **Presets disponibles**:
-  - Maxima Variedad: Epsilon 0.3, Temp 2.0, Softmax
-  - Balance (recomendado): Epsilon 0.15, Temp 0.8, Hibrida
-  - Maximo Rendimiento: Epsilon 0.05, Temp 0.3, Epsilon-Greedy
-  - Personalizado: Define tus propios valores
-- **Ver parametros actuales**: Muestra configuracion activa
+### 4. Configuration
+- **Available presets**:
+  - Maximum Variety: Epsilon 0.3, Temp 2.0, Softmax
+  - Balance (recommended): Epsilon 0.15, Temp 0.8, Hybrid
+  - Maximum Performance: Epsilon 0.05, Temp 0.3, Epsilon-Greedy
+  - Custom: Define tus propios valores
+- **View current parameters**: Muestra configuracion activa
 
-### 5. Analisis y Tests
-- **Comparar rendimiento**: ML vs tradicional
-- **Comparar estrategias**: Epsilon-Greedy vs Softmax vs Hibrida
-- **Testeo masivo**: 50 sudokus con estadisticas
+### 5. Analysis & Tests
+- **Compare performance**: ML vs tradicional
+- **Compare strategies**: Epsilon-Greedy vs Softmax vs Hybrid
+- **Massive testing**: 50 sudokus con estadisticas
 
-### 6. Ver Estadisticas
+### 6. View Statistics
 Muestra el estado actual del modelo:
-- Episodios de entrenamiento
-- Recompensa promedio
-- Sudokus unicos generados
-- Estrategia activa
-- Parametros de exploracion
+- Training episodes
+- Average reward
+- Unique sudokus generated
+- Active strategy
+- Exploration parameters
 
-**Acceso rapido recomendado**: Opcion `1 -> 1` (Prueba Rapida)
+**Quick access recommended**: Option `1 -> 1` (Quick Test)
 
 ---
 
@@ -137,17 +137,17 @@ Q(s,a) = Q(s,a) + alpha * (r + gamma * max(Q(s',a')) - Q(s,a))
 ```csharp
 var agente = SudokuGenerator.agenteML;
 
-// Maxima variedad
+// Maximum variety
 agente.SetEpsilonUso(0.3);
 agente.SetTemperature(2.0);
 agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Softmax;
 
-// Balance (por defecto)
+// Balance (by default)
 agente.SetEpsilonUso(0.15);
 agente.SetTemperature(0.8);
 agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Hibrida;
 
-// Maximo rendimiento
+// Maximum performance
 agente.SetEpsilonUso(0.05);
 agente.SetTemperature(0.3);
 agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.EpsilonGreedy;
@@ -198,9 +198,9 @@ var sudoku2 = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
 var sudoku3 = new SudokuGenerator(3, 3, usarML: true, entrenar: true);
 
 // Verificar unicidad
-Console.WriteLine($"Hash del sudoku: {sudoku2.HashSudoku}");
-Console.WriteLine($"Exito: {sudoku2.Exito}");
-Console.WriteLine($"Errores: {sudoku2.ConteoErrores}");
+Console.WriteLine($"Sudoku hash: {sudoku2.HashSudoku}");
+Console.WriteLine($"Success: {sudoku2.Exito}");
+Console.WriteLine($"Errors: {sudoku2.ConteoErrores}");
 ```
 
 ### Generar Multiples Sudokus Diversos
@@ -215,11 +215,11 @@ for (int i = 0; i < 10; i++)
     if (sudoku.Exito)
     {
         hashsGenerados.Add(sudoku.HashSudoku);
-        Console.WriteLine($"Sudoku {i+1}: Unico = {hashsGenerados.Count == i+1}");
+        Console.WriteLine($"Sudoku {i+1}: Unique = {hashsGenerados.Count == i+1}");
     }
 }
 
-Console.WriteLine($"Sudokus unicos: {hashsGenerados.Count}/10");
+Console.WriteLine($"Unique sudokus: {hashsGenerados.Count}/10");
 // Esperado: 9-10 unicos (90-100%)
 ```
 
@@ -237,8 +237,8 @@ SudokuGenerator.EntrenarAgente(episodios: 2000, columnasX: 4, columnasY: 4);
 // Obtener estadisticas (incluye sudokus unicos)
 string stats = SudokuGenerator.ObtenerEstadisticasML();
 Console.WriteLine(stats);
-// Output: "Agente ML - Episodios: 1000, Recompensa Promedio: 85.32, 
-//          Sudokus Unicos: 987, Estrategia: Hibrida"
+// Output: "ML Agent - Episodes: 1000, Average Reward: 85.32, 
+//          Unique Sudokus: 987, Strategy: Hybrid"
 ```
 
 ### Configurar Exploracion para Maxima Variedad
@@ -246,9 +246,9 @@ Console.WriteLine(stats);
 ```csharp
 var agente = SudokuGenerator.agenteML;
 
-// Configuracion: Maxima Variedad
-agente.SetEpsilonUso(0.3);              // 30% exploracion
-agente.SetTemperature(2.0);             // Alta temperatura
+// Configuration: Maximum Variety
+agente.SetEpsilonUso(0.3);              // 30% exploration
+agente.SetTemperature(2.0);             // High temperature
 agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.Softmax;
 
 // Ahora genera sudokus muy diversos
@@ -264,9 +264,9 @@ for (int i = 0; i < 20; i++)
 ```csharp
 var agente = SudokuGenerator.agenteML;
 
-// Configuracion: Maximo Rendimiento
-agente.SetEpsilonUso(0.05);             // 5% exploracion
-agente.SetTemperature(0.3);             // Baja temperatura
+// Configuration: Maximum Performance
+agente.SetEpsilonUso(0.05);             // 5% exploration
+agente.SetTemperature(0.3);             // Low temperature
 agente.Estrategia = SudokuRLAgent.EstrategiaExploracion.EpsilonGreedy;
 
 // Genera sudokus muy eficientes (menos backtracking)
@@ -278,42 +278,42 @@ var sudoku = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
 
 ## Resultados y Metricas
 
-### Comparacion: Sin ML vs Con ML (Sudoku 4x4)
+### Comparison: Without ML vs With ML (Sudoku 4x4)
 
-| Metrica                    | Sin ML      | Con ML      | Mejora      |
+| Metric                     | Without ML  | With ML     | Improvement |
 |----------------------------|-------------|-------------|-------------|
-| **Tasa de exito**          | 60-70%      | 85-95%      | +25-35%     |
-| **Backtracking promedio**  | 200-500     | 50-150      | -60-70%     |
-| **Tiempo promedio**        | 50-150 ms   | 30-80 ms    | -30-40%     |
-| **Sudokus unicos**         | 100%        | 95-98%      | -2-5%       |
+| **Success rate**           | 60-70%      | 85-95%      | +25-35%     |
+| **Average backtracking**   | 200-500     | 50-150      | -60-70%     |
+| **Average time**           | 50-150 ms   | 30-80 ms    | -30-40%     |
+| **Unique sudokus**         | 100%        | 95-98%      | -2-5%       |
 
 ### Resultados por Configuracion
 
 #### Con Configuracion por Defecto (Balance)
 ```
-Sudokus unicos: 95-98%
-Errores promedio: 50-150
-Tiempo promedio: 45ms
-Rendimiento: 4/5
-Variedad: 5/5
+Unique sudokus: 95-98%
+Average errors: 50-150
+Average time: 45ms
+Performance: 4/5
+Variety: 5/5
 ```
 
 #### Con Maxima Variedad
 ```
-Sudokus unicos: 99-100%
-Errores promedio: 80-200
-Tiempo promedio: 60ms
-Rendimiento: 3/5
-Variedad: 5/5
+Unique sudokus: 99-100%
+Average errors: 80-200
+Average time: 60ms
+Performance: 3/5
+Variety: 5/5
 ```
 
 #### Con Maximo Rendimiento
 ```
-Sudokus unicos: 70-85%
-Errores promedio: 30-80
-Tiempo promedio: 35ms
-Rendimiento: 5/5
-Variedad: 3/5
+Unique sudokus: 70-85%
+Average errors: 30-80
+Average time: 35ms
+Performance: 5/5
+Variety: 3/5
 ```
 
 ---
@@ -322,53 +322,53 @@ Variedad: 3/5
 
 ### Epsilon-Greedy
 ```
-Funcionamiento:
-- Con probabilidad epsilon: explorar (accion aleatoria)
-- Con probabilidad 1-epsilon: explotar (mejor accion conocida)
+How it works:
+- With probability epsilon: explore (random action)
+- With probability 1-epsilon: exploit (best known action)
 
-Ventajas:
+Advantages:
 + Simple y predecible
 + Facil de entender
 + Bueno para rendimiento
 
-Desventajas:
+Disadvantages:
 - Menos variado que Softmax
 - Cambios abruptos entre exploracion/explotacion
 ```
 
 ### Softmax/Boltzmann
 ```
-Funcionamiento:
+How it works:
 P(accion_i) = exp(Q(accion_i) / tau) / sum(exp(Q(accion_j) / tau))
 
-Donde:
-- tau (temperatura): controla la distribucion
+Where:
+- tau (temperature): controla la distribucion
 - tau alta -> mas uniforme (mas exploracion)
 - tau baja -> favorece alto Q-Value (mas explotacion)
 
-Ventajas:
+Advantages:
 + Probabilistico, mas natural
 + Mayor variedad que epsilon-greedy
 + Transicion suave entre exploracion/explotacion
 
-Desventajas:
+Disadvantages:
 - Mas complejo computacionalmente
 - Requiere ajustar temperatura
 ```
 
-### Hibrida (Recomendada)
+### Hybrid (Recommended)
 ```
-Funcionamiento:
+How it works:
 - En entrenamiento: mas Softmax (exploracion)
 - En uso: balance entre ambas (variedad controlada)
 - 30% Softmax + 70% Epsilon-Greedy (configurable)
 
-Ventajas:
+Advantages:
 + Mejor de ambos mundos
 + Adaptativo al contexto
 + Balance optimo variedad/rendimiento
 
-Desventajas:
+Disadvantages:
 - Mas parametros que ajustar
 ```
 
@@ -378,11 +378,11 @@ Desventajas:
 
 ### Problema: Los sudokus son muy similares
 
-**Sintomas:**
+**Symptoms:**
 - Tasa de unicidad < 80%
 - Muchos hashes repetidos
 
-**Soluciones:**
+**Solutions:**
 ```csharp
 // 1. Aumentar epsilon de uso
 SudokuGenerator.agenteML.SetEpsilonUso(0.3);
@@ -400,11 +400,11 @@ SudokuGenerator.EntrenarAgente(2000, 3, 3);
 
 ### Problema: Demasiado backtracking
 
-**Sintomas:**
+**Symptoms:**
 - Errores promedio > 200
 - Tiempo de generacion alto
 
-**Soluciones:**
+**Solutions:**
 ```csharp
 // 1. Reducir exploracion
 SudokuGenerator.agenteML.SetEpsilonUso(0.08);
@@ -421,11 +421,11 @@ SudokuGenerator.agenteML.Estrategia = SudokuRLAgent.EstrategiaExploracion.Epsilo
 
 ### Problema: El modelo no mejora
 
-**Sintomas:**
+**Symptoms:**
 - Recompensa promedio no sube
 - Alto backtracking persistente
 
-**Soluciones:**
+**Solutions:**
 ```csharp
 // 1. Resetear y re-entrenar
 SudokuGenerator.agenteML.ResetearModelo();
@@ -437,13 +437,13 @@ SudokuGenerator.EntrenarAgente(1000, 3, 3);
 
 ---
 
-## Preguntas Frecuentes (FAQ)
+## Frequently Asked Questions (FAQ)
 
 **Q: ¿Cual es la mejor configuracion?**
-A: Depende del uso:
-- Juegos/Apps: Balance (configuracion por defecto)
-- Dataset de investigacion: Maxima Variedad
-- Benchmarks: Maximo Rendimiento
+A: It depends on your usage:
+- Games/Apps: Balance (default configuration)
+- Research dataset: Maximum Variety
+- Benchmarks: Maximum Performance
 
 **Q: ¿Cuanto tiempo toma entrenar?**
 A: 
@@ -451,13 +451,13 @@ A:
 - 4x4: 45-90 minutos (2000 episodios)
 
 **Q: ¿El modelo se guarda automaticamente?**
-A: Si, se guarda en `SudokuML_Model.dat` y se carga automaticamente en la proxima ejecucion.
+A: Yes, it saves to `SudokuML_Model.dat` and loads automatically on next execution.
 
 **Q: ¿Puedo entrenar para multiples tamanos?**
-A: Si, pero cada tamano necesita entrenamiento separado.
+A: Yes, but each size needs separate training.
 
 **Q: ¿Como se que el modelo esta aprendiendo?**
-A: Verifica que:
+A: Verify that:
 - La recompensa promedio aumenta
 - El backtracking disminuye
 - La tasa de exito mejora

@@ -29,16 +29,16 @@ Sistema completo de **Reinforcement Learning (Q-Learning)** integrado en el gene
 
 ### 3. Menu Reorganizado
 
-**ANTES**: 15 opciones planas dificiles de navegar
+**BEFORE**: 15 opciones planas dificiles de navegar
 
-**AHORA**: 6 categorias con submenus:
+**NOW**: 6 categorias con submenus:
 ```
-1. INICIO RAPIDO        -> Pruebas y ejemplos rapidos
-2. Generar Sudoku       -> Crear puzzles con/sin ML
-3. Entrenar Modelo      -> Entrenamiento en diferentes modos
-4. Configuracion        -> Presets y ajustes personalizados
-5. Analisis y Tests     -> Comparativas y benchmarks
-6. Ver Estadisticas     -> Estado del modelo actual
+1. ?? Quick Start         -> Tests y ejemplos rapidos
+2. ?? Generate Sudoku      -> Crear puzzles con/sin ML
+3. ???  Train Model         -> Entrenamiento en diferentes modos
+4. ??  Configuration       -> Presets y ajustes personalizados
+5. ?? Analysis & Tests     -> Comparativas y benchmarks
+6. ?? View Statistics      -> Estado del modelo actual
 ```
 
 ### 4. Estrategias de Exploracion
@@ -63,68 +63,68 @@ Sistema completo de **Reinforcement Learning (Q-Learning)** integrado en el gene
 ## Resultados Comparativos
 
 ### Sudoku 3x3
-| Metrica            | Sin ML   | Con ML   | Mejora    |
-|--------------------|----------|----------|-----------|
-| Tasa de exito      | ~90%     | ~95%     | +5%       |
-| Backtracking       | 50-100   | 20-50    | -60%      |
-| Tiempo             | 15-30ms  | 10-20ms  | -33%      |
-| Sudokus unicos     | 100%     | 95-98%   | -2-5%     |
+| Metric             | Without ML | With ML | Improvement |
+|--------------------|----------|---------|-------------|
+| Success rate       | ~90%     | ~95%    | +5%         |
+| Backtracking       | 50-100   | 20-50   | -60%        |
+| Time               | 15-30ms  | 10-20ms | -33%        |
+| Unique sudokus     | 100%     | 95-98%  | -2-5%       |
 
 ### Sudoku 4x4
-| Metrica            | Sin ML   | Con ML   | Mejora    |
-|--------------------|----------|----------|-----------|
-| Tasa de exito      | 60-70%   | 85-95%   | +25-35%   |
-| Backtracking       | 200-500  | 50-150   | -70%      |
-| Tiempo             | 50-150ms | 30-80ms  | -40%      |
-| Sudokus unicos     | 100%     | 95-98%   | -2-5%     |
+| Metric             | Without ML | With ML | Improvement |
+|--------------------|----------|---------|-------------|
+| Success rate       | 60-70%   | 85-95%  | +25-35%     |
+| Backtracking       | 200-500  | 50-150  | -70%        |
+| Time               | 50-150ms | 30-80ms | -40%        |
+| Unique sudokus     | 100%     | 95-98%  | -2-5%       |
 
 ---
 
 ## Configuraciones Disponibles
 
-### Preset 1: Maxima Variedad
+### Preset 1: Maximum Variety
 ```
-Epsilon Uso: 0.3 (30% exploracion)
-Temperatura: 2.0
-Estrategia: Softmax
-Resultado: 99-100% unicos, mas errores
-```
-
-### Preset 2: Balance (Por Defecto)
-```
-Epsilon Uso: 0.15 (15% exploracion)
-Temperatura: 0.8
-Estrategia: Hibrida
-Resultado: 95-98% unicos, errores moderados
+Epsilon Usage: 0.3 (30% exploration)
+Temperature: 2.0
+Strategy: Softmax
+Result: 99-100% unique, more errors
 ```
 
-### Preset 3: Maximo Rendimiento
+### Preset 2: Balance (Default)
 ```
-Epsilon Uso: 0.05 (5% exploracion)
-Temperatura: 0.3
-Estrategia: Epsilon-Greedy
-Resultado: 70-85% unicos, menos errores
+Epsilon Usage: 0.15 (15% exploration)
+Temperature: 0.8
+Strategy: Hybrid
+Result: 95-98% unique, moderate errors
+```
+
+### Preset 3: Maximum Performance
+```
+Epsilon Usage: 0.05 (5% exploration)
+Temperature: 0.3
+Strategy: Epsilon-Greedy
+Result: 70-85% unique, fewer errors
 ```
 
 ---
 
-## Uso Rapido
+## Quick Usage
 
-### Desde el Menu
+### From Menu
 ```bash
 dotnet run
-# Selecciona: 1 (INICIO RAPIDO) -> 1 (Prueba Rapida)
+# Select: 1 (Quick Start) -> 1 (Quick Test)
 ```
 
-### Desde Codigo
+### From Code
 ```csharp
-// Generar con ML
+// Generate with ML
 var sudoku = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
 
-// Entrenar modelo
+// Train model
 SudokuGenerator.EntrenarAgente(1000, 3, 3);
 
-// Configurar variedad
+// Configure variety
 SudokuGenerator.agenteML.SetEpsilonUso(0.15);
 SudokuGenerator.agenteML.SetTemperature(0.8);
 SudokuGenerator.agenteML.Estrategia = SudokuRLAgent.EstrategiaExploracion.Hibrida;
@@ -164,19 +164,19 @@ SudokuML/MD/
 ## Problemas Comunes y Soluciones
 
 ### Problema: Sudokus muy similares
-**Solucion**: Aumentar exploracion
+**Solution**: Aumentar exploracion
 ```csharp
 SudokuGenerator.agenteML.SetEpsilonUso(0.3);
 ```
 
 ### Problema: Muchos errores
-**Solucion**: Reducir exploracion
+**Solution**: Reducir exploracion
 ```csharp
 SudokuGenerator.agenteML.SetEpsilonUso(0.05);
 ```
 
 ### Problema: Modelo no mejora
-**Solucion**: Mas entrenamiento
+**Solution**: Mas entrenamiento
 ```csharp
 SudokuGenerator.EntrenarAgente(5000, 4, 4);
 ```

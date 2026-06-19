@@ -69,7 +69,7 @@ SudokuGenerator.EntrenarAgente(1000, 3, 3);
 for (int i = 0; i < 10; i++)
 {
     var sudoku = new SudokuGenerator(3, 3, usarML: true, entrenar: false);
-    Console.WriteLine($"Sudoku {i+1}: Exito={sudoku.Exito}, Errores={sudoku.ConteoErrores}");
+    Console.WriteLine($"Sudoku {i+1}: Success={sudoku.Exito}, Errors={sudoku.ConteoErrores}");
 }
 
 // 3. Ver estadisticas
@@ -124,21 +124,21 @@ SudokuGenerator.agenteML.Estrategia = SudokuRLAgent.EstrategiaExploracion.Epsilo
 
 ### Primera Ejecucion:
 1. Ejecutar: `dotnet run`
-2. Seleccionar: `1` (Inicio Rapido)
-3. Seleccionar: `1` (Prueba Rapida)
+2. Seleccionar: `1` (Quick Start)
+3. Seleccionar: `1` (Quick Test)
 4. Esperar resultados (entrena y prueba automaticamente)
 
 ### Uso Normal:
 1. Ejecutar: `dotnet run`
-2. Seleccionar: `2` (Generar Sudoku)
-3. Seleccionar: `1` (Con ML)
+2. Seleccionar: `2` (Generate Sudoku)
+3. Seleccionar: `1` (With ML)
 4. Ingresar dimensiones (ej: 3 para 3x3)
 5. Ver resultado
 
 ### Ajustar Configuracion:
 1. Ejecutar: `dotnet run`
-2. Seleccionar: `4` (Configuracion)
-3. Seleccionar: `1` (Configurar parametros)
+2. Seleccionar: `4` (Configuration)
+3. Seleccionar: `1` (Configure parameters)
 4. Elegir preset o personalizar
 5. Generar sudokus para ver el efecto
 
@@ -152,17 +152,17 @@ SudokuGenerator.agenteML.Estrategia = SudokuRLAgent.EstrategiaExploracion.Epsilo
 
 **Problema: Sudokus muy similares**
 ```
-Solucion: Menu 4 -> 1 -> Opcion 1 (Maxima Variedad)
+Solucion: Menu 4 -> 1 -> Opcion 1 (Maximum Variety)
 ```
 
 **Problema: Muchos errores**
 ```
-Solucion: Menu 4 -> 1 -> Opcion 3 (Maximo Rendimiento)
+Solucion: Menu 4 -> 1 -> Opcion 3 (Maximum Performance)
 ```
 
 **Problema: El modelo no mejora**
 ```
-Solucion: Menu 3 -> 2 (Entrenar completo - 1000 episodios)
+Solucion: Menu 3 -> 2 (Train complete - 1000 episodes)
 ```
 
 ## Comandos Rapidos desde Codigo
