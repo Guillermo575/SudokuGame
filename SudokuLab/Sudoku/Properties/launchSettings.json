@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "Sudoku": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "console": "externalTerminal"
+    },
+    "WindowsTerminal": {
+      "commandName": "Executable",
+      "executablePath": "wt.exe",
+      "commandLineArgs": "new-tab cmd /k \"$(ProjectDir)bin\\Debug\\net8.0\\Sudoku.exe\"",
+      "workingDirectory": "$(ProjectDir)bin\\Debug\\net8.0"
+    }
+  }
+}
