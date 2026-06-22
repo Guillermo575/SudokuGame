@@ -24,6 +24,10 @@ namespace Sudoku
         public int ConteoErrores { private set; get; }
         public int ConteoAciertos { private set; get; }
         public long TiempoEjecutado { private set; get; }
+        private int MaxRetrocesos = 100000;
+        private int ContadorRetrocesos = 0;
+        private int UltimasPosiciones = 0;
+        private const int UMBRAL_RESET = 50;
         #endregion
 
         #region HTML Table
@@ -99,6 +103,7 @@ namespace Sudoku
             Stopwatch stopwatch = Stopwatch.StartNew();
             this.ColumnasX = ColumnasX;
             this.ColumnasY = ColumnasY;
+            MaxRetrocesos = ColumnasX * ColumnasY * 10000;
             SetNewArray();
             SetDatos();
             Validado = true;
@@ -115,7 +120,7 @@ namespace Sudoku
             bool Validado = true;
             foreach (var objCelda in lstCeldas)
             {
-                if (!Validado || objCelda.Valor == 0) 
+                if (!Validado || objCelda.Valor == 0)
                 {
                     return false;
                 }
@@ -189,9 +194,16 @@ namespace Sudoku
             int ValorActual = ValorInicial;
             while (ValorActual <= ValorFinal)
             {
+                ContadorRetrocesos = 0;
+                bool resetNecesario = false;
                 int CuadranteIndex = 1;
                 while (CuadranteIndex <= SumaCuadrantes)
                 {
+                    if (ContadorRetrocesos > MaxRetrocesos)
+                    {
+                        resetNecesario = true;
+                        break;
+                    }
                     var lstCeldasValidas = GetCeldasValidas(CuadranteIndex, ValorActual);
                     if (lstCeldasValidas.Count > 0)
                     {
@@ -204,10 +216,30 @@ namespace Sudoku
                         }
                         CuadranteIndex++;
                         celdaGenerada++;
+                        UltimasPosiciones = 0;
                     }
                     else
                     {
                         ConteoErrores++;
+                        ContadorRetrocesos++;
+                        UltimasPosiciones++;
+                        if (UltimasPosiciones > UMBRAL_RESET && ValorActual > ValorInicial)
+                        {
+                            int retrocesosProfundos = Math.Min(SumaCuadrantes, UltimasPosiciones / 10);
+                            for (int i = 0; i < retrocesosProfundos && lstBitacora.Count > 0; i++)
+                            {
+                                var objRemover = lstBitacora.Last();
+                                objRemover.Bloque.Valor = 0;
+                                lstBitacora.RemoveAt(lstBitacora.Count - 1);
+                                celdaGenerada--;
+                            }
+                            UltimasPosiciones = 0;
+                        }
+                        if (lstBitacora.Count == 0)
+                        {
+                            resetNecesario = true;
+                            break;
+                        }
                         var objLast = lstBitacora.Last();
                         objLast.Bloque.Valor = 0;
                         lstBitacora.RemoveAt(lstBitacora.Count - 1);
@@ -230,49 +262,109 @@ namespace Sudoku
                         }
                         if (ValorActual <= 0)
                         {
-                            return;
+                            resetNecesario = true;
+                            break;
                         }
                         lstBitacoraBloqueo.Add(new Bitacora() { Bloque = objLast.Bloque, Valor = ValorActual });
                     }
                     ConteoAciertos += celdaGenerada > ConteoAciertos ? 1 : 0;
                 }
-                ValorActual++;
+                if (resetNecesario)
+                {
+                    foreach (var celda in lstCeldas)
+                    {
+                        celda.Valor = 0;
+                        celda.lstWarnings.Clear();
+                    }
+                    lstBitacora.Clear();
+                    lstBitacoraBloqueo.Clear();
+                    ValorActual = ValorInicial;
+                    CuadranteIndex = 1;
+                    celdaGenerada = 0;
+                    ContadorRetrocesos = 0;
+                    UltimasPosiciones = 0;
+                }
+                else
+                {
+                    ValorActual++;
+                }
             }
             Exito = true;
-            var xx = ResumenHTML;
         }
         public Celda GetCeldaElegida(List<Celda> lst)
         {
+            int SumaPesos = 0;
+            int MaxWarnings = 0;
             if (lstBitacora.Count > 0)
             {
                 var objLast = lstBitacora.Last().Bloque;
                 if (objLast != null && objLast.lstWarnings.Count > 0)
                 {
-                    int MaxWarnings = objLast.lstWarnings.Max(x => x.Valor);
+                    MaxWarnings = objLast.lstWarnings.Max(x => x.Valor);
                     var warningDict = objLast.lstWarnings.ToDictionary(x => x.Bloque.Id, x => x.Valor);
                     foreach (var obj in lst)
                     {
                         int ObjWarnings = warningDict.ContainsKey(obj.Id) ? warningDict[obj.Id] : 0;
-                        obj.Peso = Math.Max(1, MaxWarnings - ObjWarnings);
+                        obj.Peso = Math.Max(1, MaxWarnings - ObjWarnings + 1);
+                    }
+                }
+                else
+                {
+                    foreach (var obj in lst)
+                    {
+                        obj.Peso = 1;
                     }
                 }
             }
-            int SumaPesos = 0;
-            foreach (var obj in lst)
+            var celdaConMenosOpciones = lst.OrderBy(c => ContarOpcionesFuturas(c)).ToList();
+            int minOpciones = ContarOpcionesFuturas(celdaConMenosOpciones.First());
+            var celdasOptimas = celdaConMenosOpciones.Where(c => ContarOpcionesFuturas(c) <= minOpciones + 2).ToList();
+            foreach (var obj in celdasOptimas)
+            {
+                int opcionesFuturas = ContarOpcionesFuturas(obj);
+                int pesoBase = obj.Peso;
+                if (opcionesFuturas < 3)
+                {
+                    obj.Peso = pesoBase * 5;
+                }
+                else if (opcionesFuturas < 5)
+                {
+                    obj.Peso = pesoBase * 3;
+                }
+                else
+                {
+                    obj.Peso = pesoBase * 2;
+                }
+            }
+            List<Celda> lstFinal = celdasOptimas.Count > 0 ? celdasOptimas : lst;
+            foreach (var obj in lstFinal)
             {
                 SumaPesos += obj.Peso;
             }
             int NumeroElegido = rnd.Next(SumaPesos);
             int acumulado = 0;
-            for (int l = 0; l < lst.Count; l++)
+            for (int l = 0; l < lstFinal.Count; l++)
             {
-                acumulado += lst[l].Peso;
+                acumulado += lstFinal[l].Peso;
                 if (NumeroElegido < acumulado)
                 {
-                    return lst[l];
+                    return lstFinal[l];
                 }
             }
-            return lst[lst.Count - 1];
+            return lstFinal[lstFinal.Count - 1];
+        }
+
+        private int ContarOpcionesFuturas(Celda celda)
+        {
+            int opciones = 0;
+            for (int valor = ValorInicial; valor <= ValorFinal; valor++)
+            {
+                if (ValidoEjeXY(celda, valor) && !GetBloqueo(celda, valor))
+                {
+                    opciones++;
+                }
+            }
+            return opciones;
         }
         #endregion
 
