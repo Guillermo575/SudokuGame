@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Newtonsoft.Json;
-namespace Sudoku.MachineLearning
+namespace SudokuML.MachineLearning
 {
     /// <summary>
     /// Agente de Reinforcement Learning para optimizar la selección de celdas en Sudoku

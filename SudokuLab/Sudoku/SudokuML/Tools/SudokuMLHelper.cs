@@ -1,5 +1,5 @@
 using System;
-namespace Sudoku.Tools
+namespace SudokuML.Tools
 {
     /// <summary>
     /// Clase de utilidad para entrenar y usar el generador de Sudoku con Machine Learning

@@ -1,6 +1,6 @@
 using System;
-using Sudoku.MachineLearning;
-namespace Sudoku.Tools
+using SudokuML.MachineLearning;
+namespace SudokuML.Tools
 {
     /// <summary>
     /// Ejemplos de uso del generador de Sudoku con ML y variedad

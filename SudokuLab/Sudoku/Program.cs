@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-namespace Sudoku
+namespace SudokuML
 {
     public partial class Program
     {

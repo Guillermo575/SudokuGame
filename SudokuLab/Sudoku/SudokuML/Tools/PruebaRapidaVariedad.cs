@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Sudoku.MachineLearning;
-namespace Sudoku.Tools
+using SudokuML.MachineLearning;
+namespace SudokuML.Tools
 {
     /// <summary>
     /// Quick test to verify the variety in sudoku generation

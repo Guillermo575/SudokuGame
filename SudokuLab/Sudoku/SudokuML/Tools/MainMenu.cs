@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
-using Sudoku.MachineLearning;
-namespace Sudoku.Tools
+using SudokuML.MachineLearning;
+namespace SudokuML.Tools
 {
     /// <summary>
     /// Programa de ejemplo para probar y entrenar el sistema de ML para Sudoku

@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Sudoku.MachineLearning;
-namespace Sudoku
+using SudokuML.MachineLearning;
+namespace SudokuML
 {
     [Serializable]
     public class SudokuGenerator

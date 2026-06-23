@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace Sudoku.MachineLearning
+namespace SudokuML.MachineLearning
 {
     /// <summary>
     /// Representa el estado actual del Sudoku con características para el agente de RL

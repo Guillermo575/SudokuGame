@@ -1,5 +1,5 @@
 using System;
-namespace Sudoku.MachineLearning
+namespace SudokuML.MachineLearning
 {
     /// <summary>
     /// Sistema de recompensas para el agente de Reinforcement Learning
