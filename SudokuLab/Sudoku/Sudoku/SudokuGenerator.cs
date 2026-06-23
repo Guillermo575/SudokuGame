@@ -196,13 +196,20 @@ namespace Sudoku
         #endregion
 
         #region General
-        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3)
+        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3, bool QuickFunction = false)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
             this.ColumnasX = ColumnasX;
             this.ColumnasY = ColumnasY;
             SetNewArray();
-            SetDatos();
+            if (QuickFunction)
+            {
+                SetDatosQuick();
+            }
+            else
+            {
+                SetDatos();
+            }
             Validado = true;
             foreach (var obj in lstCeldas)
             {
@@ -341,6 +348,17 @@ namespace Sudoku
                 ValorActual++;
             }
             //HashSudoku = GenerarHashSudoku();
+            InicializarMapeoValores();
+            Exito = ValidarCeldas(lstCeldas);
+            HashSudoku = GenerarHashSudoku();
+        }
+        private void SetDatosQuick()
+        {
+            foreach (var celda in lstCeldas.OrderBy(x => x.CuadranteEjeY).ThenBy(x => x.EjeY).ThenBy(x => x.CuadranteEjeX).ThenBy(x => x.EjeX))
+            {
+                int valorBase = (celda.EjeY * ColumnasY) + celda.CuadranteEjeY + (celda.CuadranteEjeX * ColumnasY) + celda.EjeX;
+                celda.Valor = (valorBase % ValorFinal) + ValorInicial;
+            }
             InicializarMapeoValores();
             Exito = ValidarCeldas(lstCeldas);
             HashSudoku = GenerarHashSudoku();
