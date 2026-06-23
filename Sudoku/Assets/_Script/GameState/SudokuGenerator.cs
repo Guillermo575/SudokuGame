@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,11 +19,13 @@ namespace Sudoku
         private List<Bitacora> lstBitacora = new List<Bitacora>();
         private List<Bitacora> lstBitacoraBloqueo = new List<Bitacora>();
         private Random rnd = new Random();
+        private Dictionary<int, int> mapeoValores;
         public bool Exito { private set; get; }
         public bool Validado { private set; get; }
         public int ConteoErrores { private set; get; }
         public int ConteoAciertos { private set; get; }
         public long TiempoEjecutado { private set; get; }
+        public string HashSudoku { private set; get; }
         #endregion
 
         #region HTML Table
@@ -64,6 +66,102 @@ namespace Sudoku
         }
         #endregion
 
+        #region ASCII Table
+        public String ResumenASCII
+        {
+            get
+            {
+                try
+                {
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                    int totalFilas = ColumnasY * ColumnasX;
+                    int totalColumnas = ColumnasX * ColumnasY;
+                    sb.Append("╔");
+                    for (int col = 0; col < totalColumnas; col++)
+                    {
+                        sb.Append("═══");
+                        if (col < totalColumnas - 1)
+                        {
+                            sb.Append((col + 1) % ColumnasY == 0 ? "╦" : "╤");
+                        }
+                    }
+                    sb.AppendLine("╗");
+                    for (int m = 0; m < ColumnasY; m++)
+                    {
+                        for (int y = 0; y < ColumnasX; y++)
+                        {
+                            sb.Append("║");
+                            for (int l = 0; l < ColumnasX; l++)
+                            {
+                                for (int x = 0; x < ColumnasY; x++)
+                                {
+                                    var objCelda = (from obj in lstCeldas
+                                                    where obj.EjeX == x && obj.CuadranteEjeX == l &&
+                                                          obj.EjeY == y && obj.CuadranteEjeY == m
+                                                    select obj).ToList().First();
+
+                                    string valor = Alphabet.getAlphaChar(objCelda.Valor);
+                                    sb.Append($" {valor} ");
+
+                                    if (x < ColumnasY - 1 || l < ColumnasX - 1)
+                                    {
+                                        sb.Append((x == ColumnasY - 1) ? "║" : "│");
+                                    }
+                                }
+                            }
+                            sb.AppendLine("║");
+                            if (y < ColumnasX - 1 || m < ColumnasY - 1)
+                            {
+                                if (y == ColumnasX - 1 && m < ColumnasY - 1)
+                                {
+                                    sb.Append("╠");
+                                    for (int col = 0; col < totalColumnas; col++)
+                                    {
+                                        sb.Append("═══");
+                                        if (col < totalColumnas - 1)
+                                        {
+                                            sb.Append((col + 1) % ColumnasY == 0 ? "╬" : "╪");
+                                        }
+                                    }
+                                    sb.AppendLine("╣");
+                                }
+                                else if (y < ColumnasX - 1)
+                                {
+                                    sb.Append("╟");
+                                    for (int col = 0; col < totalColumnas; col++)
+                                    {
+                                        sb.Append("───");
+                                        if (col < totalColumnas - 1)
+                                        {
+                                            sb.Append((col + 1) % ColumnasY == 0 ? "╫" : "┼");
+                                        }
+                                    }
+                                    sb.AppendLine("╢");
+                                }
+                            }
+                        }
+                    }
+                    sb.Append("╚");
+                    for (int col = 0; col < totalColumnas; col++)
+                    {
+                        sb.Append("═══");
+                        if (col < totalColumnas - 1)
+                        {
+                            sb.Append((col + 1) % ColumnasY == 0 ? "╩" : "╧");
+                        }
+                    }
+                    sb.AppendLine("╝");
+                    return sb.ToString();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al generar la tabla ASCII: {ex.Message}");
+                    return "Error al generar la tabla ASCII";
+                }
+            }
+        }
+        #endregion
+
         #region	Test
         public static void Testeo(int cantidad = 50000)
         {
@@ -72,6 +170,8 @@ namespace Sudoku
             int ValorMaximo = 0;
             double ValorPromed = 0;
             double ValorPromedReit = 0;
+            long TiempoMinimo = 0;
+            long TiempoMaximo = 0;
             long TiempoTotal = 0;
             long TiempoPromedio = 0;
             for (int l = 0; l < cantidad; l++)
@@ -84,6 +184,8 @@ namespace Sudoku
                     ValorMaximo = lst.Max(x => x.ConteoErrores);
                     ValorPromed = lst.Average(x => x.ConteoErrores);
                     ValorPromedReit = l == 0 ? pr.ConteoErrores : (ValorPromedReit + pr.ConteoErrores) / 2;
+                    TiempoMinimo = lst.Min(x => x.TiempoEjecutado);
+                    TiempoMaximo = lst.Max(x => x.TiempoEjecutado);
                     TiempoTotal = lst.Sum(x => x.TiempoEjecutado);
                     TiempoPromedio = TiempoTotal / lst.Count;
                 }
@@ -238,8 +340,10 @@ namespace Sudoku
                 }
                 ValorActual++;
             }
-            Exito = true;
-            var xx = ResumenHTML;
+            //HashSudoku = GenerarHashSudoku();
+            InicializarMapeoValores();
+            Exito = ValidarCeldas(lstCeldas);
+            HashSudoku = GenerarHashSudoku();
         }
         public Celda GetCeldaElegida(List<Celda> lst)
         {
@@ -273,6 +377,45 @@ namespace Sudoku
                 }
             }
             return lst[lst.Count - 1];
+        }
+        #endregion
+
+        #region HashSudoku
+        private string GenerarHashSudoku()
+        {
+            if (lstCeldas == null || lstCeldas.Count == 0) return string.Empty;
+            var valores = lstCeldas
+                .OrderBy(c => c.CuadranteEjeY)
+                .ThenBy(c => c.EjeY)
+                .ThenBy(c => c.CuadranteEjeX)
+                .ThenBy(c => c.EjeX)
+                .Select(c => c.Valor.ToString())
+                .ToArray();
+            return string.Join("", valores);
+        }
+        #endregion
+
+        #region Mapeo Valores
+        private void InicializarMapeoValores()
+        {
+            mapeoValores = new Dictionary<int, int>();
+            var valoresDisponibles = Enumerable.Range(ValorInicial, ValorFinal).ToList();
+            for (int i = valoresDisponibles.Count - 1; i > 0; i--)
+            {
+                int j = rnd.Next(i + 1);
+                int temp = valoresDisponibles[i];
+                valoresDisponibles[i] = valoresDisponibles[j];
+                valoresDisponibles[j] = temp;
+            }
+            for (int i = 0; i < valoresDisponibles.Count; i++)
+            {
+                mapeoValores[i + ValorInicial] = valoresDisponibles[i];
+            }
+            lstCeldas.Select(c => { c.Valor = MapearValor(c.Valor); return c; }).ToList();
+        }
+        private int MapearValor(int valorSecuencial)
+        {
+            return mapeoValores.ContainsKey(valorSecuencial) ? mapeoValores[valorSecuencial] : valorSecuencial;
         }
         #endregion
 
@@ -312,10 +455,14 @@ namespace Sudoku
         }
         #endregion
     }
+
+    #region Tipo
     public enum eType
     {
         cr9x9, cr16x16, cr6x6, cr4x4, cr20x20, cr25x25, cr30x30, cr36x36
     }
+    #endregion
+
     #region Alphabet
     public class Alphabet
     {
