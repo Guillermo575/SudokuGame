@@ -26,7 +26,8 @@ namespace Sudoku
         public int ConteoAciertos { private set; get; }
         public long TiempoEjecutado { private set; get; }
         public string HashSudoku { private set; get; }
-        public float progress { get { return ConteoAciertos / SumaBases; } }
+        public float progress { get { return (float)ConteoAciertos / SumaCeldas; } }
+        public bool QuickFunction { get; set; } = false;
         #endregion
 
         #region HTML Table
@@ -197,13 +198,28 @@ namespace Sudoku
         #endregion
 
         #region General
-        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3)
+        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3, bool StartNow = true, bool QuickFunction = false)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
             this.ColumnasX = ColumnasX;
             this.ColumnasY = ColumnasY;
+            this.QuickFunction = QuickFunction;
             SetNewArray();
-            SetDatos();
+            if (StartNow)
+            {
+                Start();
+            }
+        }
+        public void Start()
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            if (QuickFunction)
+            {
+                SetDatosQuick();
+            }
+            else
+            {
+                SetDatos();
+            }
             Validado = true;
             foreach (var obj in lstCeldas)
             {
@@ -342,6 +358,17 @@ namespace Sudoku
                 ValorActual++;
             }
             //HashSudoku = GenerarHashSudoku();
+            InicializarMapeoValores();
+            Exito = ValidarCeldas(lstCeldas);
+            HashSudoku = GenerarHashSudoku();
+        }
+        private void SetDatosQuick()
+        {
+            foreach (var celda in lstCeldas.OrderBy(x => x.CuadranteEjeY).ThenBy(x => x.EjeY).ThenBy(x => x.CuadranteEjeX).ThenBy(x => x.EjeX))
+            {
+                int valorBase = (celda.EjeY * ColumnasY) + celda.CuadranteEjeY + (celda.CuadranteEjeX * ColumnasY) + celda.EjeX;
+                celda.Valor = (valorBase % ValorFinal) + ValorInicial;
+            }
             InicializarMapeoValores();
             Exito = ValidarCeldas(lstCeldas);
             HashSudoku = GenerarHashSudoku();
