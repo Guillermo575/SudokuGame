@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using System.Threading;
+using System.Collections;
+using UnityEngine.UI;
 public class MenuNewGame : _Menu
 {
     #region Variables
     public TMP_Dropdown dropdownBoard;
     public TMP_Dropdown dropdownDifficult;
+    public Slider loadingSlider;
+    public TextMeshProUGUI loadingText;
+    public Button cancelButton;
+    public List<Button> otherButtons = new List<Button>();
+
+    private Thread sudokuThread;
+    private SudokuGenerator currentSudokuGenerator;
+    private bool isCancelled = false;
     #endregion
 
     #region Configuration
@@ -55,18 +66,30 @@ public class MenuNewGame : _Menu
     }
     #endregion
 
-    #region Methods 
+    #region Methods
+    internal override void Start()
+    {
+        base.Start();
+        HideLoadingUI();
+        if (cancelButton != null)
+            cancelButton.onClick.AddListener(OnCancelGeneration);
+    }
     public void OnNewGame()
     {
         var gameManager = GameManager.GetSingleton();
         if (gameManager.saveGameSO != null && gameManager.saveGameSO.lastGameState != null)
         {
-            MenuManager.GetSingleton().menuConfirmar.MostrarPantallaConfirmar(EventoNewGame, "The previous game will be deleted, Are you sure?");
+            MenuManager.GetSingleton().menuConfirmar.MostrarPantallaConfirmar(EventoNewGameYes, "The previous game will be deleted, Are you sure?");
         }
         else
         {
             EventoNewGame();
         }
+    }
+    public void EventoNewGameYes()
+    {
+        menuManager.ShowMenu(menuManager.GetMenu("Menu_pnlNewgame"));
+        EventoNewGame();
     }
     public void EventoNewGame()
     {
@@ -76,7 +99,113 @@ public class MenuNewGame : _Menu
         if (getDiff.Count == 0) return;
         string DifficultType = dropdownDifficult.options[dropdownDifficult.value].text.ToUpper().Replace(" ", "");
         var getInterv = CalcularIntervaloOcultamiento(getDiff.First().numberRows, getDiff.First().numberColumns, DifficultType);
-        var newgame = GameState.CreateGame(BoardType, DifficultType, getDiff.First().numberRows, getDiff.First().numberColumns, getInterv[0], getInterv[1]);
+        StartSudokuGeneration(getDiff.First().numberColumns, getDiff.First().numberRows, BoardType, DifficultType, getInterv);
+    }
+    private void StartSudokuGeneration(int numberColumns, int numberRows, string boardType, string difficultType, int[] interval)
+    {
+        isCancelled = false;
+        ShowLoadingUI();
+        sudokuThread = new Thread(() => GenerateSudokuThread(numberColumns, numberRows, boardType, difficultType, interval))
+        {
+            IsBackground = true
+        };
+        sudokuThread.Start();
+        StartCoroutine(MonitorProgress());
+    }
+    private void GenerateSudokuThread(int numberColumns, int numberRows, string boardType, string difficultType, int[] interval)
+    {
+        try
+        {
+            currentSudokuGenerator = new SudokuGenerator(numberColumns, numberRows);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"Error generando Sudoku: {ex.Message}");
+        }
+    }
+    private IEnumerator MonitorProgress()
+    {
+        while (!isCancelled && (sudokuThread == null || sudokuThread.IsAlive))
+        {
+            if (currentSudokuGenerator != null)
+            {
+                float progress = currentSudokuGenerator.progress;
+                UpdateLoadingUI(progress);
+                if (progress >= 100)
+                {
+                    break;
+                }
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (sudokuThread != null && sudokuThread.IsAlive)
+        {
+            sudokuThread.Join();
+        }
+        if (!isCancelled && currentSudokuGenerator != null)
+        {
+            HideLoadingUI();
+            StartGame(currentSudokuGenerator);
+        }
+        else if (isCancelled)
+        {
+            HideLoadingUI();
+            currentSudokuGenerator = null;
+        }
+    }
+    private void UpdateLoadingUI(float progress)
+    {
+        if (loadingSlider != null)
+            loadingSlider.value = progress;
+        if (loadingText != null)
+            loadingText.text = $"Generating... {progress}%";
+    }
+    private void ShowLoadingUI()
+    {
+        if (loadingSlider != null)
+            loadingSlider.gameObject.SetActive(true);
+        if (loadingText != null)
+            loadingText.gameObject.SetActive(true);
+        if (cancelButton != null)
+            cancelButton.gameObject.SetActive(true);
+        foreach (var button in otherButtons)
+        {
+            if (button != null)
+                button.gameObject.SetActive(false);
+        }
+    }
+    private void HideLoadingUI()
+    {
+        if (loadingSlider != null)
+            loadingSlider.gameObject.SetActive(false);
+        if (loadingText != null)
+            loadingText.gameObject.SetActive(false);
+        if (cancelButton != null)
+            cancelButton.gameObject.SetActive(false);
+        foreach (var button in otherButtons)
+        {
+            if (button != null)
+                button.gameObject.SetActive(true);
+        }
+    }
+    public void OnCancelGeneration()
+    {
+        isCancelled = true;
+        if (sudokuThread != null && sudokuThread.IsAlive)
+        {
+            sudokuThread.Abort();
+        }
+        HideLoadingUI();
+        currentSudokuGenerator = null;
+    }
+    public void StartGame(SudokuGenerator sudokuGenerator)
+    {
+        var gameManager = GameManager.GetSingleton();
+        string BoardType = dropdownBoard.options[dropdownBoard.value].text.ToUpper().Replace(" ", "");
+        string DifficultType = dropdownDifficult.options[dropdownDifficult.value].text.ToUpper().Replace(" ", "");
+        var getDiff = (from x in lstConfType where x.name == BoardType select x).ToList();
+        var getInterv = CalcularIntervaloOcultamiento(getDiff.First().numberRows, getDiff.First().numberColumns, DifficultType);
+        var newgame = GameState.CreateGame(sudokuGenerator, BoardType, DifficultType, getInterv[0], getInterv[1]);
         gameManager.StartGame(newgame);
         MenuManager.GetSingleton().HideShow(false);
         HUDManager.GetSingleton().HideShow(true);
