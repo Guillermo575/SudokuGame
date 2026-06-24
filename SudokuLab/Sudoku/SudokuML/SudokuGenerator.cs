@@ -20,20 +20,19 @@ namespace SudokuML
         private List<Bitacora> lstBitacora = new List<Bitacora>();
         private List<Bitacora> lstBitacoraBloqueo = new List<Bitacora>();
         private Random rnd;
-        private Dictionary<int, int> mapeoValores; // Mapeo aleatorio de valores para variedad
+        private Dictionary<int, int> mapeoValores;
         public bool Exito { private set; get; }
-        public bool Validado { private set; get; }
         public int ConteoErrores { private set; get; }
         public int ConteoAciertos { private set; get; }
         public long TiempoEjecutado { private set; get; }
         public string HashSudoku { private set; get; }
-        
         // Machine Learning
         public static SudokuRLAgent agenteML = new SudokuRLAgent();
         private SudokuState estadoActual;
         private SudokuState estadoAnterior;
         public bool UsarMachineLearning { get; set; } = true;
         public bool ModoEntrenamiento { get; set; } = false;
+        public int ToleranciaErrores { get; set; } = 2000;
         #endregion
 
         #region HTML Table
@@ -84,8 +83,6 @@ namespace SudokuML
                     System.Text.StringBuilder sb = new System.Text.StringBuilder();
                     int totalFilas = ColumnasY * ColumnasX;
                     int totalColumnas = ColumnasX * ColumnasY;
-                    
-                    // Línea superior
                     sb.Append("╔");
                     for (int col = 0; col < totalColumnas; col++)
                     {
@@ -96,8 +93,6 @@ namespace SudokuML
                         }
                     }
                     sb.AppendLine("╗");
-
-                    // Filas del sudoku
                     for (int m = 0; m < ColumnasY; m++)
                     {
                         for (int y = 0; y < ColumnasX; y++)
@@ -107,14 +102,14 @@ namespace SudokuML
                             {
                                 for (int x = 0; x < ColumnasY; x++)
                                 {
-                                    var objCelda = (from obj in lstCeldas 
-                                                   where obj.EjeX == x && obj.CuadranteEjeX == l && 
-                                                         obj.EjeY == y && obj.CuadranteEjeY == m 
-                                                   select obj).ToList().First();
-                                    
+                                    var objCelda = (from obj in lstCeldas
+                                                    where obj.EjeX == x && obj.CuadranteEjeX == l &&
+                                                          obj.EjeY == y && obj.CuadranteEjeY == m
+                                                    select obj).ToList().First();
+
                                     string valor = Alphabet.getAlphaChar(objCelda.Valor);
                                     sb.Append($" {valor} ");
-                                    
+
                                     if (x < ColumnasY - 1 || l < ColumnasX - 1)
                                     {
                                         sb.Append((x == ColumnasY - 1) ? "║" : "│");
@@ -122,13 +117,10 @@ namespace SudokuML
                                 }
                             }
                             sb.AppendLine("║");
-
-                            // Líneas intermedias
                             if (y < ColumnasX - 1 || m < ColumnasY - 1)
                             {
                                 if (y == ColumnasX - 1 && m < ColumnasY - 1)
                                 {
-                                    // Línea gruesa entre bloques
                                     sb.Append("╠");
                                     for (int col = 0; col < totalColumnas; col++)
                                     {
@@ -142,7 +134,6 @@ namespace SudokuML
                                 }
                                 else if (y < ColumnasX - 1)
                                 {
-                                    // Línea delgada dentro de bloques
                                     sb.Append("╟");
                                     for (int col = 0; col < totalColumnas; col++)
                                     {
@@ -157,8 +148,6 @@ namespace SudokuML
                             }
                         }
                     }
-
-                    // Línea inferior
                     sb.Append("╚");
                     for (int col = 0; col < totalColumnas; col++)
                     {
@@ -169,7 +158,6 @@ namespace SudokuML
                         }
                     }
                     sb.AppendLine("╝");
-
                     return sb.ToString();
                 }
                 catch (Exception ex)
@@ -189,6 +177,8 @@ namespace SudokuML
             int ValorMaximo = 0;
             double ValorPromed = 0;
             double ValorPromedReit = 0;
+            long TiempoMinimo = 0;
+            long TiempoMaximo = 0;
             long TiempoTotal = 0;
             long TiempoPromedio = 0;
             for (int l = 0; l < cantidad; l++)
@@ -201,6 +191,8 @@ namespace SudokuML
                     ValorMaximo = lst.Max(x => x.ConteoErrores);
                     ValorPromed = lst.Average(x => x.ConteoErrores);
                     ValorPromedReit = l == 0 ? pr.ConteoErrores : (ValorPromedReit + pr.ConteoErrores) / 2;
+                    TiempoMinimo = lst.Min(x => x.TiempoEjecutado);
+                    TiempoMaximo = lst.Max(x => x.TiempoEjecutado);
                     TiempoTotal = lst.Sum(x => x.TiempoEjecutado);
                     TiempoPromedio = TiempoTotal / lst.Count;
                 }
@@ -211,32 +203,29 @@ namespace SudokuML
         #endregion
 
         #region General
-        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3, bool usarML = true, bool entrenar = false)
+        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3, bool usarML = true, bool entrenar = false, bool QuickFunction = false, int ToleranciaErrores = 2000)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
             this.ColumnasX = ColumnasX;
             this.ColumnasY = ColumnasY;
-            this.UsarMachineLearning = usarML;
-            this.ModoEntrenamiento = entrenar;
-            
-            // Inicializar Random con semilla única para variabilidad
             rnd = new Random(Guid.NewGuid().GetHashCode());
-            
-            // Crear mapeo aleatorio de valores para mayor variedad
-            InicializarMapeoValores();
-            
-            // Inicializar estado para ML
-            if (UsarMachineLearning)
-            {
-                InicializarEstadoML();
-            }
-            
             SetNewArray();
-            SetDatos();
-            Validado = true;
+            if (QuickFunction)
+            {
+                SetDatosQuick();
+            }
+            else
+            {
+                this.UsarMachineLearning = usarML;
+                this.ModoEntrenamiento = entrenar;
+                if (UsarMachineLearning)
+                {
+                    InicializarEstadoML();
+                }
+                SetDatos();
+            }
             foreach (var obj in lstCeldas)
             {
-                Validado = Validado ? ValidoSoloUno(obj) : false;
                 obj.lstWarnings = null;
             }
             stopwatch.Stop();
@@ -263,23 +252,11 @@ namespace SudokuML
         #endregion
 
         #region Process
-        public List<Celda> GetCeldasValidas(int Cuadrante, int ValorSecuencial)
+        public List<Celda> GetCeldasValidas(int Cuadrante, int Valor)
         {
             List<Celda> lstRetorno = new List<Celda>();
-            int valorMapeado = MapearValor(ValorSecuencial);
-            lstRetorno = (from x in lstCeldas where x.IdCuadrante == Cuadrante && x.Valor == 0 && ValidoEjeXY(x, valorMapeado) && !GetBloqueoMapeado(x, ValorSecuencial) select x).ToList();
+            lstRetorno = (from x in lstCeldas where x.IdCuadrante == Cuadrante && x.Valor == 0 && ValidoEjeXY(x, Valor) && !GetBloqueo(x, Valor) select x).ToList();
             return lstRetorno;
-        }
-        public bool ValidoSoloUno(Celda objCelda)
-        {
-            int Valor = objCelda.Valor;
-            var lstRetorno = (from x in lstCeldas
-                              where ((x.IdCuadrante == objCelda.IdCuadrante) ||
-                                                         (x.CuadranteEjeX == objCelda.CuadranteEjeX && x.EjeX == objCelda.EjeX) ||
-                                                         (x.CuadranteEjeY == objCelda.CuadranteEjeY && x.EjeY == objCelda.EjeY)) &&
-                                                          x.Valor == Valor
-                              select x).ToList();
-            return lstRetorno.Count == 1;
         }
         public bool ValidoEjeXY(Celda objCelda, int Valor)
         {
@@ -294,12 +271,6 @@ namespace SudokuML
         {
             var lstBloqueo = (from x in lstBitacoraBloqueo where x.Bloque == objCelda && x.Valor == Valor select x).ToList();
             return lstBloqueo.Count > 0;
-        }
-        
-        private bool GetBloqueoMapeado(Celda objCelda, int ValorSecuencial)
-        {
-            int valorMapeado = MapearValor(ValorSecuencial);
-            return GetBloqueo(objCelda, valorMapeado);
         }
         private void SetNewArray()
         {
@@ -326,8 +297,6 @@ namespace SudokuML
         {
             int celdaGenerada = 0;
             int ValorActual = ValorInicial;
-            int anteriorValorActual = ValorInicial;
-            
             while (ValorActual <= ValorFinal)
             {
                 int CuadranteIndex = 1;
@@ -337,21 +306,15 @@ namespace SudokuML
                     if (lstCeldasValidas.Count > 0)
                     {
                         var objCeldaElegida = lstCeldasValidas.Count == 1 ? lstCeldasValidas.First() : GetCeldaElegida(lstCeldasValidas);
-                        
-                        // Usar el valor mapeado para mayor variedad
-                        int valorMapeado = MapearValor(ValorActual);
-                        objCeldaElegida.Valor = valorMapeado;
-                        lstBitacora.Add(new Bitacora() { Bloque = objCeldaElegida, Valor = valorMapeado });
-                        
-                        // Actualizar estado ML - éxito
+                        objCeldaElegida.Valor = ValorActual;
+                        lstBitacora.Add(new Bitacora() { Bloque = objCeldaElegida, Valor = ValorActual });
                         bool cuadranteCompleto = CuadranteIndex == SumaCuadrantes;
                         bool valorCompleto = cuadranteCompleto;
                         ActualizarEstadoML(ValorActual, CuadranteIndex, objCeldaElegida, esBacktrack: false);
                         ActualizarAgenteML(objCeldaElegida, exitoso: true, completado: false, cuadranteCompleto, valorCompleto);
-                        
                         if (lstBitacoraBloqueo.Count > 0)
                         {
-                            lstBitacoraBloqueo = (from x in lstBitacoraBloqueo where (x.Valor < valorMapeado) || (x.Valor == valorMapeado && x.Bloque.IdCuadrante <= CuadranteIndex) select x).ToList();
+                            lstBitacoraBloqueo = (from x in lstBitacoraBloqueo where (x.Valor < ValorActual) || (x.Valor == ValorActual && x.Bloque.IdCuadrante <= CuadranteIndex) select x).ToList();
                         }
                         CuadranteIndex++;
                         celdaGenerada++;
@@ -372,11 +335,15 @@ namespace SudokuML
                         {
                             objNewLast.lstWarnings.Add(new Bitacora { Bloque = objLast.Bloque, Valor = 1 });
                         }
-                        
-                        // Actualizar estado ML - backtracking
                         ActualizarEstadoML(ValorActual, CuadranteIndex, objLast.Bloque, esBacktrack: true);
                         ActualizarAgenteML(objLast.Bloque, exitoso: false, completado: false, cuadranteCompleto: false, valorCompleto: false);
-                        
+                        if (UsarMachineLearning && ModoEntrenamiento)
+                        {
+                            if (ConteoErrores > SumaCeldas * ToleranciaErrores)
+                            {
+                                return;
+                            }
+                        }
                         CuadranteIndex--;
                         celdaGenerada--;
                         if (CuadranteIndex <= 0)
@@ -388,38 +355,40 @@ namespace SudokuML
                         {
                             return;
                         }
-                        lstBitacoraBloqueo.Add(new Bitacora() { Bloque = objLast.Bloque, Valor = objLast.Valor });
+                        lstBitacoraBloqueo.Add(new Bitacora() { Bloque = objLast.Bloque, Valor = ValorActual });
                     }
                     ConteoAciertos += celdaGenerada > ConteoAciertos ? 1 : 0;
                 }
-                anteriorValorActual = ValorActual;
                 ValorActual++;
             }
-            Exito = true;
-            
-            // Generar hash del sudoku para tracking de unicidad
-            HashSudoku = GenerarHashSudoku();
-            
-            // Notificar al agente que el sudoku se completó exitosamente
             if (UsarMachineLearning && ModoEntrenamiento)
             {
-                ActualizarAgenteML(lstBitacora.Last().Bloque, exitoso: true, completado: true, 
-                                  cuadranteCompleto: true, valorCompleto: true);
+                ActualizarAgenteML(lstBitacora.Last().Bloque, exitoso: true, completado: true, cuadranteCompleto: true, valorCompleto: true);
             }
-            
-            var xx = ResumenHTML;
+            InicializarMapeoValores();
+            Exito = ValidarCeldas(lstCeldas);
+            HashSudoku = GenerarHashSudoku();
         }
+        private void SetDatosQuick()
+        {
+            foreach (var celda in lstCeldas.OrderBy(x => x.CuadranteEjeY).ThenBy(x => x.EjeY).ThenBy(x => x.CuadranteEjeX).ThenBy(x => x.EjeX))
+            {
+                int valorBase = (celda.EjeY * ColumnasY) + celda.CuadranteEjeY + (celda.CuadranteEjeX * ColumnasY) + celda.EjeX;
+                celda.Valor = (valorBase % ValorFinal) + ValorInicial;
+            }
+            InicializarMapeoValores();
+            Exito = ValidarCeldas(lstCeldas);
+            HashSudoku = GenerarHashSudoku();
+        }
+        #endregion
+
+        #region GetCelda
         public Celda GetCeldaElegida(List<Celda> lst)
         {
-            // Usar Machine Learning si está habilitado
             if (UsarMachineLearning && estadoActual != null)
             {
-                // Actualizar pesos basados en warnings (heurística tradicional)
-                ActualizarPesosTradicional(lst);
-                
-                // Usar el agente de RL para seleccionar la mejor celda
+                ActualizarPesos(lst);
                 var celdaSeleccionada = agenteML.SeleccionarCelda(lst, estadoActual, ModoEntrenamiento);
-                
                 return celdaSeleccionada ?? GetCeldaElegidaTradicional(lst);
             }
             else
@@ -427,8 +396,7 @@ namespace SudokuML
                 return GetCeldaElegidaTradicional(lst);
             }
         }
-        
-        private void ActualizarPesosTradicional(List<Celda> lst)
+        private void ActualizarPesos(List<Celda> lst)
         {
             if (lstBitacora.Count > 0)
             {
@@ -445,14 +413,13 @@ namespace SudokuML
                 }
             }
         }
-        
         private Celda GetCeldaElegidaTradicional(List<Celda> lst)
         {
             int SumaPesos = 0;
             foreach (var obj in lst)
             {
                 SumaPesos += obj.Peso;
-            }      
+            }
             int NumeroElegido = rnd.Next(SumaPesos);
             int acumulado = 0;
             for (int l = 0; l < lst.Count; l++)
@@ -467,18 +434,26 @@ namespace SudokuML
         }
         #endregion
 
-        #region Machine Learning
-        /// <summary>
-        /// Inicializa un mapeo aleatorio de valores para mayor variedad en los sudokus generados
-        /// </summary>
+        #region HashSudoku
+        private string GenerarHashSudoku()
+        {
+            if (lstCeldas == null || lstCeldas.Count == 0) return string.Empty;
+            var valores = lstCeldas
+                .OrderBy(c => c.CuadranteEjeY)
+                .ThenBy(c => c.EjeY)
+                .ThenBy(c => c.CuadranteEjeX)
+                .ThenBy(c => c.EjeX)
+                .Select(c => c.Valor.ToString())
+                .ToArray();
+            return string.Join("", valores);
+        }
+        #endregion
+
+        #region Mapeo Valores
         private void InicializarMapeoValores()
         {
             mapeoValores = new Dictionary<int, int>();
-            
-            // Crear lista de valores disponibles
             var valoresDisponibles = Enumerable.Range(ValorInicial, ValorFinal).ToList();
-            
-            // Mezclar aleatoriamente usando Fisher-Yates shuffle
             for (int i = valoresDisponibles.Count - 1; i > 0; i--)
             {
                 int j = rnd.Next(i + 1);
@@ -486,22 +461,19 @@ namespace SudokuML
                 valoresDisponibles[i] = valoresDisponibles[j];
                 valoresDisponibles[j] = temp;
             }
-            
-            // Crear mapeo: índice secuencial -> valor aleatorio
             for (int i = 0; i < valoresDisponibles.Count; i++)
             {
                 mapeoValores[i + ValorInicial] = valoresDisponibles[i];
             }
+            lstCeldas.Select(c => { c.Valor = MapearValor(c.Valor); return c; }).ToList();
         }
-        
-        /// <summary>
-        /// Obtiene el valor mapeado aleatoriamente
-        /// </summary>
         private int MapearValor(int valorSecuencial)
         {
             return mapeoValores.ContainsKey(valorSecuencial) ? mapeoValores[valorSecuencial] : valorSecuencial;
         }
-        
+        #endregion
+
+        #region Machine Learning
         private void InicializarEstadoML()
         {
             estadoActual = new SudokuState
@@ -514,33 +486,23 @@ namespace SudokuML
                 UltimoBacktrackingCount = 0
             };
         }
-
         private void ActualizarEstadoML(int valorActual, int cuadranteIndex, Celda celdaColocada, bool esBacktrack)
         {
             if (!UsarMachineLearning || estadoActual == null) return;
-
             estadoAnterior = estadoActual.Clonar();
-            
             estadoActual.ValorActual = valorActual;
             estadoActual.CuadranteActual = cuadranteIndex;
             estadoActual.BacktrackingCount = ConteoErrores;
             estadoActual.ListaCeldas = lstCeldas;
-
             if (!esBacktrack && celdaColocada != null)
             {
-                // Incrementar celdas llenadas
                 estadoActual.CeldasLlenadas++;
-
-                // Actualizar densidad de cuadrantes
                 if (estadoActual.CeldasPorCuadrante.ContainsKey(celdaColocada.IdCuadrante))
                     estadoActual.CeldasPorCuadrante[celdaColocada.IdCuadrante]++;
                 else
                     estadoActual.CeldasPorCuadrante[celdaColocada.IdCuadrante] = 1;
-
-                // Actualizar valores por fila y columna
                 int filaKey = celdaColocada.CuadranteEjeY * 10 + celdaColocada.EjeY;
                 int columnaKey = celdaColocada.CuadranteEjeX * 10 + celdaColocada.EjeX;
-
                 if (estadoActual.ValoresPorFila.ContainsKey(filaKey))
                     estadoActual.ValoresPorFila[filaKey]++;
                 else
@@ -553,22 +515,16 @@ namespace SudokuML
             }
             else if (esBacktrack && celdaColocada != null)
             {
-                // Decrementar celdas llenadas
                 estadoActual.CeldasLlenadas = Math.Max(0, estadoActual.CeldasLlenadas - 1);
-
-                // Actualizar densidad de cuadrantes
                 if (estadoActual.CeldasPorCuadrante.ContainsKey(celdaColocada.IdCuadrante))
-                    estadoActual.CeldasPorCuadrante[celdaColocada.IdCuadrante] = 
+                    estadoActual.CeldasPorCuadrante[celdaColocada.IdCuadrante] =
                         Math.Max(0, estadoActual.CeldasPorCuadrante[celdaColocada.IdCuadrante] - 1);
             }
         }
-
         private void ActualizarAgenteML(Celda celdaElegida, bool exitoso, bool completado, bool cuadranteCompleto, bool valorCompleto)
         {
             if (!UsarMachineLearning || !ModoEntrenamiento) return;
             if (estadoAnterior == null || estadoActual == null || celdaElegida == null) return;
-
-            // Calcular recompensa
             double recompensa = SudokuRewardSystem.CalcularRecompensaTotal(
                 estadoAnterior,
                 estadoActual,
@@ -578,8 +534,6 @@ namespace SudokuML
                 cuadranteCompleto,
                 valorCompleto
             );
-
-            // Actualizar Q-Value del agente
             agenteML.ActualizarQValue(
                 estadoAnterior,
                 celdaElegida,
@@ -588,16 +542,11 @@ namespace SudokuML
                 completado || ConteoErrores > SumaCeldas * 2 // episodio terminado
             );
         }
-
-        /// <summary>
-        /// Trains the ML agent with multiple episodes
-        /// </summary>
         public static void EntrenarAgente(int episodios = 1000, int columnasX = 3, int columnasY = 3)
         {
             Console.WriteLine($"Starting ML agent training with {episodios} episodes...");
             var tiempoInicio = DateTime.Now;
             var tiempoEpisodioAnterior = tiempoInicio;
-
             for (int i = 0; i < episodios; i++)
             {
                 var sudoku = new SudokuGenerator(columnasX, columnasY, usarML: true, entrenar: true);
@@ -614,38 +563,13 @@ namespace SudokuML
                     Console.WriteLine($"Ep. {i + 1}/{episodios} | Rec.: {agenteML.RecompensaPromedio:F2} | OK: {sudoku.Exito} | Uniques: {agenteML.SudokusUnicos} | Δt: {tiempoTranscurrido.TotalMilliseconds:F0}ms | End: {tiempoActual:HH:mm:ss}");
                 }
             }
-
             var tiempoFinal = DateTime.Now;
             var tiempoTotalEntrenamiento = tiempoFinal - tiempoInicio;
             Console.WriteLine($"✓ Training completed. Episodes: {agenteML.EpisodiosEntrenados} | Uniques: {agenteML.SudokusUnicos} | Total time: {tiempoTotalEntrenamiento.TotalSeconds:F2}s | End: {tiempoFinal:HH:mm:ss}");
         }
-
-        /// <summary>
-        /// Gets ML agent statistics
-        /// </summary>
         public static string ObtenerEstadisticasML()
         {
             return $"ML Agent - Episodes: {agenteML.EpisodiosEntrenados}, Avg Reward: {agenteML.RecompensaPromedio:F2}, Unique Sudokus: {agenteML.SudokusUnicos}, Strategy: {agenteML.Estrategia}";
-        }
-        
-        /// <summary>
-        /// Genera un hash único del sudoku para tracking de diversidad
-        /// </summary>
-        private string GenerarHashSudoku()
-        {
-            if (lstCeldas == null || lstCeldas.Count == 0)
-                return string.Empty;
-            
-            // Ordenar celdas por posición y concatenar valores
-            var valores = lstCeldas
-                .OrderBy(c => c.CuadranteEjeY)
-                .ThenBy(c => c.EjeY)
-                .ThenBy(c => c.CuadranteEjeX)
-                .ThenBy(c => c.EjeX)
-                .Select(c => c.Valor.ToString())
-                .ToArray();
-            
-            return string.Join("", valores);
         }
         #endregion
 
@@ -685,10 +609,14 @@ namespace SudokuML
         }
         #endregion
     }
+
+    #region Tipo
     public enum eType
     {
         cr9x9, cr16x16, cr6x6, cr4x4, cr20x20, cr25x25, cr30x30, cr36x36
     }
+    #endregion
+
     #region Alphabet
     public class Alphabet
     {
