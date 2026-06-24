@@ -11,7 +11,7 @@ public class _Menu : MonoBehaviour
 
     #region Start
     /** Inicializacion de los objetos */
-    protected virtual void Start()
+    internal virtual void Start()
     {
         menuManager = MenuManager.GetSingleton();
     }

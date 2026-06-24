@@ -20,7 +20,7 @@ public class MenuConfirmar : _Menu
 
     #region Awake
     /** Inicializacion de los objetos */
-    protected override void Start()
+    internal override void Start()
     {
         base.Start();
     }
@@ -65,7 +65,7 @@ public class MenuConfirmar : _Menu
     public void ConfirmarSi()
     {
         EventoConfirmar.Invoke();
-        menuManager.BackMenu();
+        //menuManager.BackMenu();
     }
     #endregion
 }
