@@ -26,6 +26,8 @@ namespace Sudoku
         public int ConteoAciertos { private set; get; }
         public long TiempoEjecutado { private set; get; }
         public string HashSudoku { private set; get; }
+        public float progress { get { return (float)ConteoAciertos / SumaCeldas; } }
+        public bool QuickFunction { get; set; } = false;
         #endregion
 
         #region HTML Table
@@ -196,12 +198,20 @@ namespace Sudoku
         #endregion
 
         #region General
-        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3, bool QuickFunction = false)
+        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3, bool StartNow = true, bool QuickFunction = false)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
             this.ColumnasX = ColumnasX;
             this.ColumnasY = ColumnasY;
+            this.QuickFunction = QuickFunction;
             SetNewArray();
+            if (StartNow)
+            {
+                Start();
+            }
+        }
+        public void Start()
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
             if (QuickFunction)
             {
                 SetDatosQuick();

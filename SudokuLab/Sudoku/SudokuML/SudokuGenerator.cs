@@ -33,6 +33,8 @@ namespace SudokuML
         public bool UsarMachineLearning { get; set; } = true;
         public bool ModoEntrenamiento { get; set; } = false;
         public int ToleranciaErrores { get; set; } = 2000;
+        public float progress { get { return (float)ConteoAciertos / SumaCeldas; } }
+        public bool QuickFunction { get; set; } = false;
         #endregion
 
         #region HTML Table
@@ -208,6 +210,7 @@ namespace SudokuML
             Stopwatch stopwatch = Stopwatch.StartNew();
             this.ColumnasX = ColumnasX;
             this.ColumnasY = ColumnasY;
+            this.QuickFunction = QuickFunction;
             rnd = new Random(Guid.NewGuid().GetHashCode());
             SetNewArray();
             if (QuickFunction)
