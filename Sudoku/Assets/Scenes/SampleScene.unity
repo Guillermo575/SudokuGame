@@ -2966,7 +2966,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3269,7 +3269,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100%
+  m_text: 0%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4aae033ac12f63f47bbb7286f37e35e0, type: 2}
   m_sharedMaterial: {fileID: 21975412471922176, guid: 4aae033ac12f63f47bbb7286f37e35e0, type: 2}

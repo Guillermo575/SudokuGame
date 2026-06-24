@@ -116,7 +116,8 @@ public class MenuNewGame : _Menu
     {
         try
         {
-            currentSudokuGenerator = new SudokuGenerator(numberColumns, numberRows);
+            currentSudokuGenerator = new SudokuGenerator(numberColumns, numberRows, false);
+            currentSudokuGenerator.Start();
         }
         catch (System.Exception ex)
         {
@@ -158,7 +159,7 @@ public class MenuNewGame : _Menu
         if (loadingSlider != null)
             loadingSlider.value = progress;
         if (loadingText != null)
-            loadingText.text = $"Generating... {progress}%";
+            loadingText.text = $"{(int)(progress * 100)}%";
     }
     private void ShowLoadingUI()
     {
