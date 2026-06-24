@@ -26,6 +26,7 @@ namespace Sudoku
         public int ConteoAciertos { private set; get; }
         public long TiempoEjecutado { private set; get; }
         public string HashSudoku { private set; get; }
+        public float progress { get { return ConteoAciertos / SumaBases; } }
         #endregion
 
         #region HTML Table

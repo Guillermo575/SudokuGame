@@ -56,6 +56,38 @@ public class GameState
         gameState.lstCeldas = lstCeldas;
         return gameState;
     }
+    public static GameState CreateGame(SudokuGenerator sudokuGenerator, string BoardType, string Difficult, int cicloMin = 2, int cicloMax = 4)
+    {
+        BlockCells(sudokuGenerator.lstCeldas, cicloMin, cicloMax);
+        var gameState = new GameState();
+        gameState.BoardType = BoardType;
+        gameState.Difficult = Difficult;
+        var dateNow = DateTime.Now;
+        gameState.Id = dateNow.ToString("yyyyMMddHHmmssfff");
+        gameState.dateCreate = dateNow.ToString("dd/MM/yyyy");
+        gameState.dateUpdate = gameState.dateCreate;
+        gameState.sudokuGenerator = sudokuGenerator;
+        var lstCeldas = new List<Celda>();
+        foreach (var obj in sudokuGenerator.lstCeldas)
+        {
+            lstCeldas.Add
+            (
+                new Celda
+                {
+                    Id = obj.Id,
+                    IdCuadrante = obj.IdCuadrante,
+                    CuadranteEjeX = obj.CuadranteEjeX,
+                    CuadranteEjeY = obj.CuadranteEjeY,
+                    EjeX = obj.EjeX,
+                    EjeY = obj.EjeY,
+                    bloqueado = obj.bloqueado,
+                    Valor = obj.bloqueado ? obj.Valor : 0,
+                }
+            );
+        }
+        gameState.lstCeldas = lstCeldas;
+        return gameState;
+    }
     public static void BlockCells(List<SudokuGenerator.Celda> lstCelda, int cicloMin = 2, int cicloMax = 4)
     {
         foreach (var obj in lstCelda)
