@@ -297,7 +297,6 @@ namespace SudokuML.Tools
             Console.WriteLine($"Success: {(sudoku.Exito ? "✅ YES" : "❌ NO")}");
             Console.WriteLine($"⏱️  Time: {sudoku.TiempoEjecutado} ms");
             Console.WriteLine($"🔄 Backtracking: {sudoku.ConteoErrores}");
-            Console.WriteLine($"Validated: {(sudoku.Validado ? "✅ YES" : "❌ NO")}");
 
             if (sudoku.Exito)
             {

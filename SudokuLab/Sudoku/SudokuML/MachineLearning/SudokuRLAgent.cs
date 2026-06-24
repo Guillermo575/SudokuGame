@@ -258,6 +258,7 @@ namespace SudokuML.MachineLearning
         {
             try
             {
+                Console.WriteLine($"----------Guardando Modelo.....");
                 string rutaModelo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SudokuRLModel.json");
                 var modeloData = new
                 {
@@ -272,6 +273,7 @@ namespace SudokuML.MachineLearning
                 };
                 string json = JsonConvert.SerializeObject(modeloData, Formatting.Indented);
                 File.WriteAllText(rutaModelo, json);
+                Console.WriteLine($"----------Modelo Guardado-----------");
             }
             catch (Exception)
             {
@@ -283,6 +285,7 @@ namespace SudokuML.MachineLearning
         {
             try
             {
+                Console.WriteLine($"----------Cargando Modelo.....");
                 string rutaModelo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SudokuRLModel.json");
                 if (File.Exists(rutaModelo))
                 {
@@ -303,6 +306,7 @@ namespace SudokuML.MachineLearning
                     if (modeloData.Estrategia != null)
                         Estrategia = Enum.Parse<EstrategiaExploracion>(modeloData.Estrategia.ToString());
                 }
+                Console.WriteLine($"----------Modelo Cargado-----------");
             }
             catch (Exception)
             {
