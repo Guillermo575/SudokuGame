@@ -15,6 +15,7 @@ public class MenuNewGame : _Menu
     public TextMeshProUGUI loadingText;
     public Button cancelButton;
     public List<Button> otherButtons = new List<Button>();
+    public List<TMP_Dropdown> otherDropdowns = new List<TMP_Dropdown>();
 
     private Thread sudokuThread;
     private SudokuGenerator currentSudokuGenerator;
@@ -174,6 +175,11 @@ public class MenuNewGame : _Menu
             if (button != null)
                 button.gameObject.SetActive(false);
         }
+        foreach (var dropdown in otherDropdowns)
+        {
+            if (dropdown != null)
+                dropdown.gameObject.SetActive(false);
+        }
     }
     private void HideLoadingUI()
     {
@@ -187,6 +193,11 @@ public class MenuNewGame : _Menu
         {
             if (button != null)
                 button.gameObject.SetActive(true);
+        }
+        foreach (var dropdown in otherDropdowns)
+        {
+            if (dropdown != null)
+                dropdown.gameObject.SetActive(true);
         }
     }
     public void OnCancelGeneration()
