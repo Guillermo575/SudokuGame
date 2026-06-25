@@ -260,6 +260,8 @@ namespace SudokuML.MachineLearning
             {
                 Console.WriteLine($"----------Guardando Modelo.....");
                 string rutaModelo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SudokuRLModel.json");
+                if (!File.Exists(rutaModelo))
+                    File.Create(rutaModelo).Close();
                 var modeloData = new
                 {
                     QTable = QTable,
@@ -275,27 +277,28 @@ namespace SudokuML.MachineLearning
                 File.WriteAllText(rutaModelo, json);
                 Console.WriteLine($"----------Modelo Guardado-----------");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // No detener ejecución si falla el guardado
+                Console.WriteLine($"Error al guardar modelo: {ex.Message}");
             }
         }
-
         private void CargarModelo()
         {
             try
             {
                 Console.WriteLine($"----------Cargando Modelo.....");
                 string rutaModelo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SudokuRLModel.json");
+                if (!File.Exists(rutaModelo))
+                    File.Create(rutaModelo).Close();
                 if (File.Exists(rutaModelo))
                 {
                     string json = File.ReadAllText(rutaModelo);
                     var modeloData = JsonConvert.DeserializeObject<dynamic>(json);
-                    
+
                     QTable = JsonConvert.DeserializeObject<Dictionary<string, double>>(modeloData.QTable.ToString());
                     EpisodiosEntrenados = modeloData.EpisodiosEntrenados;
                     RecompensaPromedio = modeloData.RecompensaPromedio;
-                    
+
                     // Cargar nuevos parámetros con valores por defecto si no existen
                     if (modeloData.EpsilonEntrenamiento != null)
                         epsilonEntrenamiento = modeloData.EpsilonEntrenamiento;
