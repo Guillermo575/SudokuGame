@@ -254,7 +254,7 @@ namespace SudokuML.MachineLearning
             return string.Join("_", features.Select(f => Math.Round(f, 2).ToString()));
         }
 
-        private void GuardarModelo()
+        public void GuardarModelo()
         {
             try
             {

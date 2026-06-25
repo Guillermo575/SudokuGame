@@ -205,22 +205,30 @@ namespace SudokuML
         #endregion
 
         #region General
-        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3, bool usarML = true, bool entrenar = false, bool QuickFunction = false, int ToleranciaErrores = 2000)
+        public SudokuGenerator(int ColumnasX = 3, int ColumnasY = 3, bool usarML = true, bool entrenar = false, bool StartNow = true, bool QuickFunction = false, int ToleranciaErrores = 2000)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
             this.ColumnasX = ColumnasX;
             this.ColumnasY = ColumnasY;
+            this.UsarMachineLearning = usarML;
+            this.ModoEntrenamiento = entrenar;
             this.QuickFunction = QuickFunction;
+            this.ToleranciaErrores = ToleranciaErrores;
             rnd = new Random(Guid.NewGuid().GetHashCode());
             SetNewArray();
+            if (StartNow)
+            {
+                Start();
+            }
+        }
+        public void Start()
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
             if (QuickFunction)
             {
                 SetDatosQuick();
             }
             else
             {
-                this.UsarMachineLearning = usarML;
-                this.ModoEntrenamiento = entrenar;
                 if (UsarMachineLearning)
                 {
                     InicializarEstadoML();
@@ -553,19 +561,17 @@ namespace SudokuML
             for (int i = 0; i < episodios; i++)
             {
                 var sudoku = new SudokuGenerator(columnasX, columnasY, usarML: true, entrenar: true);
-
                 double recompensaTotal = sudoku.Exito ? 100 : -50;
                 agenteML.RegistrarEpisodio(recompensaTotal, sudoku.HashSudoku);
-
                 var tiempoActual = DateTime.Now;
                 var tiempoTranscurrido = tiempoActual - tiempoEpisodioAnterior;
                 tiempoEpisodioAnterior = tiempoActual;
-
                 //if ((i + 1) % 5 == 0)
                 {
                     Console.WriteLine($"Ep. {i + 1}/{episodios} | Rec.: {agenteML.RecompensaPromedio:F2} | OK: {sudoku.Exito} | Uniques: {agenteML.SudokusUnicos} | Δt: {tiempoTranscurrido.TotalMilliseconds:F0}ms | End: {tiempoActual:HH:mm:ss}");
                 }
             }
+            agenteML.GuardarModelo();
             var tiempoFinal = DateTime.Now;
             var tiempoTotalEntrenamiento = tiempoFinal - tiempoInicio;
             Console.WriteLine($"✓ Training completed. Episodes: {agenteML.EpisodiosEntrenados} | Uniques: {agenteML.SudokusUnicos} | Total time: {tiempoTotalEntrenamiento.TotalSeconds:F2}s | End: {tiempoFinal:HH:mm:ss}");
