@@ -122,7 +122,7 @@ public class CamaraController : MonoBehaviour
     }
     private void HandleMouseDrag()
     {
-        if (Mouse.current.leftButton.isPressed)
+        if (Mouse.current.rightButton.isPressed)
         {
             Vector2 mousePos = Mouse.current.position.ReadValue();
             if (!isDragging)
