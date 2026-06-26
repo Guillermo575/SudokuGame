@@ -1,10 +1,10 @@
 using Sudoku;
+using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
 using System.Linq;
 using System.Threading;
-using System.Collections;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 public class MenuNewGame : _Menu
 {
@@ -22,7 +22,9 @@ public class MenuNewGame : _Menu
     private Thread sudokuThread;
     private SudokuGenerator currentSudokuGenerator;
     private bool isCancelled = false;
+    private bool IsRerolling = false;
     private const float GENERATION_TIMEOUT_SECONDS = 60f;
+    private System.Exception threadException = null;
     #endregion
 
     #region Configuration
@@ -101,29 +103,46 @@ public class MenuNewGame : _Menu
     }
     public void EventoNewGame()
     {
+        var objConfiguration = getConfiguration();
+        if (objConfiguration == null) return;
         var gameManager = GameManager.GetSingleton();
-        string BoardType = dropdownBoard.options[dropdownBoard.value].text.ToUpper().Replace(" ", "");
-        var getDiff = (from x in lstConfType where x.name == BoardType select x).ToList();
-        if (getDiff.Count == 0) return;
-        string DifficultType = dropdownDifficult.options[dropdownDifficult.value].text.ToUpper().Replace(" ", "");
-        var getInterv = CalcularIntervaloOcultamiento(getDiff.First().numberRows, getDiff.First().numberColumns, DifficultType);
-        StartSudokuGeneration(getDiff.First(), BoardType, DifficultType, getInterv);
+        string BoardType = getBoardType();
+        string DifficultType = getDifficult();
+        StartSudokuGeneration(objConfiguration, BoardType, DifficultType);
+    }
+    #endregion
+
+    #region Getters
+    public string getBoardType()
+    {
+        return dropdownBoard.options[dropdownBoard.value].text.ToUpper().Replace(" ", "");
+    }
+    public string getDifficult()
+    {
+        return dropdownDifficult.options[dropdownDifficult.value].text.ToUpper().Replace(" ", "");
+    }
+    public Configuration getConfiguration()
+    {
+        var getDiff = (from x in lstConfType where x.name == getBoardType() select x).ToList();
+        if (getDiff.Count == 0) return null;
+        return getDiff.First();
     }
     #endregion
 
     #region Sudoku Generation
-    private void StartSudokuGeneration(Configuration configuration, string boardType, string difficultType, int[] interval)
+    private void StartSudokuGeneration(Configuration configuration, string boardType, string difficultType)
     {
         isCancelled = false;
+        threadException = null;
         ShowLoadingUI();
-        sudokuThread = new Thread(() => GenerateSudokuThread(configuration, boardType, difficultType, interval))
+        sudokuThread = new Thread(() => GenerateSudokuThread(configuration, boardType, difficultType))
         {
             IsBackground = true
         };
         sudokuThread.Start();
         StartCoroutine(MonitorProgress());
     }
-    private void GenerateSudokuThread(Configuration configuration, string boardType, string difficultType, int[] interval)
+    private void GenerateSudokuThread(Configuration configuration, string boardType, string difficultType)
     {
         try
         {
@@ -133,12 +152,22 @@ public class MenuNewGame : _Menu
         catch (System.Exception ex)
         {
             Debug.LogError($"Error generando Sudoku: {ex.Message}");
+            threadException = ex;
         }
     }
     private IEnumerator MonitorProgress()
     {
+        float elapsedTime = 0f;
         while (!isCancelled && (sudokuThread == null || sudokuThread.IsAlive))
         {
+            elapsedTime += 0.1f;
+            if (elapsedTime >= GENERATION_TIMEOUT_SECONDS)
+            {
+                Debug.LogWarning("Timeout en generacion de Sudoku (1 minuto excedido)");
+                IsRerolling = true;
+                OnCancelGeneration();
+                break;
+            }
             if (currentSudokuGenerator != null)
             {
                 float progress = currentSudokuGenerator.progress;
@@ -154,7 +183,20 @@ public class MenuNewGame : _Menu
         {
             sudokuThread.Join();
         }
-        if (!isCancelled && currentSudokuGenerator != null)
+        if (threadException != null)
+        {
+            HideLoadingUI();
+            var capturedException = threadException;
+            threadException = null;
+            if (IsRerolling)
+            {
+                IsRerolling = false;
+                var objConfiguration = getConfiguration();
+                var objConf = new Configuration { etype = objConfiguration.etype, numberColumns = objConfiguration.numberColumns, numberRows = objConfiguration.numberRows, QuickMode = true };
+                StartSudokuGeneration(objConf, getBoardType(), getDifficult());
+            }
+        }
+        else if (!isCancelled && currentSudokuGenerator != null)
         {
             HideLoadingUI();
             StartGame(currentSudokuGenerator);
@@ -229,10 +271,10 @@ public class MenuNewGame : _Menu
     public void StartGame(SudokuGenerator sudokuGenerator)
     {
         var gameManager = GameManager.GetSingleton();
-        string BoardType = dropdownBoard.options[dropdownBoard.value].text.ToUpper().Replace(" ", "");
-        string DifficultType = dropdownDifficult.options[dropdownDifficult.value].text.ToUpper().Replace(" ", "");
-        var getDiff = (from x in lstConfType where x.name == BoardType select x).ToList();
-        var getInterv = CalcularIntervaloOcultamiento(getDiff.First().numberRows, getDiff.First().numberColumns, DifficultType);
+        string BoardType = getBoardType();
+        string DifficultType = getDifficult();
+        var objConfiguration = getConfiguration();
+        var getInterv = CalcularIntervaloOcultamiento(objConfiguration.numberRows, objConfiguration.numberColumns, DifficultType);
         var newgame = GameState.CreateGame(sudokuGenerator, BoardType, DifficultType, getInterv[0], getInterv[1]);
         gameManager.StartGame(newgame);
         MenuManager.GetSingleton().HideShow(false);
