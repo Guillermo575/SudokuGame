@@ -29,17 +29,18 @@ public class MenuNewGame : _Menu
         public int numberColumns { get; set; }
         public int numberRows { get; set; }
         public string name { get { return etype.ToString().ToUpper().Replace("CR", ""); } }
+        public bool QuickMode { get; set; }
     }
     public List<Configuration> lstConfType = new List<Configuration>
     {
-        new Configuration { etype = eType.cr9x9, numberColumns = 3, numberRows = 3 },
-        new Configuration { etype = eType.cr16x16, numberColumns = 4, numberRows = 4 },
-        new Configuration { etype = eType.cr6x6, numberColumns = 3, numberRows = 2 },
-        new Configuration { etype = eType.cr4x4, numberColumns = 4, numberRows = 4 },
-        new Configuration { etype = eType.cr20x20, numberColumns = 5, numberRows = 4 },
-        new Configuration { etype = eType.cr25x25, numberColumns = 5, numberRows = 5 },
-        new Configuration { etype = eType.cr30x30, numberColumns = 6, numberRows = 5 },
-        new Configuration { etype = eType.cr36x36, numberColumns = 6, numberRows = 6 },
+        new Configuration { etype = eType.cr9x9, numberColumns = 3, numberRows = 3, QuickMode = false },
+        new Configuration { etype = eType.cr16x16, numberColumns = 4, numberRows = 4, QuickMode = false },
+        new Configuration { etype = eType.cr6x6, numberColumns = 3, numberRows = 2, QuickMode = false },
+        new Configuration { etype = eType.cr4x4, numberColumns = 4, numberRows = 4, QuickMode = false },
+        new Configuration { etype = eType.cr20x20, numberColumns = 5, numberRows = 4, QuickMode = true },
+        new Configuration { etype = eType.cr25x25, numberColumns = 5, numberRows = 5, QuickMode = true },
+        new Configuration { etype = eType.cr30x30, numberColumns = 6, numberRows = 5, QuickMode = true },
+        new Configuration { etype = eType.cr36x36, numberColumns = 6, numberRows = 6, QuickMode = true },
     };
     public static int[] CalcularIntervaloOcultamiento(int filas, int columnas, string dificultad = "NORMAL")
     {
@@ -100,24 +101,24 @@ public class MenuNewGame : _Menu
         if (getDiff.Count == 0) return;
         string DifficultType = dropdownDifficult.options[dropdownDifficult.value].text.ToUpper().Replace(" ", "");
         var getInterv = CalcularIntervaloOcultamiento(getDiff.First().numberRows, getDiff.First().numberColumns, DifficultType);
-        StartSudokuGeneration(getDiff.First().numberColumns, getDiff.First().numberRows, BoardType, DifficultType, getInterv);
+        StartSudokuGeneration(getDiff.First(), BoardType, DifficultType, getInterv);
     }
-    private void StartSudokuGeneration(int numberColumns, int numberRows, string boardType, string difficultType, int[] interval)
+    private void StartSudokuGeneration(Configuration configuration, string boardType, string difficultType, int[] interval)
     {
         isCancelled = false;
         ShowLoadingUI();
-        sudokuThread = new Thread(() => GenerateSudokuThread(numberColumns, numberRows, boardType, difficultType, interval))
+        sudokuThread = new Thread(() => GenerateSudokuThread(configuration, boardType, difficultType, interval))
         {
             IsBackground = true
         };
         sudokuThread.Start();
         StartCoroutine(MonitorProgress());
     }
-    private void GenerateSudokuThread(int numberColumns, int numberRows, string boardType, string difficultType, int[] interval)
+    private void GenerateSudokuThread(Configuration configuration, string boardType, string difficultType, int[] interval)
     {
         try
         {
-            currentSudokuGenerator = new SudokuGenerator(numberColumns, numberRows, false);
+            currentSudokuGenerator = new SudokuGenerator(ColumnasX: configuration.numberColumns, ColumnasY: configuration.numberRows, StartNow: false, QuickFunction: configuration.QuickMode);
             currentSudokuGenerator.Start();
         }
         catch (System.Exception ex)
