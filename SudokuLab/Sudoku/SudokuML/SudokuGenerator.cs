@@ -386,6 +386,10 @@ namespace SudokuML
             {
                 int valorBase = (celda.EjeY * ColumnasY) + celda.CuadranteEjeY + (celda.CuadranteEjeX * ColumnasY) + celda.EjeX;
                 celda.Valor = (valorBase % ValorFinal) + ValorInicial;
+                bool cuadranteCompleto = celda.IdCuadrante == SumaCuadrantes;
+                bool valorCompleto = cuadranteCompleto;
+                ActualizarEstadoML(celda.Valor, celda.IdCuadrante, celda, esBacktrack: false);
+                ActualizarAgenteML(celda, exitoso: true, completado: false, cuadranteCompleto, valorCompleto);
             }
             InicializarMapeoValores();
             Exito = ValidarCeldas(lstCeldas);
@@ -560,7 +564,7 @@ namespace SudokuML
             var tiempoEpisodioAnterior = tiempoInicio;
             for (int i = 0; i < episodios; i++)
             {
-                var sudoku = new SudokuGenerator(columnasX, columnasY, usarML: true, entrenar: true);
+                var sudoku = new SudokuGenerator(columnasX, columnasY, usarML: true, entrenar: true, QuickFunction: i == 0);
                 double recompensaTotal = sudoku.Exito ? 100 : -50;
                 agenteML.RegistrarEpisodio(recompensaTotal, sudoku.HashSudoku);
                 var tiempoActual = DateTime.Now;
