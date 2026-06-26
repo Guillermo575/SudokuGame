@@ -8,7 +8,7 @@ using System.Collections;
 using UnityEngine.UI;
 public class MenuNewGame : _Menu
 {
-    #region Variables
+    #region Public
     public TMP_Dropdown dropdownBoard;
     public TMP_Dropdown dropdownDifficult;
     public Slider loadingSlider;
@@ -16,10 +16,13 @@ public class MenuNewGame : _Menu
     public Button cancelButton;
     public List<Button> otherButtons = new List<Button>();
     public List<TMP_Dropdown> otherDropdowns = new List<TMP_Dropdown>();
+    #endregion
 
+    #region Private
     private Thread sudokuThread;
     private SudokuGenerator currentSudokuGenerator;
     private bool isCancelled = false;
+    private const float GENERATION_TIMEOUT_SECONDS = 60f;
     #endregion
 
     #region Configuration
@@ -68,7 +71,7 @@ public class MenuNewGame : _Menu
     }
     #endregion
 
-    #region Methods
+    #region Start
     internal override void Start()
     {
         base.Start();
@@ -76,6 +79,9 @@ public class MenuNewGame : _Menu
         if (cancelButton != null)
             cancelButton.onClick.AddListener(OnCancelGeneration);
     }
+    #endregion
+
+    #region Events
     public void OnNewGame()
     {
         var gameManager = GameManager.GetSingleton();
@@ -103,6 +109,9 @@ public class MenuNewGame : _Menu
         var getInterv = CalcularIntervaloOcultamiento(getDiff.First().numberRows, getDiff.First().numberColumns, DifficultType);
         StartSudokuGeneration(getDiff.First(), BoardType, DifficultType, getInterv);
     }
+    #endregion
+
+    #region Sudoku Generation
     private void StartSudokuGeneration(Configuration configuration, string boardType, string difficultType, int[] interval)
     {
         isCancelled = false;
@@ -156,6 +165,9 @@ public class MenuNewGame : _Menu
             currentSudokuGenerator = null;
         }
     }
+    #endregion
+
+    #region Load Bar GUI
     private void UpdateLoadingUI(float progress)
     {
         if (loadingSlider != null)
@@ -201,6 +213,9 @@ public class MenuNewGame : _Menu
                 dropdown.gameObject.SetActive(true);
         }
     }
+    #endregion
+
+    #region Start & Cancel
     public void OnCancelGeneration()
     {
         isCancelled = true;
