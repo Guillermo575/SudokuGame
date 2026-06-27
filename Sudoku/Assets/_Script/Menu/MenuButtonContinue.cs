@@ -2,6 +2,6 @@ public class MenuButtonContinue : MenuButton
 {
     void Update()
     {
-        button.enabled = gameManager.saveGameSO != null && gameManager.saveGameSO.lastGameState != null;
+        button.interactable = gameManager.saveGameSO != null && gameManager.saveGameSO.lastGameState != null && !string.IsNullOrEmpty(gameManager.saveGameSO.lastGameState.Id);
     }
 }
