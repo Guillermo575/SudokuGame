@@ -87,7 +87,7 @@ public class MenuNewGame : _Menu
     public void OnNewGame()
     {
         var gameManager = GameManager.GetSingleton();
-        if (gameManager.saveGameSO != null && gameManager.saveGameSO.lastGameState != null)
+        if (gameManager.saveGameSO != null && gameManager.saveGameSO.lastGameState != null && !string.IsNullOrEmpty(gameManager.saveGameSO.lastGameState.Id))
         {
             MenuManager.GetSingleton().menuConfirmar.MostrarPantallaConfirmar(EventoNewGameYes, "The previous game will be deleted, Are you sure?");
         }
