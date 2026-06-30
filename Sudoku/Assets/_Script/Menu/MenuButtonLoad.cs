@@ -20,7 +20,11 @@ public class MenuButtonLoad : MenuButton
     public void OnButtonDelete()
     {
         if (gameManager == null || gameState == null) return;
-        gameManager.saveGameSO.lstGames = (from x in gameManager.saveGameSO.lstGames where x.Id != gameState.Id select x).ToList();
-        Destroy(this);
+        SavePlayerPref savePlayerPref = SavePlayerPref.GetSingleton();
+        if (savePlayerPref != null)
+        {
+            savePlayerPref.DeleteGame(gameState.Id);
+        }
+        Destroy(gameObject);
     }
 }

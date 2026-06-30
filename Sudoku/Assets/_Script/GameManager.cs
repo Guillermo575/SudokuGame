@@ -5,7 +5,6 @@ public class GameManager : MonoBehaviour
 {
     #region Variables
     public SudokuBoard sudokuBoard;
-    public SaveGameSO saveGameSO;
     public HUDButtonPanel hUDButtonPanel;
     public GameObject hudObject;
     #endregion
@@ -34,7 +33,11 @@ public class GameManager : MonoBehaviour
     #region General
     public void StartGame()
     {
-        StartGame(saveGameSO.lastGameState);
+        SavePlayerPref savePlayerPref = SavePlayerPref.GetSingleton();
+        if (savePlayerPref != null)
+        {
+            StartGame(savePlayerPref.GetLastGameState());
+        }
     }
     public void StartGame(GameState gameState)
     {
@@ -43,7 +46,11 @@ public class GameManager : MonoBehaviour
         sudokuBoard.CreateBoard(gameState);
         if (hUDButtonPanel != null)
             hUDButtonPanel.HideShowButtons(TotalAlphabet);
-        saveGameSO.lastGameState = gameState;
+        SavePlayerPref savePlayerPref = SavePlayerPref.GetSingleton();
+        if (savePlayerPref != null)
+        {
+            savePlayerPref.SetLastGameState(gameState);
+        }
         _IsPause = false;
         ShowWinPanel = false;
         _IsWin = false;
@@ -52,7 +59,11 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         if (gameState == null) return;
-        saveGameSO.SaveGame(saveGameSO.lastGameState);
+        SavePlayerPref savePlayerPref = SavePlayerPref.GetSingleton();
+        if (savePlayerPref != null)
+        {
+            savePlayerPref.SaveGame(gameState);
+        }
     }
     public void DestroyGame()
     {

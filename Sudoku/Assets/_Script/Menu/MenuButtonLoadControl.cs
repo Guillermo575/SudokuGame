@@ -2,6 +2,7 @@ public class MenuButtonLoadControl : MenuButton
 {
     void Update()
     {
-        button.interactable = gameManager.saveGameSO != null && gameManager.saveGameSO.lstGames != null && gameManager.saveGameSO.lstGames.Count > 0;
+        SavePlayerPref savePlayerPref = SavePlayerPref.GetSingleton();
+        button.interactable = savePlayerPref != null && savePlayerPref.GetAllGames().Count > 0;
     }
 }

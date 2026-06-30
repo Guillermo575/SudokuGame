@@ -3,14 +3,14 @@ public class MenuButtonLoadPanel : MonoBehaviour
 {
     public GameObject panelContainer;
     public MenuButtonLoad menuButtonLoadPrefab;
-    public SaveGameSO saveGameSO;	
     public void Start()
     {
         Initialize();
     }
     public void Initialize()
     {
-        if (saveGameSO == null) return;
+        SavePlayerPref savePlayerPref = SavePlayerPref.GetSingleton();
+        if (savePlayerPref == null) return;
         Transform[] children = panelContainer.GetComponentsInChildren<Transform>();
         foreach (Transform child in children)
         {
@@ -25,9 +25,10 @@ public class MenuButtonLoadPanel : MonoBehaviour
         //    menuButtonLoad.name = $"menuButtonLoad_Last";
         //    menuButtonLoad.GetComponent<MenuButtonLoad>().Initialize(saveGameSO.lastGameState);
         //}
-        for (int l = 0; l < saveGameSO.lstGames.Count; l++)
+        var lstGames = savePlayerPref.GetAllGames();
+        for (int l = 0; l < lstGames.Count; l++)
         {
-            var obj = saveGameSO.lstGames[l];
+            var obj = lstGames[l];
             GameObject menuButtonLoad = Instantiate(menuButtonLoadPrefab.gameObject, Vector3.zero, Quaternion.identity, panelContainer.transform);
             menuButtonLoad.name = $"menuButtonLoad_{l}";
             menuButtonLoad.GetComponent<MenuButtonLoad>().Initialize(obj);
