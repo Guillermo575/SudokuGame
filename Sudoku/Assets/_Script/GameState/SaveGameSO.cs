@@ -1,13 +1,9 @@
-using Sudoku;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.Serialization;
 using UnityEngine;
-using static Sudoku.SudokuGenerator;
 [Serializable]
 [CreateAssetMenu(fileName = "SaveGameSO", menuName = "ScriptableObjects/SaveGameSO")]
-public class SaveGameSO : UnityEngine.ScriptableObject
+public class SaveGameSO : ObjetoPersistente
 {
     #region Variables
     public GameState lastGameState;
