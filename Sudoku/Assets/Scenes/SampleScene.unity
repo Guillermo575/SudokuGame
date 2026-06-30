@@ -6060,7 +6060,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelContainer: {fileID: 428936430}
   menuButtonLoadPrefab: {fileID: 5175794419762440265, guid: 9c176debbec1bce40b08d11462b441ba, type: 3}
-  saveGameSO: {fileID: 11400000, guid: 0db9e814c1418ce488dda2aba6df6602, type: 2}
 --- !u!1 &986611095
 GameObject:
   m_ObjectHideFlags: 0
@@ -12738,7 +12737,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sudokuBoard: {fileID: 1546840822}
-  saveGameSO: {fileID: 11400000, guid: 0db9e814c1418ce488dda2aba6df6602, type: 2}
   hUDButtonPanel: {fileID: 7954579218871001131}
   hudObject: {fileID: 227736408}
   ShowWinPanel: 0
@@ -12791,11 +12789,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1902135369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb421cb7cd788034c9ea67f8f8f8c31a, type: 3}
+  m_Script: {fileID: 11500000, guid: a59f7ddbebdf0c040aee4c1bed15a08b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjetosAGuardar:
-  - {fileID: 11400000, guid: 0db9e814c1418ce488dda2aba6df6602, type: 2}
 --- !u!1 &1912351534
 GameObject:
   m_ObjectHideFlags: 0
