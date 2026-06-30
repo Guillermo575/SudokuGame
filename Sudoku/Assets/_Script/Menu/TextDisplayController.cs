@@ -7,6 +7,10 @@ public class TextDisplayController : MonoBehaviour
     public float displayDuration = 5f;
     public float fadeDuration = 1f;
     private Coroutine currentCoroutine;
+    public void OnEnable()
+    {
+        SetAlpha(0f);
+    }
     public void ShowText(string message)
     {
         textMeshPro = GetComponent<TextMeshProUGUI>();
@@ -39,6 +43,7 @@ public class TextDisplayController : MonoBehaviour
     }
     private void SetAlpha(float alpha)
     {
+        if (textMeshPro == null) return;
         Color color = textMeshPro.color;
         color.a = alpha;
         textMeshPro.color = color;
