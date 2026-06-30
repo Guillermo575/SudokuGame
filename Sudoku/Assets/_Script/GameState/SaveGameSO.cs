@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [Serializable]
 [CreateAssetMenu(fileName = "SaveGameSO", menuName = "ScriptableObjects/SaveGameSO")]
-public class SaveGameSO : ObjetoPersistente
+public class SaveGameSO : ScriptableObject
 {
     #region Variables
     public GameState lastGameState;
