@@ -3,7 +3,7 @@ public class MenuButtonLoadPanel : MonoBehaviour
 {
     public GameObject panelContainer;
     public MenuButtonLoad menuButtonLoadPrefab;
-    public void Start()
+    private void OnEnable()
     {
         Initialize();
     }
